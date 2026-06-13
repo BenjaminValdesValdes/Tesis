@@ -1,0 +1,79 @@
+% ============================================================================
+% PAQUETES - Tesis UTEM
+% ============================================================================
+% Este archivo contiene todos los paquetes necesarios para el documento.
+% No es necesario modificarlo a menos que necesites agregar funcionalidad.
+% ============================================================================
+
+% --- Codificación y lenguaje ---
+\usepackage[utf8]{inputenc}          % Permite usar tildes y ñ directamente
+\usepackage[T1]{fontenc}             % Codificación de fuentes para español
+\usepackage[spanish,es-tabla]{babel} % Idioma español (cambia "Table" por "Tabla", etc.)
+
+% --- Fuente Arial (equivalente: Helvetica) ---
+\usepackage{helvet}                  % Carga la fuente Helvetica (muy similar a Arial)
+\renewcommand{\familydefault}{\sfdefault} % Establece sans-serif como fuente predeterminada
+
+% --- Geometría de página ---
+\usepackage[
+    letterpaper,                     % Tamaño carta
+    top=4cm,                         % Margen superior: 4 cm
+    left=4cm,                        % Margen izquierdo: 4 cm
+    right=2.5cm,                     % Margen derecho: 2.5 cm
+    bottom=2.5cm                     % Margen inferior: 2.5 cm
+]{geometry}
+
+% --- Espaciado ---
+\usepackage{setspace}                % Control de interlineado
+\usepackage{parskip}                 % Espacio entre párrafos (en lugar de sangría sola)
+
+% --- Encabezados y pies de página ---
+\usepackage{fancyhdr}                % Personalización de encabezados/pies
+
+% --- Títulos de capítulos y secciones ---
+\usepackage{titlesec}                % Personalización de títulos
+
+% --- Gráficos e imágenes ---
+\usepackage{graphicx}                % Insertar imágenes
+\usepackage{float}                   % Mejor control de posición de figuras/tablas
+\usepackage[font=small,labelfont=bf]{caption} % Formato de pies de figura/tabla
+
+% --- Tablas ---
+\usepackage{array}                   % Mejoras para tablas
+\usepackage{longtable}               % Tablas que ocupan más de una página
+\usepackage{booktabs}                % Líneas profesionales en tablas (\toprule, \midrule, etc.)
+\usepackage{multirow}                % Celdas que abarcan varias filas
+
+% --- Bibliografía APA ---
+\usepackage[
+    backend=biber,                   % Motor de bibliografía
+    style=apa,                       % Estilo APA
+    sortcites=true,                  % Ordenar citas
+    sorting=nyt,                     % Ordenar por nombre, año, título
+    language=spanish                 % Idioma español para la bibliografía
+]{biblatex}
+\addbibresource{finales/bibliografia.bib} % Archivo de bibliografía
+
+% --- Hipervínculos ---
+\usepackage[
+    colorlinks=true,                 % Enlaces con color (sin recuadros)
+    linkcolor=black,                 % Color de enlaces internos
+    citecolor=black,                 % Color de citas
+    urlcolor=blue,                   % Color de URLs
+    bookmarks=true,                  % Crear marcadores en el PDF
+    pdfauthor={},                    % Se llenará después
+    pdftitle={}                      % Se llenará después
+]{hyperref}
+\usepackage{bookmark}                % Mejores marcadores en el PDF
+
+% --- Notas al pie ---
+\usepackage[bottom]{footmisc}        % Notas al pie siempre abajo
+
+% --- Sangría del primer párrafo ---
+\usepackage{indentfirst}             % Sangría también en el primer párrafo de cada sección
+
+% --- Otros ---
+\usepackage{enumitem}                % Personalización de listas
+\usepackage{pdfpages}                % Incluir páginas PDF externas (útil para anexos)
+\usepackage{xcolor}                  % Colores (por si se necesitan)
+\usepackage{emptypage}               % Páginas en blanco sin encabezado/pie

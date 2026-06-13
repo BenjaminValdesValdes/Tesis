@@ -1,0 +1,74 @@
+% ============================================================================
+% PORTADA - Según Anexo 2 de la Pauta UTEM
+% ============================================================================
+
+\begin{titlepage}
+    \thispagestyle{empty}  % Sin número de página visible
+    
+    % --- Logo e información institucional ---
+    \begin{flushleft}
+        % Logo UTEM (3 cm x 2 cm)
+        \ifx\logoUTEM\empty\else
+            \IfFileExists{\logoUTEM}{%
+                \includegraphics[width=3cm, height=2cm]{\logoUTEM}%
+            }{%
+                % Si no existe el logo, se deja un espacio
+                \rule{3cm}{2cm} % Placeholder para el logo
+            }
+        \fi
+        \hspace{0.5cm}
+        \begin{minipage}[b]{0.7\textwidth}
+            \textbf{\universidad}\\
+            \textbf{\facultad}\\
+            \textbf{\departamento}\\
+            \textbf{\escuela}
+        \end{minipage}
+    \end{flushleft}
+    
+    \vfill
+    
+    % --- Título del trabajo ---
+    \begin{center}
+        \begin{doublespace}
+            {\Large\textbf{\tituloTesis}}
+        \end{doublespace}
+        
+        % Subtítulo (si existe)
+        \ifx\subtituloTesis\empty\else
+            \begin{doublespace}
+                {\large \subtituloTesis}
+            \end{doublespace}
+        \fi
+    \end{center}
+    
+    \vfill
+    
+    % --- Leyenda de grado ---
+    \begin{center}
+        {\normalsize\textbf{\leyendaGrado}}
+    \end{center}
+    
+    \vspace{1.5cm}
+    
+    % --- Autores ---
+    \begin{flushright}
+        \textbf{AUTORES:}\\
+        \autorUno\\
+        % \autorDos\\            % <-- Descomenta si hay más autores
+        % \autorTres\\           % <-- Descomenta si hay más autores
+        
+        \vspace{1cm}
+        
+        \textbf{PROFESOR GUÍA:}\\
+        \profesorGuia
+    \end{flushright}
+    
+    \vfill
+    
+    % --- Lugar y fecha ---
+    \begin{center}
+        \textbf{\ciudadPais}\\
+        \textbf{\anioTesis}
+    \end{center}
+
+\end{titlepage}

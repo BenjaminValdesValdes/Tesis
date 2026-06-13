@@ -1,0 +1,114 @@
+% ============================================================================
+% FORMATO - Tesis UTEM
+% ============================================================================
+% Configuración visual del documento: interlineado, paginación, estilos de
+% títulos y encabezados, según la Pauta UTEM.
+% ============================================================================
+
+% --- Interlineado 1.5 líneas ---
+\onehalfspacing
+
+% --- Sangría de párrafo: 5 espacios (~1.25 cm) ---
+\setlength{\parindent}{1.25cm}
+
+% --- Espacio entre párrafos ---
+\setlength{\parskip}{0.5\baselineskip}
+
+% ============================================================================
+% ESTILO DE PÁGINA (encabezado y pie)
+% ============================================================================
+\pagestyle{fancy}
+\fancyhf{}                                   % Limpia encabezados y pies
+\fancyfoot[R]{\thepage}                      % Número de página: ángulo inferior derecho
+\renewcommand{\headrulewidth}{0pt}           % Sin línea en el encabezado
+\renewcommand{\footrulewidth}{0pt}           % Sin línea en el pie
+
+% Estilo para la primera página de cada capítulo
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[R]{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+% ============================================================================
+% ESTILO DE CAPÍTULOS
+% ============================================================================
+% Títulos de capítulos: centrados, mayúsculas, negrita, parte superior de la página
+\titleformat{\chapter}[display]
+    {\normalfont\Large\bfseries\centering}    % Formato: grande, negrita, centrado
+    {\MakeUppercase{\chaptertitlename}\ \thechapter} % "CAPÍTULO X"
+    {20pt}                                    % Espacio entre número y título
+    {\Large\MakeUppercase}                    % Título en mayúsculas
+
+% Capítulos sin número (Introducción, Conclusiones, Bibliografía)
+\titleformat{name=\chapter,numberless}[display]
+    {\normalfont\Large\bfseries\centering}
+    {}
+    {0pt}
+    {\Large\MakeUppercase}
+
+% Espacio antes y después del título del capítulo
+\titlespacing*{\chapter}{0pt}{-20pt}{40pt}
+
+% ============================================================================
+% ESTILO DE SECCIONES
+% ============================================================================
+% Secciones (ej: 1.1 Título): minúsculas, negrita
+\titleformat{\section}
+    {\normalfont\large\bfseries}             % Formato
+    {\thesection}                            % Numeración (1.1, 1.2, ...)
+    {1em}                                    % Espacio después del número
+    {}                                       % Sin transformación (minúsculas naturales)
+
+% Subsecciones (ej: 1.1.1 Subtítulo)
+\titleformat{\subsection}
+    {\normalfont\normalsize\bfseries}
+    {\thesubsection}
+    {1em}
+    {}
+
+% Subsubsecciones (ej: 1.1.1.1)
+\titleformat{\subsubsection}
+    {\normalfont\normalsize\bfseries}
+    {\thesubsubsection}
+    {1em}
+    {}
+
+% ============================================================================
+% TABLAS DE CONTENIDO, FIGURAS Y TABLAS
+% ============================================================================
+% Profundidad de numeración (hasta subsubsección: 1.1.1.1)
+\setcounter{secnumdepth}{3}
+% Profundidad en la tabla de contenido
+\setcounter{tocdepth}{3}
+
+% Redefinición de nombres para cumplir con la norma UTEM (usando babel)
+\addto\captionsspanish{
+    \renewcommand{\contentsname}{TABLA DE CONTENIDO}
+    \renewcommand{\listtablename}{ÍNDICE DE TABLAS}
+    \renewcommand{\listfigurename}{ÍNDICE DE ILUSTRACIONES}
+    \renewcommand{\bibname}{BIBLIOGRAFÍA}
+    \renewcommand{\appendixname}{ANEXO}
+}
+
+
+% ============================================================================
+% PIES DE FIGURAS Y TABLAS
+% ============================================================================
+% Formato: "Figura 1: Descripción" / "Tabla 1: Descripción"
+\captionsetup[figure]{labelsep=period, justification=centering}
+\captionsetup[table]{labelsep=period, justification=centering}
+
+% ============================================================================
+% NOTAS AL PIE
+% ============================================================================
+% Las notas al pie usan espacio simple
+\renewcommand{\footnotesize}{\small}
+
+% ============================================================================
+% LISTAS
+% ============================================================================
+% Personalización de listas con viñetas y numeradas
+\setlist[itemize]{topsep=0pt, partopsep=0pt, parsep=0pt, itemsep=2pt}
+\setlist[enumerate]{topsep=0pt, partopsep=0pt, parsep=0pt, itemsep=2pt}

@@ -1,0 +1,33 @@
+# ============================================================================
+# .gitignore para proyectos LaTeX (Tesis UTEM)
+# ============================================================================
+
+# --- Archivos auxiliares del motor TeX/LaTeX ---
+*.aux
+*.log
+*.toc
+*.lof
+*.lot
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.pdfsync
+*.auxlock
+
+# --- Archivos temporales de BibTeX y BibLaTeX/Biber ---
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*-blx.bib
+
+# --- Respaldos e temporales de editores (TeXstudio, VS Code, etc.) ---
+*.bak
+*.sav
+*~
+.vscode/
+
+# --- PDF generado ---
+# Puedes descomentar la siguiente línea si no deseas guardar el PDF en Git
+# main.pdf

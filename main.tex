@@ -1,0 +1,95 @@
+% ============================================================================
+% UNIVERSIDAD TECNOLÓGICA METROPOLITANA
+% Facultad de Ingeniería
+% Departamento de Informática y Computación
+% ============================================================================
+% ARCHIVO MAESTRO PRINCIPAL: main.tex
+% Este es el archivo que se debe compilar para generar el PDF de la tesis.
+% ============================================================================
+
+\documentclass[12pt,letterpaper,oneside]{report}
+
+% --- Importación de configuraciones y paquetes ---
+\input{configuracion/paquetes}
+\input{configuracion/formato}
+\input{configuracion/comandos}
+
+\begin{document}
+
+% ============================================================================
+% PÁGINAS PRELIMINARES
+% Paginación con números romanos en minúscula (i, ii, iii...) en el ángulo inferior derecho.
+% ============================================================================
+\pagenumbering{roman}
+
+% 1. Portada (Se cuenta como página i, pero no se muestra el número físicamente)
+\input{preliminares/portada}
+
+% 2. Página de Derecho de Autor (Anexo 4)
+\input{preliminares/derecho_autor}
+
+% 3. Página de Calificaciones (Anexo 3)
+\input{preliminares/calificaciones}
+
+% 4. Dedicatoria (Optativa, se puede comentar si no se desea incluir)
+\input{preliminares/dedicatoria}
+
+% 5. Agradecimientos (Optativos, se pueden comentar si no se desea incluir)
+\input{preliminares/agradecimientos}
+
+% 6. Tabla de Contenido
+\clearpage
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents
+\newpage
+
+% 7. Índice de Tablas
+\listoftables
+\newpage
+
+% 8. Índice de Ilustraciones (Figuras)
+\listoffigures
+\newpage
+
+% 9. Resumen (Síntesis del trabajo en español)
+\input{preliminares/resumen}
+
+% 10. Abstract (Resumen traducido al inglés)
+\input{preliminares/abstract}
+
+% ============================================================================
+% TEXTO PRINCIPAL (Cuerpo de la Obra)
+% Paginación con números arábigos (1, 2, 3...) en el ángulo inferior derecho,
+% comenzando desde la página 1 en la Introducción.
+% ============================================================================
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% Introducción
+\input{capitulos/introduccion}
+
+% Capítulos del cuerpo de la obra
+\input{capitulos/capitulo1} % Marco Teórico
+\input{capitulos/capitulo2} % Metodología
+\input{capitulos/capitulo3} % Desarrollo
+\input{capitulos/capitulo4} % Resultados y Discusión
+
+% Conclusiones
+\input{capitulos/conclusiones}
+
+% ============================================================================
+% PÁGINAS FINALES
+% ============================================================================
+\newpage
+
+% Bibliografía (formato APA)
+\printbibliography[title={BIBLIOGRAFÍA}, heading=bibintoc]
+
+% Glosario (Optativo, se puede comentar si no se desea incluir)
+\input{finales/glosario}
+
+% Anexos
+\input{finales/anexos}
+
+\end{document}
