@@ -136,3 +136,8 @@ Para que LaTeX resuelva correctamente los números de página, el índice, la bi
 4.  **PdfLaTeX**: Resuelve las referencias cruzadas finales (índices y citas).
 
 ¡Felicidades! Tienes todo configurado para comenzar tu tesis de forma completamente profesional.
+
+Comando para compilar en una sola linea:
+```bash
+latexmk -pdf main.tex
+```

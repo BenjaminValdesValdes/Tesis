@@ -21,9 +21,11 @@
 % Paginación con números romanos en minúscula (i, ii, iii...) en el ángulo inferior derecho.
 % ============================================================================
 \pagenumbering{roman}
+\hypersetup{pageanchor=false}  % Evita warning de identificador duplicado en hyperref
 
 % 1. Portada (Se cuenta como página i, pero no se muestra el número físicamente)
 \input{preliminares/portada}
+\hypersetup{pageanchor=true}   % Reactiva los anchors de página
 
 % 2. Página de Derecho de Autor (Anexo 4)
 \input{preliminares/derecho_autor}

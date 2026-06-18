@@ -8,15 +8,17 @@
 % --- Interlineado 1.5 líneas ---
 \onehalfspacing
 
-% --- Sangría de párrafo: 5 espacios (~1.25 cm) ---
+% --- Sangría de párrafo: 5 espacios (~1.25 cm) según norma UTEM (sección 4.6) ---
 \setlength{\parindent}{1.25cm}
 
-% --- Espacio entre párrafos ---
-\setlength{\parskip}{0.5\baselineskip}
+% --- Espacio entre párrafos: "Un espacio entre párrafos" (sección 4.6) ---
+% Se usa un valor moderado para separar párrafos sin romper la lectura.
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
 
 % ============================================================================
 % ESTILO DE PÁGINA (encabezado y pie)
 % ============================================================================
+% Paginación: ángulo inferior derecho (sección 4.5)
 \pagestyle{fancy}
 \fancyhf{}                                   % Limpia encabezados y pies
 \fancyfoot[R]{\thepage}                      % Número de página: ángulo inferior derecho
@@ -35,6 +37,8 @@
 % ESTILO DE CAPÍTULOS
 % ============================================================================
 % Títulos de capítulos: centrados, mayúsculas, negrita, parte superior de la página
+% Sección 4.6: "Inicio de los títulos en la parte superior de la página,
+% en margen centrado, letras mayúsculas y en negrita."
 \titleformat{\chapter}[display]
     {\normalfont\Large\bfseries\centering}    % Formato: grande, negrita, centrado
     {\MakeUppercase{\chaptertitlename}\ \thechapter} % "CAPÍTULO X"
@@ -49,12 +53,14 @@
     {\Large\MakeUppercase}
 
 % Espacio antes y después del título del capítulo
+% Sección 4.6: "Inicio del texto después de dos espacios bajo el título"
 \titlespacing*{\chapter}{0pt}{-20pt}{40pt}
 
 % ============================================================================
 % ESTILO DE SECCIONES
 % ============================================================================
-% Secciones (ej: 1.1 Título): minúsculas, negrita
+% Sección 4.6: "Uso de minúsculas en subtítulos, con excepción de la primera
+% letra de la primera palabra y sustantivos propios."
 \titleformat{\section}
     {\normalfont\large\bfseries}             % Formato
     {\thesection}                            % Numeración (1.1, 1.2, ...)
@@ -96,14 +102,14 @@
 % ============================================================================
 % PIES DE FIGURAS Y TABLAS
 % ============================================================================
-% Formato: "Figura 1: Descripción" / "Tabla 1: Descripción"
+% Formato: "Figura 1. Descripción" / "Tabla 1. Descripción"
 \captionsetup[figure]{labelsep=period, justification=centering}
 \captionsetup[table]{labelsep=period, justification=centering}
 
 % ============================================================================
 % NOTAS AL PIE
 % ============================================================================
-% Las notas al pie usan espacio simple
+% Sección 4.3: notas se escriben a espacio simple
 \renewcommand{\footnotesize}{\small}
 
 % ============================================================================

@@ -25,7 +25,8 @@
 
 % --- Espaciado ---
 \usepackage{setspace}                % Control de interlineado
-\usepackage{parskip}                 % Espacio entre párrafos (en lugar de sangría sola)
+% NOTA: No se usa el paquete parskip porque interfiere con la sangría de párrafo.
+% El espacio entre párrafos se configura manualmente en formato.tex.
 
 % --- Encabezados y pies de página ---
 \usepackage{fancyhdr}                % Personalización de encabezados/pies
@@ -43,6 +44,9 @@
 \usepackage{longtable}               % Tablas que ocupan más de una página
 \usepackage{booktabs}                % Líneas profesionales en tablas (\toprule, \midrule, etc.)
 \usepackage{multirow}                % Celdas que abarcan varias filas
+
+% --- Comillas tipográficas (debe cargarse ANTES de biblatex) ---
+\usepackage{csquotes}                % Manejo correcto de comillas en español
 
 % --- Bibliografía APA ---
 \usepackage[
@@ -71,6 +75,9 @@
 
 % --- Sangría del primer párrafo ---
 \usepackage{indentfirst}             % Sangría también en el primer párrafo de cada sección
+
+% --- Matemáticas (para símbolos como \square) ---
+\usepackage{amssymb}                 % Símbolos matemáticos adicionales
 
 % --- Otros ---
 \usepackage{enumitem}                % Personalización de listas
