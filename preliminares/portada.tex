@@ -10,10 +10,10 @@
         % Logo UTEM (3 cm x 2 cm)
         \ifx\logoUTEM\empty\else
             \IfFileExists{\logoUTEM}{%
-                \includegraphics[width=3cm, height=2cm]{\logoUTEM}%
+                \includegraphics[width=2cm, height=3cm, keepaspectratio]{\logoUTEM}%
             }{%
                 % Si no existe el logo, se deja un espacio
-                \rule{3cm}{2cm} % Placeholder para el logo
+                \rule{2cm}{3cm} % Placeholder para el logo
             }
         \fi
         \hspace{0.5cm}
@@ -54,7 +54,7 @@
     \begin{flushright}
         \textbf{AUTORES:}\\
         \autorUno\\
-        % \autorDos\\            % <-- Descomenta si hay más autores
+        \autorDos\\            % <-- Descomenta si hay más autores
         % \autorTres\\           % <-- Descomenta si hay más autores
         
         \vspace{1cm}
