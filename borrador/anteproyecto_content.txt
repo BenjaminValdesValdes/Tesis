@@ -1,0 +1,690 @@
+--- PAGE 1 ---
+ 
+1 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Facultad de ingeniería 
+Escuela de Informática y Computación 
+ 
+INFORME PROPUESTA 
+ 
+Sistema de Control de Acceso Vehicular 
+Automatizado mediante Reconocimiento de 
+Patentes para la Universidad Tecnológica 
+Metropolitana, Sede Campus Ñuñoa 
+ 
+ 
+PROFESOR GUIA 
+ESTUDIANTE 
+Michael Emilio Cristi Capstick 
+Ezequiel Jeremias Molina Zuñiga 
+Benjamin Ignacio Valdés Valdés 
+Ingeniero Civil en Computación mención 
+informática 
+Estudiantes de Ingeniería 
+ Civil en Computación con mención en 
+Informática 
+mcristi@utem.cl 
+ 
+emolinaz@utem.cl 
+bvaldes@utem.cl 
+ 
+ 
+ 
+ 
+Índice 
+
+--- PAGE 2 ---
+ 
+2 
+Contenido 
+Sistema de Control de Acceso Vehicular Automatizado mediante Reconocimiento de Patentes 
+para la Universidad Tecnológica Metropolitana, Sede Campus Ñuñoa ...................................... 1 
+Índice ..................................................................................................................................... 1 
+Resumen Ejecutivo................................................................................................................. 3 
+Contextualización y Definición del Problema Institucional....................................................... 3 
+Objetivos del Proyecto ............................................................................................................ 4 
+Objetivo General ................................................................................................................. 4 
+Objetivos Específicos .......................................................................................................... 4 
+Alcance y Limitaciones del Anteproyecto ................................................................................ 5 
+Alcance de la Solución Propuesta ....................................................................................... 5 
+Limitaciones Identificadas ................................................................................................... 6 
+Marco Teórico y Estado del Arte............................................................................................. 6 
+Detección de Objetos mediante YOLOv8 ............................................................................ 6 
+Arquitectura Edge Computing en Sistemas de Seguridad ................................................... 7 
+Metodología: Prototipado Rápido ........................................................................................... 8 
+Diseño Teórico de la Infraestructura de Hardware .................................................................. 8 
+Nodo de Procesamiento (Cerebro del Sistema) .................................................................. 8 
+Adquisición de Imagen y Visión Artificial ............................................................................. 8 
+Control de Actuadores y Mecanismos de Apertura ............................................................. 9 
+Plan de contingencia ........................................................................................................... 9 
+Marco Normativo y Ético: Privacidad de Datos Biométricos .................................................... 9 
+Consideraciones Legales en el Ámbito Universitario ........................................................... 9 
+Evaluación Económica de Implementación (Diseño Teórico) ................................................10 
+Gastos de Capital (CAPEX) ...............................................................................................10 
+Gastos Operativos (OPEX) ................................................................................................11 
+Depreciación de Activos .....................................................................................................12 
+Análisis de Retorno (ROI) y Beneficio Institucional ............................................................12 
+Conclusiones y Proyección del Proyecto ...............................................................................13 
+Bibliografía ................................................................................................................................14 
+ 
+ 
+ 
+ 
+
+--- PAGE 3 ---
+ 
+3 
+Resumen Ejecutivo 
+El presente anteproyecto propone la automatización del control de acceso vehicular para el 
+estacionamiento de funcionarios en el Campus Ñuñoa de la UTEM, con el fin de mitigar las 
+ineficiencias logísticas y latencias operativas derivadas del actual proceso de validación manual. 
+La solución técnica consiste en un sistema de autenticación que integra el reconocimiento 
+automático de placas patentes mediante el algoritmo YOLOv8. Bajo una arquitectura teórica de 
+Edge Computing (basada en Raspberry Pi 5), el sistema garantiza el procesamiento local de 
+datos para optimizar la velocidad de respuesta y resguardar la privacidad de la información 
+sensible. 
+Debido al alcance académico del trabajo de título, se emplea la metodología de Prototipado 
+Rápido, distinguiendo claramente entre un diseño de infraestructura física integral y un 
+entregable core basado en un prototipo funcional estrictamente digital. Este último consistirá en 
+una aplicación de software capaz de simular el flujo de acceso mediante cámaras de PC y un 
+panel administrativo para la gestión de usuarios y registros históricos. Finalmente, el 
+anteproyecto incorpora una evaluación económica y financiera detallada que analiza los 
+requerimientos de inversión inicial (CAPEX) y los costos operativos (OPEX) proyectados para 
+un despliegue físico real. Este análisis se complementa con el cálculo de indicadores de 
+rentabilidad clave, tales como el Valor Actual Neto (VAN), la Tasa Interna de Retorno (TIR) y 
+el Periodo de Recuperación de la Inversión. Dichos indicadores permiten validar la viabilidad 
+técnica-económica de la solución y proyectar el retorno institucional derivado de la optimización 
+operativa en el Campus Ñuñoa. 
+Contextualización 
+y 
+Definición 
+del 
+Problema 
+Institucional 
+La Universidad Tecnológica Metropolitana (UTEM), en su búsqueda constante por la 
+modernización de sus procesos infraestructurales y la optimización de los recursos destinados a 
+la gestión de sus campus, enfrenta desafíos significativos en la administración de sus espacios 
+de estacionamiento. En el Campus Ñuñoa, específicamente en el área destinada a los 
+funcionarios, el proceso de ingreso vehicular actual depende de un sistema de validación manual 
+que ha demostrado ser ineficiente desde una perspectiva logística y operativa. Actualmente, el 
+acceso se rige por un protocolo en el que el funcionario debe contactar directamente al personal 
+de seguridad o conserjería para solicitar la apertura del portón. Este contacto se realiza 
+habitualmente mediante llamadas telefónicas o señales visuales, tras lo cual el responsable de 
+la portería debe identificar visualmente al solicitante como un miembro habilitado de la comunidad 
+universitaria antes de proceder con la apertura mecánica o manual del portón. 
+Este modelo de gestión manual introduce diversas fricciones operativas. En primer lugar, la 
+ubicación física del personal de seguridad no siempre coincide con la cercanía inmediata al punto 
+de acceso, lo que genera latencias considerables entre la llegada del vehículo y la ejecución de 
+la apertura. Esta demora sistemática afecta la fluidez del tránsito en la entrada del campus. 
+Desde la perspectiva de la eficiencia operativa, el modelo vigente obliga al personal de seguridad 
+
+--- PAGE 4 ---
+ 
+4 
+a dedicar una parte sustancial de su jornada laboral a tareas de baja complejidad técnica, como 
+es el reconocimiento visual y la apertura de portones, lo que distrae su atención de labores 
+críticas de vigilancia y prevención de riesgos en el resto de las instalaciones. Si bien la seguridad 
+frente a la delincuencia es un factor secundario en la justificación de este proyecto, no puede 
+ignorarse que un sistema manual es intrínsecamente más vulnerable a errores humanos, o 
+ingresos no autorizados debido a la fatiga o la baja visibilidad en horarios nocturnos. La carencia 
+de un registro digital automatizado impide, además, contar con una trazabilidad precisa de los 
+flujos vehiculares, dificultando la planificación de la capacidad del estacionamiento y la auditoría 
+de accesos ante eventuales incidentes. 
+Por tanto, el problema central se identifica como una ineficiencia logística crítica en el control de 
+acceso vehicular del Campus Ñuñoa, caracterizada por la dependencia del factor humano para 
+tareas repetitivas, la generación de latencias operativas y la ausencia de una infraestructura 
+digital que sustente la toma de decisiones basada en datos. La solución propuesta a través de 
+este anteproyecto busca automatizar este proceso mediante el uso de inteligencia artificial, 
+específicamente detección de placas patentes, para transformar el acceso en un procedimiento 
+autónomo, seguro y eficiente. 
+Objetivos del Proyecto 
+Objetivo General 
+Validar la viabilidad técnica y operativa de un sistema de control de acceso vehicular 
+automatizado mediante el desarrollo de un prototipo funcional basado en modelos de inteligencia 
+artificial para el reconocimiento de patentes, orientado a optimizar la eficiencia y trazabilidad en 
+el ingreso de funcionarios al Campus Ñuñoa de la UTEM. 
+Objetivos Específicos 
+● Analizar el estado del arte de las tecnologías de visión computacional, con énfasis en el 
+algoritmo YOLOv8 para la detección de objetos, aplicadas a entornos de seguridad física. 
+● Diseñar una arquitectura de software basada en el paradigma de Edge Computing que 
+permita el procesamiento local de datos para garantizar bajas latencias en la apertura del 
+portón y una mayor protección de la privacidad de los datos. 
+● Entrenar y validar un modelo de detección de placas patentes chilenas que reconozca los 
+cinco formatos definitivos (incluyendo vehículos particulares y motocicletas), abarcando 
+desde el sistema clásico de 1985 hasta las nuevas configuraciones de 5 letras y 1 número 
+aprobadas recientemente (Gobierno de Chile, 2025). Se excluyen del entrenamiento 
+aquellas patentes de carácter especial (ej. Bomberos, Carabineros, diplomáticos o de carga 
+pesada), dado que su flujo de acceso no corresponde al perfil de usuario funcionario 
+definido para este recinto. 
+● Implementar una plataforma web de gestión administrativa que actúe como panel de control 
+para el registro de funcionarios, vinculación de vehículos y visualización de logs históricos 
+de acceso con marcas de tiempo precisas. 
+● Desarrollar un prototipo funcional de software de escritorio que demuestre el flujo completo 
+de autenticación de Patente utilizando cámaras de ordenador personal para la validación 
+
+--- PAGE 5 ---
+ 
+5 
+de la lógica de negocio. 
+● Elaborar una propuesta técnica detallada de hardware que especifique los componentes 
+necesarios para una implementación física real, tales como Raspberry Pi 5, cámaras IP y 
+actuadores para portones automáticos. 
+● Realizar una evaluación económica y financiera detallada del proyecto, que incluya la 
+estimación de la inversión inicial (CAPEX) y los costos operativos (OPEX), así como el 
+cálculo de indicadores de rentabilidad tales como el Valor Actual Neto (VAN), la Tasa 
+Interna de Retorno (TIR) y el Periodo de Recuperación de la Inversión (Payback), con el fin 
+de determinar la viabilidad técnica-económica y el retorno social de la implementación en 
+el Campus Ñuñoa. 
+Alcance y Limitaciones del Anteproyecto 
+Alcance de la Solución Propuesta 
+El presente anteproyecto define una hoja de ruta técnica que abarca desde la investigación 
+conceptual hasta la entrega de un artefacto de software funcional en modo de simulación. La 
+solución propuesta se desglosa en los siguientes componentes: 
+1. Desarrollo de Modelos de Inteligencia Artificial: Desarrollo de Modelos de Inteligencia 
+Artificial: Se contempla el entrenamiento del modelo YOLOv8 para la localización de 
+patentes en tiempo real, abarcando vehículos de 4 o más ruedas (formatos 2L+4N, 4L+2N 
+y el futuro 5L+1N) y motocicletas (3L+2N y 4L+1N). El dataset incorporará técnicas de Data 
+Augmentation para asegurar el reconocimiento de la 'Patente Verde' (caracteres negros 
+sobre fondo verde reflectante) para vehículos eléctricos e híbridos enchufables, según el 
+Decreto Supremo 53 (Gobierno de Chile, 2025). La lógica omitirá deliberadamente 
+vehículos institucionales o de emergencia para maximizar la precisión en el perfil de usuario 
+objetivo. 
+2. Interfaz de Simulación Funcional: Se entregará una aplicación de escritorio capaz de 
+capturar video a través de la cámara web de un computador personal para procesar de 
+manera automática la detección de patentes. Esta simulación permitirá validar la tasa de 
+éxito de los modelos de IA y la robustez de la lógica de acceso sin necesidad de intervenir 
+físicamente la infraestructura de la universidad. 
+3. Panel Administrativo de Gestión: El sistema incluirá una interfaz web para la 
+administración de usuarios. Esta herramienta permitirá al personal encargado realizar altas, 
+bajas y modificaciones de funcionarios, asociar múltiples patentes a un mismo usuario y 
+exportar reportes de entradas con fines de auditoría operativa. 
+4. Lógica de Control de Acceso: El núcleo del software validará que la patente se encuentre 
+habilitada y el sistema generará una señal lógica de apertura. 
+5. Diseño Teórico de Infraestructura: Se proporcionará un documento de especificación 
+técnica que describe la arquitectura física ideal. Esto incluye la selección de controladores 
+(Raspberry Pi 5), dispositivos de adquisición de imagen (Cámaras IP), sensores de 
+seguridad (fotoceldas antiaplastamiento), motores de portón y el diseño de la red local bajo 
+principios de Edge Computing. 
+
+--- PAGE 6 ---
+ 
+6 
+Limitaciones Identificadas 
+A pesar de la exhaustividad técnica del diseño, el anteproyecto reconoce fronteras claras en su 
+ejecución inicial: 
+1. Hardware de Ejecución del Prototipo: La simulación funcional se limitará a hardware de 
+computación personal. No se realizará la migración del software a dispositivos embebidos 
+durante esta etapa, aunque el diseño teórico sí los contempla como el objetivo final del 
+proyecto. 
+2. Simulación de Actuadores Físicos: La interacción con el portón será estrictamente una 
+simulación digital. El prototipo mostrará indicadores visuales de "Apertura" o "Cierre" en 
+pantalla, sin ejecutar la instalación de motores, cremalleras ni cableado eléctrico en el 
+Campus Ñuñoa. 
+3. Fidelidad de Captura en Condiciones Críticas: Si bien el prototipo permite simular 
+entornos de baja luminosidad, existe una limitación técnica en la calidad del sensor de las 
+cámaras web estándar (ruido digital y falta de rango dinámico) en comparación con las 
+cámaras IP con visión infrarroja especificadas en el diseño teórico. Por lo tanto, los 
+umbrales de confianza obtenidos en la simulación representan un rendimiento base que se 
+verá optimizado al utilizar el hardware industrial diseñado para mitigar reflejos y operar en 
+oscuridad total. 
+Marco Teórico y Estado del Arte 
+Detección de Objetos mediante YOLOv8 
+En el ámbito de la visión computacional, el algoritmo YOLO (You Only Look Once) ha 
+revolucionado la detección de objetos por su capacidad de procesar imágenes a altas 
+velocidades sin comprometer significativamente la precisión. La versión YOLOv8, desarrollada 
+por Ultralytics, representa el estado del arte actual para aplicaciones de tiempo real en 
+dispositivos con recursos computacionales moderados. A diferencia de los detectores de dos 
+etapas, YOLOv8 utiliza una arquitectura de una sola red convolucional que predice directamente 
+las cajas delimitadoras (bounding boxes) y las probabilidades de clase. (Jocher, Glenn; 
+Chaurasia, Ayush; Qiu, Jing, 2023) 
+Para el reconocimiento de patentes en Chile, el uso de YOLOv8 es crítico debido a la variabilidad 
+normativa. De acuerdo con el Gobierno de Chile (2025) (Gobierno de Chile, 2025), el sistema 
+debe estar preparado para la transición desde el formato FE-Schrift de 2007 hacia las nuevas 
+configuraciones de 5 letras y 1 número para automóviles y 4 letras y 1 número para motocicletas. 
+El modelo debe ser capaz de procesar caracteres sobre fondos blancos tradicionales y los 
+nuevos fondos verdes de movilidad sostenible, evitando falsos negativos en la identificación de 
+vehículos eléctricos. Al centrarse en estándares civiles, el algoritmo aumenta su eficacia al 
+reducir la ambigüedad que introducirían formatos especiales con colores o símbolos distintos 
+(como los de vehículos fiscales o de gran tonelaje), los cuales quedan fuera del espectro de este 
+prototipo. El modelo debe ser entrenado para detectar no solo la placa como un objeto, sino 
+también para segmentar los caracteres o alimentar un motor OCR (Optical Character 
+Recognition) que convierta la imagen en texto alfanumérico interpretable por la base de datos. 
+
+--- PAGE 7 ---
+ 
+7 
+Arquitectura Edge Computing en Sistemas de Seguridad 
+El diseño teórico de la solución para el Campus Ñuñoa se basa en la filosofía de Edge Computing. 
+Tradicionalmente, los sistemas de vigilancia envían flujos masivos de video a la nube para su 
+procesamiento, lo que introduce latencias críticas y consume un ancho de banda considerable.12 
+En un sistema de control de acceso, donde la decisión de apertura debe tomarse en menos de 
+un segundo, la latencia de red es un factor determinante. 
+ 
+Dimensión 
+Enfoque Cloud Computing 
+Enfoque Edge Computing 
+(Propuesto) 
+Latencia 
+Alta, dependiente del tráfico 
+de red y carga del servidor 
+remoto. 
+Muy baja, procesamiento 
+inmediato en el sitio de 
+origen. 
+Privacidad 
+Riesgo de interceptación de 
+datos de tránsito. 
+Mayor 
+seguridad; 
+las 
+imágenes 
+sensibles 
+no 
+abandonan el nodo local. 
+Resiliencia 
+Inoperante ante caídas de la 
+conexión a Internet. 
+Operatividad 
+continua 
+incluso en modo offline. 
+Costos de Red 
+Costos 
+elevados 
+por 
+transferencia 
+masiva 
+de 
+datos. 
+Ahorro significativo; solo se 
+envían 
+metadatos 
+al 
+servidor central. 
+Al utilizar una Raspberry Pi 5 como nodo de borde, el sistema puede ejecutar los modelos de 
+YOLOv8. (IBM, 2024) 
+ 
+Gestión de Datos mediante Sistema Modular Autónomo 
+ 
+El proyecto implementará un sistema de gestión de datos descentralizado e independiente, 
+diseñado para operar de forma autónoma en el nodo periférico (Edge). La administración de las 
+identidades se realizará mediante un Módulo de Gestión Local, donde el administrador del 
+estacionamiento tendrá la facultad de registrar, editar y dar de baja las patentes de los 
+funcionarios autorizados de manera directa. Este enfoque garantiza la soberanía operativa del 
+sistema, eliminando la dependencia de redes externas o latencias de consulta a servidores 
+centrales, y asegura que el control de acceso sea funcional al 100% bajo cualquier escenario de 
+conectividad institucional. 
+ 
+
+--- PAGE 8 ---
+ 
+8 
+Metodología: Prototipado Rápido 
+La metodología seleccionada para la realización de este anteproyecto y el posterior desarrollo 
+del proyecto de título es el Prototipado Rápido, En el contexto de la Ingeniería Civil en 
+Computación, esta metodología permite mitigar los riesgos asociados a la ambigüedad de 
+requisitos y validar la viabilidad de algoritmos complejos de IA en etapas tempranas. 
+El proceso se divide en ciclos iterativos de diseño, construcción y refinamiento: 
+1. Conceptualización de la Lógica de Negocio: Definición de los estados del portón y los 
+criterios de aceptación para la autenticación. Se establecen los umbrales de confianza para 
+la detección de patentes.16 
+2. Desarrollo del Prototipo Digital: Implementación de los modelos en un entorno 
+controlado. Se utiliza hardware de PC para garantizar una velocidad de desarrollo superior, 
+enfocándose en la "función sobre la forma". 
+3. Simulación y Pruebas de Usuario: Evaluación del comportamiento del software frente a 
+diferentes perfiles de funcionarios y tipos de vehículos. Esta fase permite identificar casos 
+de borde, cambios en la iluminación ambiental o patentes deterioradas. 
+4. Refinamiento Técnico: Ajuste de los hiperparámetros de los modelos de IA basándose 
+en los resultados de las pruebas. Si la tasa de falsos negativos es elevada en condiciones 
+de sombra, se procede a re-entrenar el modelo con un dataset aumentado que contenga 
+más muestras en esas condiciones. 
+Académicamente, el uso de una simulación en PC bajo esta metodología está plenamente 
+justificado, ya que permite validar la lógica de control y la precisión de los modelos antes de 
+proceder a la adquisición de hardware industrial, ahorrando costos y tiempo en el ciclo de vida 
+del desarrollo de software. 
+Diseño Teórico de la Infraestructura de Hardware 
+Para una eventual implementación real en el Campus Ñuñoa, se ha diseñado una arquitectura 
+física que equilibra el rendimiento técnico con la restricción presupuestaria de una institución 
+pública. La elección de componentes se basa en la disponibilidad local y la compatibilidad con 
+entornos de desarrollo basados en Windows. 
+Nodo de Procesamiento (Cerebro del Sistema) 
+La Raspberry Pi 5 es la plataforma recomendada debido a su procesador Broadcom BCM2712 
+y su capacidad para manejar múltiples flujos de datos a través de sus puertos MIPI y USB 3.0. 
+En Chile, el costo de un kit inicial para este dispositivo ronda los ~$286.990 CLP, lo que lo 
+convierte en una solución accesible para la escala de un campus universitario. 
+Adquisición de Imagen y Visión Artificial 
+Para el éxito del sistema, la calidad de la imagen es primordial. Se proyecta el uso de cámaras 
+IP con soporte para protocolos RTSP (Real-Time Streaming Protocol) y características 
+específicas para exteriores: 
+
+--- PAGE 9 ---
+ 
+9 
+● Resolución: Mínimo de 4MP para asegurar que los caracteres de la patente sean legibles 
+a una distancia de 5 a 10 metros. 
+● Visión Nocturna: Leds infrarrojos con alcance de al menos 30 metros para garantizar 
+operatividad 24/7. 
+● Certificación IP66/IP67: Protección contra polvo y lluvia, factores ambientales presentes 
+en Santiago durante los meses de invierno. 
+Control de Actuadores y Mecanismos de Apertura 
+El control físico del portón se realizará mediante los pines GPIO de la Raspberry Pi, conectados 
+a un módulo de relés industriales que actúen como interruptores para el motor del portón. Se han 
+evaluado motores de tipo corredera debido a que son los más comunes en accesos 
+institucionales de la UTEM. 
+El sistema de salida se simplificará mediante un botón físico de grado industrial montado en una 
+columna accesible desde el vehículo, lo que elimina la necesidad de una segunda cámara y 
+reduce el CAPEX del proyecto significativamente sin comprometer la seguridad de ingreso. 
+Plan de contingencia 
+Para mitigar las fallas derivadas de condiciones climáticas adversas, se ha diseñado una solución 
+basada en hardware con certificación industrial y ajustes algorítmicos. Ante la lluvia y humedad, 
+el diseño teórico especifica cámaras con certificación IP66/IP67 y gabinetes estancos para 
+proteger la electrónica. Para la oscuridad total, se utilizarán sensores con tecnología de 
+infrarrojos (IR) de largo alcance y se ajustarán los umbrales de confianza de los modelos YOLOv8 
+para operar con imágenes en escala de grises sin perder precisión. Como Plan de Contingencia 
+ante una falla crítica del sistema (caída de energía o avería del hardware), se mantendrá un 
+mecanismo de apertura manual mediante una llave física o un pulsador protegido en la caseta 
+de funcionarios/conserje. Esto garantiza que el flujo vehicular no se interrumpa y que el personal 
+de seguridad pueda retomar el control total de forma inmediata si el sistema automatizado queda 
+fuera de servicio. 
+ 
+Marco Normativo y Ético: Privacidad de Datos 
+Biométricos 
+Un componente ineludible de este anteproyecto es la alineación con la legislación chilena 
+vigente. La Ley 19.628 sobre Protección de la Vida Privada establece que el tratamiento de 
+datos personales, especialmente los de carácter sensible, debe realizarse con bases de licitud 
+claras. (Biblioteca del Congreso Nacional de Chile, 1999) 
+Consideraciones Legales en el Ámbito Universitario 
+1. Principio de Finalidad: Los datos capturados por el sistema patentes deben utilizarse 
+exclusivamente para la gestión del acceso vehicular del Campus Ñuñoa. No está permitido 
+el uso de esta información para otros fines, como control de asistencia laboral o monitoreo 
+
+--- PAGE 10 ---
+ 
+10 
+disciplinario, a menos que se informe y consienta previamente. 
+2. Consentimiento Expreso: La UTEM, como responsable del tratamiento de datos, debe 
+obtener una autorización escrita de cada funcionario que desee utilizar el sistema 
+automatizado. En este documento se debe especificar qué datos se recolectan, quién tiene 
+acceso a ellos y por cuánto tiempo se almacenarán. 
+3. Seguridad y Confidencialidad: El responsable de la base de datos tiene el deber legal de 
+implementar medidas técnicas para evitar el acceso no autorizado, la pérdida o alteración 
+de la información sensible. El uso de Edge Computing es una medida de seguridad 
+proactiva en este sentido. 
+4. Derecho de Exclusión: Se debe garantizar que el funcionario que decida no entregar sus 
+datos biométricos no sufra menoscabo en su derecho a utilizar el estacionamiento. Por ello, 
+el diseño contempla un método alternativo de acceso manual, manteniendo la equidad en 
+el servicio institucional. 
+Evaluación Económica de Implementación (Diseño 
+Teórico) 
+La presente evaluación económica desglosa los recursos financieros necesarios para la 
+transición desde el prototipo digital hacia un despliegue físico real en el Campus Ñuñoa. Se 
+consideran tanto la inversión inicial como los costos de mantenimiento y los indicadores de 
+retorno institucional. 
+ 
+Gastos de Capital (CAPEX) 
+El CAPEX comprende la inversión única para la adquisición de activos físicos. Se establecen 
+rangos de precios basados en valores de mercado actualizados extraídos de proveedores 
+tecnológicos y ferreteros locales. 
+Categoría 
+Componente y Especificación Técnica 
+Rango de Precio 
+(CLP) 
+Procesamiento 
+Kit Original Raspberry Pi 5 (8GB) + Case + 
+Fuente PD 27W (Raspberry Pi Chile, s.f.). 
+Adicionalmente se requiere una MicroSD 64GB 
+High Endurance (PC Factory, s.f.) justificada para 
+soportar los constantes ciclos de lectura/escritura 
+del procesamiento local de YOLOv8 y logs del 
+sistema sin corromperse. 
+$286.990 + 
+$44.990 
+Visión Artificial 
+Cámara IP 4MP, Lente Varifocal, IR 30m, PoE, 
+Certificación IP67. Necesaria para la lectura de 
+patentes en condiciones de iluminación variable 
+$138.990 
+
+--- PAGE 11 ---
+ 
+11 
+(Prodalam, s.f.). 
+Actuadores 
+Motor Corredera Veloti New Speed 800kg 
+(Sodimac, s.f.-a) + 4m Cremalleras reforzadas 
+(Sodimac, 
+s.f.-b) 
++ 
+Módulo 
+Relé 
+30A 
+Optoacoplado (MechatronicStore, s.f.-b). 
+$120.990 + 
+$9.690*4 + 
+$5.990 
+Seguridad 
+Fotoceldas infrarrojas antiaplastamiento (Par). 
+Requisito de seguridad industrial para prevenir 
+accidentes en portones automáticos, con valores 
+de mercado para accesorios de automatización 
+(Sodimac, s.f.-c). 
+$23.990 
+Infraestructura 
+Gabinete estanco IP66 (BDTEC, s.f.) + ductería 
+Conduit  (Sodimac, s.f.-d) + cableado UTP 
+categoría 6 (Sodimac, s.f.-e). Para un tendido de 
+30 
+metros 
+desde 
+portería. 
+Incluye 
+cajas 
+herméticas y cableado de red apto para exterior. 
+$71.269 + 
+$680*10 + 
+$29.980 
+Implementación 
+Mano 
+de 
+obra 
+especializada 
++ 
+seguro 
+(Worldhouse, s.f.). Cubre la instalación eléctrica y 
+de red, configuración del motor y riesgos 
+operativos asociados al montaje del sistema. 
+$298.000 
+TOTAL CAPEX 
+ 
+$595.989 CLP 
+ 
+ 
+Gastos Operativos (OPEX) 
+Representan los costos recurrentes para asegurar la continuidad operativa del sistema de forma 
+autónoma. 
+1. Suministro Eléctrico ($4.500 - $6.500 mensual): Calculado sobre un consumo estimado 
+de 0.5 kWh diarios para electrónica y ciclos de motor en hora punta. 
+2. Mantenimiento Preventivo ($20.000 - $35.000 mensual): Incluye limpieza semestral de 
+ópticas de cámaras IP y lubricación del motor de corredera para evitar fallas mecánicas 
+por polución ambiental. 
+3. Gestión de Logs y Base de Datos ($5.000 - $10.000 mensual): Costo de administración 
+de la base de datos dedicada localmente. El enfoque Edge Computing reduce 
+drásticamente este costo al no requerir transferencia masiva de video hacia la nube. 
+
+--- PAGE 12 ---
+ 
+12 
+TOTAL OPEX MENSUAL ESTIMADO: $29.500 - $51.500 
+ 
+Depreciación de Activos 
+Se aplica una depreciación lineal asumiendo una vida útil de 3 años (36 meses) para los 
+componentes electrónicos expuestos (Raspberry Pi y cámaras), debido a la obsolescencia 
+tecnológica y desgaste ambiental en Santiago. 
+Fórmula: 𝐷=
+𝐼𝑛𝑣𝑒𝑟𝑠𝑖ó𝑛 𝐻𝑎𝑟𝑑𝑤𝑎𝑟𝑒
+36 𝑚𝑒𝑠𝑒𝑠
+ 
+Valor Cuota Mensual: ~$15.000 - $25.000 (gasto contable no desembolsable). 
+Análisis de Retorno (ROI) y Beneficio Institucional 
+El retorno de inversión de este proyecto no se fundamenta en la generación de ingresos 
+directos, sino en el ahorro por eficiencia operativa y la optimización de los recursos humanos 
+de la institución. Al automatizar la lectura de patentes, se eliminan tareas repetitivas de bajo 
+valor técnico para el personal de seguridad. 
+ 
+1. Memoria de Cálculo de Eficiencia Operativa 
+Se estima una liberación de 1.5 horas diarias del personal de seguridad o conserjería 
+encargado de la portería del Campus Ñuñoa. Esta cifra se sustenta en el siguiente 
+escenario base: 
+• 
+Flujo Vehicular: 30 vehículos promedio en la ventana de mayor tráfico. 
+• 
+Tiempo de Validación Manual: 3 minutos por vehículo (tiempo acumulado entre el 
+aviso de llegada, identificación visual del funcionario, verificación manual y 
+accionamiento mecánico del portón). 
+• 
+Tiempo de Validación Automatizada: Menos de 2 segundos para la detección y 
+señal de apertura mediante YOLOv8 en arquitectura Edge. 
+ 
+2. Valorización del Tiempo y Ahorro Mensual 
+Para efectos de este análisis, se establece un valor conservador para la hora-hombre (HH) 
+basado en el costo empresa de un guardia de seguridad o conserje en Chile (incluyendo 
+sueldo base y leyes sociales): 
+• 
+Valor Hora-Hombre Estimado: $5.000 CLP. 
+• 
+Ahorro Diario: 1.5 horas = 7.500 CLP. 
+• 
+Ahorro Mensual Recurrente: 165.000 CLP. 
+ 
+3. Periodo de Payback (Punto de Equilibrio) 
+El periodo de recuperación de la inversión se calcula contrastando la inversión inicial 
+(CAPEX) con el ahorro mensual generado, descontando previamente los gastos operativos 
+(OPEX): 
+• 
+Gastos Operativos (OPEX): Entre $29.500 y $51.500 CLP mensuales (suministro 
+eléctrico, mantenimiento preventivo y gestión de base de datos). Se asume un 
+promedio de $40.500 CLP.  
+• 
+Ahorro Neto Mensual: $165.000 (Ahorro Bruto) - $40.500 (OPEX promedio) = 
+$124.500 CLP. 
+• 
+Escenario Base (Inversión de $595.989): $595.989 / $124.500 ≈ 4,8 meses 
+(aproximadamente 5 meses para recuperar la inversión) 
+Conclusión: Considerando posibles variaciones en el flujo vehicular, gastos operativos e 
+imprevistos de mantenimiento, el proyecto presenta un periodo estimado de recuperación 
+
+--- PAGE 13 ---
+ 
+13 
+de la inversión cercano a 5 meses. Bajo un enfoque conservador, el punto de equilibrio 
+podría alcanzarse entre 6 y 8 meses, posicionando la implementación como una inversión 
+de alta rentabilidad para la administración del campus. 
+ 
+4. Retorno Social y Trazabilidad Institucional 
+Más allá del ahorro monetario, el sistema proporciona beneficios cualitativos de alto 
+impacto: 
+• 
+Fluidez Vehicular: Reducción drástica de las latencias de ingreso, impactando 
+positivamente en el flujo vehicular perimetral del Campus Ñuñoa. 
+• 
+Trazabilidad Digital: Generación de logs históricos con marcas de tiempo precisas 
+para auditoría y planificación de la capacidad del estacionamiento, una capacidad 
+inexistente en el modelo manual actual. 
+• 
+Seguridad Activa: Eliminación del error humano por fatiga o baja visibilidad en la 
+identificación de patentes habilitadas. 
+ 
+Conclusiones y Proyección del Proyecto 
+El anteproyecto presentado establece una base técnica y metodológica sólida para abordar una 
+necesidad latente en el Campus Ñuñoa de la UTEM. A través de la integración de algoritmo de 
+detección de objetos como YOLOv8, es posible transformar un proceso manual y propenso a 
+ineficiencias en un sistema autónomo de alta fidelidad. La justificación del proyecto se centra en 
+la eficiencia logística y la mejora del clima institucional, resolviendo de manera definitiva los 
+conflictos derivados de las latencias en el acceso de funcionarios. 
+La dualidad entre el diseño teórico (basado en Edge Computing con Raspberry Pi 5) y el prototipo 
+funcional (simulado en software de PC) garantiza que el trabajo de título sea riguroso desde el 
+punto de vista de la ingeniería. La simulación permitirá validar las tasas de acierto y la lógica de 
+control multifactorial sin incurrir en riesgos de implementación física prematura. Asimismo, el 
+cumplimiento estricto de la normativa de privacidad asegura que la innovación tecnológica no 
+vulnere los derechos de la comunidad universitaria. 
+En conclusión, la propuesta técnica es viable, económicamente eficiente y escalable. Una vez 
+validado el prototipo de software, la universidad contará con una especificación detallada para 
+proceder a la digitalización completa de sus accesos vehiculares, posicionándose a la vanguardia 
+en el uso de inteligencia artificial aplicada a la infraestructura pública. La carrera de Ingeniería 
+Civil en Computación mención Informática de la UTEM se ve directamente beneficiada al generar 
+conocimiento aplicado que soluciona problemas reales de su propio entorno académico y laboral. 
+ 
+ 
+ 
+ 
+ 
+
+--- PAGE 14 ---
+ 
+14 
+Bibliografía 
+• 
+Biblioteca del Congreso Nacional de Chile. (1999). Ley N° 19.628 sobre protección de la 
+vida privada. Obtenido de Ley Chile: 
+https://www.bcn.cl/leychile/navegar?idNorma=141599 
+• 
+Gobierno de Chile. (7 de Octubre de 2025). ¿Cómo serán y cuándo parten las nuevas 
+patentes de vehículos en Chile? Obtenido de gob.cl: https://www.gob.cl/noticias/conoce-
+como-seran-nuevas-patentes-vehiculos-chile/ 
+• 
+IBM. (2024). Edge computing: principales casos de uso. Obtenido de IBM Think: 
+https://www.ibm.com/mx-es/think/topics/edge-computing-use-cases 
+• 
+Jocher, Glenn; Chaurasia, Ayush; Qiu, Jing. (2023). Ultralytics YOLOv8. Obtenido de 
+GitHub: https://github.com/ultralytics/ultralytics 
+• 
+Gobierno de Chile. (2025, 7 de octubre). ¿Cómo serán y cuándo parten las nuevas 
+patentes de vehículos en Chile?. https://www.gob.cl/noticias/conoce-como-seran-
+nuevas-patentes-vehiculos-chile/ 
+• 
+RaspberryPi Chile. (s.f.). Kit Original Raspberry Pi 5 de 8GB RAM. 
+https://raspberrypi.cl/products/kit-original-raspberry-pi-5-de-8gb-ram 
+• 
+pc Factory. (s.f.). Lexar Memoria 64GB microSDXC U3 V30 High Endurance. 
+https://www.pcfactory.cl/producto/55581-lexar-memoria-64gb-microsdxc-u3-v30-high-
+endurance?origin=PCF 
+• 
+Prodalam. (s.f.). Cámara Bullet 4MP IR30m 2,80-12mm Varifocal IP. 
+https://www.prodalam.cl/productos/91925-C%252FU/camara-bullet-4mp-ir30m-
+28012mm-varifocal-ip?grupo=WA001610 
+• 
+Mechatronic Store. (s.f.). Módulo relé 1 canal 5V optoacoplado 30A. 
+https://www.mechatronicstore.cl/modulo-rele-1-canal-5v-octoacoplado-30a/ 
+• 
+Sodimac. (s.f.-a). Motor para portón eléctrico 800 kg New Veloti Speed. 
+https://www.sodimac.cl/sodimac-cl/articulo/151871541/motor-para-porton-electrico-800-
+kg-new-veloti-speed-8-5-seg/151871542 
+• 
+Sodimac. (s.f.-b). Cremallera portón automático 100 cm reforzada. 
+https://www.sodimac.cl/sodimac-cl/articulo/110277513/cremallera-porton-automatico-
+100-cm-reforzada/110277516 
+• 
+Sodimac. (s.f.-c). Fotocelda portón automático. https://www.sodimac.cl/sodimac-
+cl/articulo/110678433/Fotocelda-porton-automatico/110678434 
+• 
+Sodimac. (s.f.-d). Tubo conduit C4 20 mm x 3 m. https://www.sodimac.cl/sodimac-
+cl/articulo/120658457/Tubo-conduit-C4-20-mm-x-3-m/120658458 
+• 
+Sodimac. (s.f.-e). UGREEN cable de red UTP Cat6 plano 30m. 
+https://www.sodimac.cl/sodimac-cl/articulo/119023626/UGREEN-Cable-de-Red-UTP-
+Cat6-plano-30m/119023628 
+• 
+BDTEC. (s.f.). Gabinete metálico IP66 400x300x200. https://bdtec.cl/producto/gabinete-
+met-1p-400x300x200-7035-ip66/ 
+• 
+Worldhouse. (s.f.). Portones eléctricos (automatización). 
+https://worldhouse.cl/producto/portones-electricos-automatizacion/ 
+ 
+ 
+ 

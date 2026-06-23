@@ -141,3 +141,11 @@ Comando para compilar en una sola linea:
 ```bash
 latexmk -pdf main.tex
 ```
+## 5. Enlace documento anteproyecto compartido
+https://docs.google.com/document/d/1aeiS5XZ8jAyy-1S5M-Hg8lk8gRtLpiptCBgMu1Mx-ao/edit?usp=sharing
+
+## Simbología para marcar texto:
+Bueno: ✅
+Malo: ❌
+Importante:‼️
+Duda:❓
