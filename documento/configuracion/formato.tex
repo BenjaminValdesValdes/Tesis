@@ -42,7 +42,7 @@
 \titleformat{\chapter}[display]
     {\normalfont\Large\bfseries\centering}    % Formato: grande, negrita, centrado
     {\MakeUppercase{\chaptertitlename}\ \thechapter} % "CAPÍTULO X"
-    {20pt}                                    % Espacio entre número y título
+    {10pt}                                    % Espacio entre número y título
     {\Large\MakeUppercase}                    % Título en mayúsculas
 
 % Capítulos sin número (Introducción, Conclusiones, Bibliografía)
@@ -54,7 +54,9 @@
 
 % Espacio antes y después del título del capítulo
 % Sección 4.6: "Inicio del texto después de dos espacios bajo el título"
-\titlespacing*{\chapter}{0pt}{-20pt}{40pt}
+% before-sep de -50pt compensa el espacio interno que LaTeX añade antes de los capítulos,
+% logrando que el título inicie en el margen superior real (4 cm).
+\titlespacing*{\chapter}{0pt}{-50pt}{20pt}
 
 % ============================================================================
 % ESTILO DE SECCIONES
