@@ -528,23 +528,96 @@ en escenarios comerciales de borde
 % ============================================================================
 \section{Robustez en Entornos No Restringidos}
 
-% [PENDIENTE: Párrafo introductorio sobre los desafíos del mundo real.]
+El despliegue de un sistema ALPR en exteriores, como las porterías vehiculares del 
+Campus Ñuñoa, somete a los algoritmos a una drástica variabilidad ambiental. 
+Garantizar la resiliencia del sistema ante escenarios estocásticos (fluctuaciones 
+lumínicas, sombras dinámicas y precipitaciones) requiere la integración de módulos 
+especializados a lo largo de todo el flujo de procesamiento.
 
 \subsection{Técnicas de Preprocesamiento Crítico}
-% Uso de filtros bilaterales para reducción de ruido, normalización min-max,
-% conversión a escala de grises y algoritmos de mejora de contraste (como
-% CLAHE).
-% [PENDIENTE]
 
-\subsection{Módulos de Mejora Dinámica}
-% Tecnologías como CPA-Enhancer para optimizar imágenes degradadas por
-% lluvia, niebla o baja luminosidad.
-% [PENDIENTE]
+Aunque las arquitecturas de aprendizaje profundo poseen una capacidad intrínseca para 
+la extracción autónoma de características, el preprocesamiento de la imagen sigue 
+siendo una etapa indispensable. Depurar las variaciones estocásticas antes de la 
+inferencia reduce la complejidad requerida en el \textit{backbone} de la red, 
+aliviando significativamente la carga computacional en los dispositivos de borde 
+\parencite{kuyunsaDeepLearningEnhancedAutomatic2025, xiongLicensePlateRecognition2026}.
+
+Entre las técnicas fundamentales, la Normalización Min-Max ($x_{norm} = \frac{x - x_{min}}{x_{max} - x_{min}}$) 
+es vital para estabilizar el entrenamiento. Al escalar las intensidades de los píxeles, 
+evita que valores extremos dominen el cálculo de los pesos, acelerando la convergencia 
+del descenso de gradiente \parencite{kuyunsaDeepLearningEnhancedAutomatic2025}. 
+Por otra parte, para el manejo de sombras o deslumbramiento severo, la Ecualización 
+de Histograma Adaptativa Limitada por Contraste (CLAHE) demuestra superioridad sobre la 
+ecualización global. Al operar mediante regiones localizadas (\textit{tiles}), CLAHE 
+optimiza el contraste sin amplificar el ruido en zonas homogéneas, permitiendo que 
+detectores como YOLOv11 aíslen la placa con mayor fiabilidad 
+\parencite{buleuDeepLearningBasedSystem2025a, suhartoComparativeEvaluationYOLObased2025}.
+
+Para la atenuación de ruido visual sin comprometer la morfología alfanumérica, la 
+literatura prioriza los Filtros Bilaterales sobre el filtrado Gaussiano tradicional. 
+Esta técnica logra suavizar el granulado digital mientras preserva los bordes de alta 
+frecuencia, evitando confusiones semánticas en la etapa OCR (e.g., confundir una ``B'' 
+con un ``8'') \parencite{kuyunsaDeepLearningEnhancedAutomatic2025, xiongLicensePlateRecognition2026}. 
+Finalmente, transformaciones como la conversión a escala de grises seguida de una 
+binarización de Otsu maximizan la dicotomía entre fondo y texto, reduciendo drásticamente 
+la dimensionalidad de los datos de entrada 
+\parencite{kuyunsaDeepLearningEnhancedAutomatic2025, suhartoComparativeEvaluationYOLObased2025}.
+
+\subsection{Módulos de Mejora Dinámica: Restauración y Adaptación}
+
+Las perturbaciones climáticas severas exigen enfoques más sofisticados que el preprocesamiento 
+estadístico clásico. Recientemente, se han propuesto arquitecturas con módulos de mejora 
+dinámica diseñados explícitamente para restaurar características degradadas por la niebla 
+o la lluvia.
+
+Destaca el módulo CPA-Enhancer (\textit{Chain-of-Thought Prompted Adaptive Enhancer}), un bloque 
+que se acopla previo al \textit{backbone} de detección \parencite{xiongLicensePlateRecognition2026}. 
+Utilizando convoluciones de atención de campo receptivo (RFAConv), extrae información 
+contextual para generar representaciones optimizadas a múltiples resoluciones. La fusión de 
+estas señales reemplaza la imagen degradada original, logrando incrementos sustanciales de 
+precisión en escenarios climáticos adversos \parencite{xiongLicensePlateRecognition2026}.
+
+En paralelo, para abordar la baja resolución provocada por la lejanía del vehículo, 
+módulos como CARAFE (\textit{Content-Aware ReAssembly of FEatures}) reemplazan algoritmos 
+clásicos de sobremuestreo (como la interpolación bilineal). CARAFE reconstruye los trazos 
+de los caracteres adaptándose dinámicamente al contenido visual 
+\parencite{xiongLicensePlateRecognition2026}. De forma similar, el \textit{framework} SR2 
+(Super-Resolución y Reconocimiento) aborda este problema entrenando ambas tareas de manera 
+paralela, utilizando la super-resolución como un regulador inductivo para refinar los 
+mapas de características que ingresan al motor de clasificación 
+\parencite{schirrmacherBenchmarkingProbabilisticDeep2023}.
+
+Finalmente, la integración de mecanismos de atención espacial y de canal (como SEAM o CBAM) 
+permite a la red asignar ponderaciones dinámicas a las regiones de interés, ignorando 
+la lluvia de fondo para enfocarse estrictamente en los glifos de la matrícula 
+\parencite{xiongLicensePlateRecognition2026, xuDeepLearningAlgorithms2026c}.
 
 \subsection{Datos Sintéticos y Aumento (\textit{Data Augmentation})}
-% El rol de las redes GAN para entrenar modelos robustos ante la escasez
-% de datos reales.
-% [PENDIENTE]
+
+Uno de los principales impedimentos en la investigación de ALPR es la escasez de conjuntos de 
+datos reales anotados bajo condiciones extremas. Para solventar este déficit y evitar el 
+sobreajuste (\textit{overfitting}), la investigación moderna recurre a la expansión controlada 
+del volumen de entrenamiento \parencite{larocaAdvancingMultinationalLicense2025, meesadAdvancedDeepLearning2025a}.
+
+Las técnicas de aumento de datos (\textit{Data Augmentation}) en tiempo real (\textit{on-the-fly}) 
+constituyen la base de este proceso. Alteraciones estocásticas como rotaciones ($\pm15^\circ$), 
+recortes aleatorios, ajustes en el espacio de color HSV y transformaciones de mosaico, 
+simulan oclusiones parciales y diversas perspectivas angulares 
+\parencite{buleuDeepLearningBasedSystem2025a, vargooraniLicensePlateDetection2024}. 
+Complementariamente, la Permutación de Caracteres se utiliza para generar variabilidad 
+léxica, intercambiando parches de caracteres dentro de una misma matrícula sin alterar 
+la iluminación o el ruido original de la imagen \parencite{larocaAdvancingMultinationalLicense2025}.
+
+Cuando las transformaciones geométricas son insuficientes, las Redes Generativas 
+Antagónicas (GANs) asumen el rol de síntesis avanzada. Arquitecturas como \textit{pix2pix} o 
+LPSRGAN son capaces de realizar traducción de dominios; por ejemplo, convirtiendo imágenes 
+diurnas limpias en capturas nocturnas con ruido o introduciendo degradaciones hiperrealistas 
+como lodo salpicado \parencite{larocaAdvancingMultinationalLicense2025, xuDeepLearningAlgorithms2026c}. 
+La inclusión de esta data sintética de alta fidelidad permite entrenar sistemas altamente 
+robustos incluso empleando menos del 10\,\% de imágenes reales, un enfoque metodológico 
+crucial para generalizar el desempeño del prototipo 
+\parencite{larocaAdvancingMultinationalLicense2025}.
 
 
 % ============================================================================
@@ -552,18 +625,68 @@ en escenarios comerciales de borde
 % ============================================================================
 \section{Consistencia Temporal y Seguimiento (\textit{Tracking})}
 
-% [PENDIENTE: Párrafo introductorio sobre la importancia del seguimiento
-% temporal en un sistema de control de acceso vehicular.]
+La detección estática en un único fotograma es insuficiente para un entorno operativo 
+como el control de acceso vehicular. El sistema debe garantizar la continuidad de la 
+identidad del vehículo a través del tiempo para evitar registrar el mismo evento de 
+acceso de forma redundante \parencite{ammarMultiStageDeepLearningBasedVehicle2023, mobeenRealTimeAutomaticLicense2026}. 
+La integración de la dimensión temporal transforma detecciones aisladas en un sistema 
+robusto y cohesivo.
 
-\subsection{Algoritmos de \textit{Tracking}}
-% Uso de SORT y DeepSort para vincular placas entre cuadros de video,
-% evitando detecciones duplicadas y permitiendo la redundancia temporal.
-% [PENDIENTE]
+\subsection{Algoritmos de Seguimiento (\textit{Tracking})}
+
+Los algoritmos de \textit{tracking} vinculan las detecciones realizadas en el fotograma 
+$k$ con las identidades confirmadas en fotogramas previos, imponiendo una lógica 
+espacio-temporal que mitiga los fallos transitorios de los modelos de visión artificial 
+\parencite{mobeenRealTimeAutomaticLicense2026}.
+
+En entornos con limitaciones de recursos, el algoritmo SORT (\textit{Simple Online and Realtime Tracking}) 
+se perfila como un estándar de alta eficiencia computacional. Arquitectónicamente, SORT emplea un 
+Filtro de Kalman para realizar predicciones lineales del estado cinemático del vehículo 
+(posición, escala y velocidad). Posteriormente, utiliza el Algoritmo Húngaro para la 
+asociación de datos, minimizando la métrica de Intersección sobre la Unión (IoU) entre 
+las cajas delimitadoras predichas y las recientemente detectadas 
+\parencite{mobeenRealTimeAutomaticLicense2026}.
+
+Ante oclusiones severas o intersecciones visuales entre múltiples vehículos, algoritmos 
+más avanzados como DeepSORT incorporan una métrica de asociación profunda. Mediante la 
+extracción de descriptores visuales (\textit{embeddings}) a través de redes neuronales, 
+DeepSORT asegura que el seguimiento no dependa exclusivamente de la geometría del 
+movimiento, sino también de la apariencia física del vehículo, minimizando el 
+intercambio erróneo de identidades (\textit{ID switches}) 
+\parencite{ammarMultiStageDeepLearningBasedVehicle2023, mobeenRealTimeAutomaticLicense2026}.
+
+Mediante estos algoritmos, se asigna un identificador único (\texttt{track\_id}) a 
+cada vehículo. Esto permite que el nodo de borde acumule información internamente y 
+envíe una única notificación consolidada al panel administrativo, reduciendo 
+drásticamente la saturación de red y asegurando la trazabilidad del evento 
+\parencite{ammarMultiStageDeepLearningBasedVehicle2023}.
 
 \subsection{Votación Temporal e Interpolación}
-% Cómo promediar los resultados de varios cuadros para elevar la precisión
-% final del acceso.
-% [PENDIENTE]
+
+El procesamiento de secuencias de video permite aplicar mecanismos de Votación Temporal 
+(\textit{Majority Voting}), los cuales aprovechan la redundancia fotogramétrica para 
+incrementar la precisión del Reconocimiento de Caracteres (OCR). 
+
+En este paradigma, el sistema almacena las predicciones obtenidas de múltiples 
+fotogramas en un búfer temporal vinculado al \texttt{track\_id}. En lugar de confiar 
+en la lectura estática ---altamente vulnerable al desenfoque por movimiento o reflejos 
+momentáneos---, el sistema efectúa una votación carácter por carácter. El glifo que 
+presenta mayor frecuencia de aparición en la secuencia se asume como el valor definitivo 
+\parencite{ammarMultiStageDeepLearningBasedVehicle2023}. Variantes más robustas aplican 
+una votación ponderada, multiplicando cada voto por el puntaje de confianza (\textit{confidence score}) 
+emitido por el motor OCR, otorgando mayor peso analítico a los fotogramas donde el 
+vehículo se encuentra más cercano y nítido 
+\parencite{ammarMultiStageDeepLearningBasedVehicle2023}. La evidencia empírica documenta que 
+esta técnica eleva la precisión final del reconocimiento hasta en un 40\,\% respecto al 
+procesamiento de imágenes aisladas \parencite{ammarMultiStageDeepLearningBasedVehicle2023, mobeenRealTimeAutomaticLicense2026}.
+
+Adicionalmente, cuando el detector pierde el rastro de la placa por bloqueos temporales, 
+se aplica la interpolación de datos geométricos. Si se registran posiciones válidas en 
+los tiempos $t_0$ y $t_1$, una interpolación lineal 1-D permite imputar las coordenadas 
+faltantes, reconstruyendo una trayectoria fluida \parencite{mobeenRealTimeAutomaticLicense2026}. 
+Esta recuperación sintética de la continuidad visual puede aumentar la densidad de los 
+datos de seguimiento en más de un 100\,\%, garantizando que el sistema mantenga el foco 
+en la placa bajo condiciones operativas inestables \parencite{mobeenRealTimeAutomaticLicense2026}.
 
 
 % ============================================================================
@@ -571,16 +694,60 @@ en escenarios comerciales de borde
 % ============================================================================
 \section{Contexto Normativo y Operacional Chileno}
 
-% [PENDIENTE: Párrafo introductorio que aterrice el proyecto a la realidad
-% local chilena.]
+La viabilidad de un sistema ALPR en el Campus Ñuñoa no solo depende de su arquitectura 
+computacional, sino de su estricta alineación con el ecosistema vehicular chileno y 
+las regulaciones de privacidad institucionales.
 
 \subsection{Estándares de Patentes en Chile}
-% Reconocimiento de los 5 formatos civiles, incluyendo la transición al
-% sistema de 5 letras y el nuevo estándar de Movilidad Sostenible
-% (Patentes Verdes).
-% [PENDIENTE]
 
-\subsection{Requerimientos Funcionales del Prototipo}
-% Presupuesto de latencia (<100ms), consumo energético (<10W) y gestión
-% de logs administrativos.
-% [PENDIENTE]
+El parque automotriz chileno presenta una notable heterogeneidad derivada de la 
+evolución de sus normativas de tránsito. Desde el formato clásico instaurado en 1985 
+(dos letras y cuatro números), el país evolucionó en 2007 hacia el estándar FE-Schrift 
+(cuatro letras y dos números), una tipografía diseñada específicamente para dificultar 
+la falsificación y facilitar el reconocimiento óptico \parencite{https://magnet.clComoSeranCuando}. 
+Recientemente, se ha aprobado la transición hacia configuraciones de cinco letras y 
+un número para expandir las combinaciones disponibles \parencite{https://magnet.clComoSeranCuando}.
+
+Un hito crítico para la visión computacional es la promulgación del Decreto Supremo 53, 
+que introduce la ``Patente Verde'' para vehículos de electromovilidad (eléctricos e 
+híbridos enchufables). A diferencia del fondo blanco tradicional, este formato emplea 
+caracteres negros sobre un fondo verde reflectante 
+\parencite{https://magnet.clComoSeranCuando}. Esta variabilidad de fondos y densidades 
+alfanuméricas representa un desafío crítico: los sistemas ALPR basados en heurísticas de 
+procesamiento clásico sufren drásticas caídas de precisión ante cambios repentinos de 
+contraste \parencite{xuDeepLearningAlgorithms2026c}.
+
+Para absorber esta diversidad normativa sin comprometer la eficacia, resulta imperativo 
+el uso de modelos de \textit{Deep Learning} como YOLOv8 \parencite{oluwaseyiComparativeAnalysisYOLOv52025, mobeenRealTimeAutomaticLicense2026}. 
+Esta arquitectura extrae características jerárquicas que son invariantes al color del 
+fondo, asegurando que el control de acceso de la universidad sea inclusivo ante las 
+nuevas tecnologías vehiculares \parencite{larocaAdvancingMultinationalLicense2025}. 
+Cabe destacar que, dado que las cámaras de portería efectúan un escaneo frontal, 
+el sistema excluye inherentemente a las motocicletas, las cuales por normativa chilena 
+solo portan placa trasera. Del mismo modo, se excluyen vehículos de carga y emergencia 
+cuyos formatos escapan al perfil del funcionario universitario.
+
+\subsection{Requerimientos Funcionales y Trazabilidad}
+
+El diseño lógico del sistema exige el cumplimiento de parámetros operativos rigurosos 
+acordes a la filosofía de \textit{Edge Computing}. En primer lugar, para que una 
+decisión de acceso sea percibida como inmediata, la literatura impone un presupuesto de 
+latencia estricto de $\approx$100\,ms por cuadro procesado en el hardware local 
+\parencite{ammarMultiStageDeepLearningBasedVehicle2023, sonnaraEfficientRealtimeLicense2025}. 
+Para garantizar esta fluidez durante las ventanas de mayor tráfico en la portería, el 
+nodo de borde debe sostener tasas de inferencia objetivo entre 10 y 14 FPS 
+\parencite{sonnaraEfficientRealtimeLicense2025}. Mantenerse en este umbral evita que 
+un vehículo en movimiento abandone el campo visual antes de que su patente sea 
+decodificada con un alto nivel de confianza.
+
+En el ámbito administrativo y normativo, la automatización del acceso debe respaldarse 
+mediante la generación de registros digitales históricos (\textit{logs}). Cada evento 
+de apertura debe quedar almacenado localmente con una marca de tiempo precisa, la 
+cadena alfanumérica extraída y el nivel de confianza arrojado por el modelo 
+\parencite{ammarMultiStageDeepLearningBasedVehicle2023}. Esta trazabilidad digital 
+sustituye la falta de métricas del modelo manual vigente, permitiendo auditorías 
+posteriores y facilitando la planificación estratégica de la capacidad del 
+estacionamiento \parencite{kumarAutomaticNumberPlate2026}. Además, en cumplimiento con 
+la Ley 19.628 sobre Protección de la Vida Privada \parencite{nacionalBibliotecaCongresoNacional1999}, 
+el procesamiento íntegro en el borde (sin envío de secuencias de video a la nube) garantiza la 
+confidencialidad de los datos vehiculares de la comunidad universitaria.
