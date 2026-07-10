@@ -1,0 +1,586 @@
+% ============================================================================
+% MARCO TEÓRICO
+% ============================================================================
+% Este capítulo presenta la base teórica y conceptual que sustenta el trabajo.
+%
+% TIPS PARA CITAS (formato APA, según la norma UTEM):
+%
+%   Cuando el autor forma parte de la narrativa:
+%     Según \textcite{clave}, debido a la evolución...
+%     Resultado: "Según Wilkinson (2001), debido a la evolución..."
+%
+%   Cuando el autor NO forma parte de la narrativa:
+%     En un estudio reciente \parencite{clave}, se determinó que...
+%     Resultado: "En un estudio reciente (Wilkinson, 2001), se determinó que..."
+%
+%   Cita textual corta (menos de 40 palabras):
+%     Como señala el autor, ``texto citado'' \parencite{clave}.
+%
+%   Cita textual larga (más de 40 palabras):
+%     \begin{quote}
+%         Texto citado largo... \parencite{clave}
+%     \end{quote}
+% ============================================================================
+
+\chapter{Marco Teórico}
+
+% --- Párrafo introductorio del capítulo ---
+% [PENDIENTE: Breve introducción que presente el propósito y la organización
+% de este capítulo al lector.]
+
+
+% ============================================================================
+% SECCIÓN 1: Fundamentos y Arquitectura de los Sistemas ALPR
+% ============================================================================
+\section{Fundamentos y Arquitectura de los Sistemas ALPR}
+
+El Reconocimiento Automático de Placas Patentes (ALPR, por sus siglas en inglés) 
+constituye una tecnología de visión computacional crítica dentro de las 
+infraestructuras de Sistemas de Transporte Inteligente (ITS), permitiendo la 
+identificación de vehículos en tiempo real mediante la extracción de caracteres 
+alfanuméricos a partir de imágenes o secuencias de video 
+\parencite{PDFRealTimeLicense2026, kuyunsaDeepLearningEnhancedAutomatic2025, 
+larocaAdvancingMultinationalLicense2025}. 
+Su implementación es un pilar fundamental en aplicaciones de seguridad pública, 
+gestión automatizada de estacionamientos, control de acceso a áreas restringidas 
+y aplicación de leyes de tránsito 
+\parencite{buleuDeepLearningBasedSystem2025a, xuDeepLearningAlgorithms2026c, 
+zherzdevLPRNetLicensePlate2018}. 
+La evolución de estos sistemas responde a la necesidad de superar las ineficiencias 
+de los modelos de vigilancia manual, los cuales resultan lentos, costosos y altamente 
+propensos a errores humanos, limitando la escalabilidad operativa en entornos urbanos 
+densos 
+\parencite{meesadAdvancedDeepLearning2025a, wijayaEfficientLicensePlate2024, 
+xuDeepLearningAlgorithms2026c}.
+
+La eficacia de un sistema ALPR robusto se mide por su capacidad de operar en entornos 
+no restringidos (\textit{unconstrained environments}), donde debe procesar datos bajo 
+condiciones ambientales adversas y estocásticas 
+\parencite{PDFRealTimeLicense2026, xuDeepLearningAlgorithms2026c, 
+vargooraniLicensePlateDetection2024}. 
+Entre los principales desafíos técnicos se encuentran las variaciones extremas de 
+iluminación ---como el deslumbramiento solar o la penumbra nocturna---, las 
+obstrucciones por suciedad o agentes climáticos (lluvia, niebla, nieve) y las 
+distorsiones geométricas causadas por el movimiento del vehículo o el ángulo de 
+captura de la cámara 
+\parencite{buleuDeepLearningBasedSystem2025a, mobeenRealTimeAutomaticLicense2026, 
+sonnaraEfficientRealtimeLicense2025, xiongLicensePlateRecognition2026}. 
+Por ello, la viabilidad de un prototipo operativo depende del cumplimiento de un 
+presupuesto de latencia estricto, habitualmente situado en torno a los 100 ms por 
+cuadro, asegurando una toma de decisiones inmediata que es indispensable para el 
+flujo vehicular en tiempo real 
+\parencite{kuyunsaDeepLearningEnhancedAutomatic2025, 
+sonnaraEfficientRealtimeLicense2025}.
+
+
+\subsection{Definición y Evolución: De la Visión Clásica al \textit{Deep Learning}}
+
+La arquitectura de los sistemas ALPR ha experimentado una transformación paradigmática, 
+migrando desde métodos deterministas basados en el procesamiento de imágenes tradicional 
+hacia redes neuronales altamente parametrizadas 
+\parencite{mobeenRealTimeAutomaticLicense2026, xuDeepLearningAlgorithms2026c}. 
+Inicialmente, la localización y el reconocimiento dependían de descriptores manuales 
+(\textit{handcrafted features}) y heurísticas de bajo nivel, tales como el detector de 
+bordes de Canny, la segmentación por color (espacios HSV/YUV) y operaciones morfológicas 
+de dilatación para aislar candidatos a placas 
+\parencite{PDFRealTimeLicense2026, mobeenRealTimeAutomaticLicense2026, 
+xuDeepLearningAlgorithms2026c}. 
+En estas etapas tempranas, técnicas como la Transformada de Radon eran fundamentales 
+para la corrección de inclinación (\textit{tilt correction}), mientras que la 
+clasificación de caracteres se realizaba mediante algoritmos de coincidencia de 
+plantillas (\textit{template matching}) o máquinas de vectores de soporte (SVM) 
+\parencite{buleuDeepLearningBasedSystem2025a, sonnaraEfficientRealtimeLicense2025}.
+
+A pesar de su eficiencia computacional inicial, estos métodos clásicos presentan una 
+fragilidad crítica ante la variabilidad del entorno real, degradando drásticamente su 
+precisión frente al desenfoque por movimiento, oclusiones parciales o cambios bruscos 
+en la iluminación ambiental 
+\parencite{meesadAdvancedDeepLearning2025a, sonnaraEfficientRealtimeLicense2025, 
+vargooraniLicensePlateDetection2024}. 
+Esta limitación motivó la adopción del Aprendizaje Profundo (\textit{Deep Learning}), 
+específicamente mediante Redes Neuronales Convolucionales (CNN), las cuales permiten 
+la extracción automatizada de características jerárquicas abstractas directamente desde 
+los datos de píxeles \textit{raw}, eliminando la necesidad de ingeniería de 
+características manual 
+\parencite{PDFRealTimeLicense2026, swatiEfficientDeepLearning2024, 
+xuDeepLearningAlgorithms2026c}.
+
+La evolución dentro del aprendizaje profundo se divide en dos enfoques de detección: 
+los detectores de dos etapas (ej. Faster R-CNN) y los de una sola etapa (familia YOLO) 
+\parencite{PDFRealTimeLicense2026, swatiEfficientDeepLearning2024}. 
+Mientras que los modelos de dos etapas priorizan la precisión mediante una Red de 
+Propuesta de Regiones (RPN), los modelos de una sola etapa redefinieron la detección 
+como un problema de regresión unificado, logrando un balance superior entre latencia 
+y exactitud, lo que ha consolidado a arquitecturas como YOLOv8, YOLOv10 y YOLOv12 
+como el estándar para aplicaciones de vigilancia y control de acceso en tiempo real 
+\parencite{buleuDeepLearningBasedSystem2025a, mobeenRealTimeAutomaticLicense2026, 
+sonnaraEfficientRealtimeLicense2025}.
+
+\subsection{Los Pilares del Sistema: Detección (LPD) y Reconocimiento (LPR)}
+
+Un sistema ALPR de alto desempeño se fundamenta en la integración de dos procesos 
+computacionales secuenciales y estrechamente acoplados: la Detección de Placas Patentes 
+(LPD, por sus siglas en inglés) y el Reconocimiento de Caracteres (LPR, por sus siglas 
+en inglés) 
+\parencite{larocaAdvancingMultinationalLicense2025, sonnaraEfficientRealtimeLicense2025}. 
+La fase LPD constituye la primera etapa crítica y tiene como objetivo la localización 
+espacial de la placa dentro de un fotograma mediante la predicción de cajas delimitadoras 
+(\textit{bounding boxes}) o polígonos de cuatro esquinas 
+\parencite{buleuDeepLearningBasedSystem2025a, sonnaraEfficientRealtimeLicense2025, 
+vargooraniLicensePlateDetection2024}. 
+La precisión en esta etapa es determinante, dado que cualquier imprecisión en las 
+coordenadas estimadas degrada directamente el rendimiento del reconocimiento de 
+caracteres subsecuente 
+\parencite{suhartoComparativeEvaluationYOLObased2025, swatiEfficientDeepLearning2024, 
+xuDeepLearningAlgorithms2026c}.
+
+La fase LPR consiste en la decodificación de la información visual contenida en la 
+región detectada para su transformación en una cadena de texto alfanumérico 
+\parencite{kuyunsaDeepLearningEnhancedAutomatic2025, wijayaEfficientLicensePlate2024}. 
+Históricamente, esta tarea se abordaba mediante un enfoque basado en segmentación, 
+el cual intentaba aislar cada carácter individualmente antes de clasificarlo; sin 
+embargo, este paradigma presenta una fragilidad intrínseca ante el ruido visual, 
+caracteres adheridos y variaciones de iluminación 
+\parencite{sonnaraEfficientRealtimeLicense2025, xiongLicensePlateRecognition2026, 
+zherzdevLPRNetLicensePlate2018}.
+
+En contraste, el estado del arte ha convergido hacia el enfoque libre de segmentación 
+(\textit{segmentation-free}), el cual trata la lectura de la placa como un problema de 
+etiquetado secuencial holístico 
+\parencite{kuyunsaDeepLearningEnhancedAutomatic2025, sonnaraEfficientRealtimeLicense2025, 
+zherzdevLPRNetLicensePlate2018}. 
+Esta metodología emplea redes neuronales recurrentes (RNN) o mecanismos de atención 
+(\textit{Transformers}) junto a una función de pérdida de Clasificación Temporal 
+Conexionista (CTC), permitiendo que el sistema aprenda a reconocer la secuencia completa 
+de la patente sin necesidad de pre-segmentar los caracteres manualmente, lo que incrementa 
+significativamente la robustez del prototipo en entornos no restringidos 
+\parencite{PDFRealTimeLicense2026, kuyunsaDeepLearningEnhancedAutomatic2025, 
+mobeenRealTimeAutomaticLicense2026, zherzdevLPRNetLicensePlate2018}.
+
+\subsection{Flujos de Procesamiento: \textit{Pipelines} Secuenciales vs. Sistemas Integrados (\textit{End-to-End})}
+
+La eficiencia operativa de un sistema ALPR en tiempo real depende críticamente de la 
+organización lógica de sus componentes, distinguiéndose en la literatura dos enfoques 
+arquitectónicos predominantes: los \textit{pipelines} secuenciales multietapa y los 
+sistemas integrados extremo a extremo (\textit{end-to-end}) 
+\parencite{xuDeepLearningAlgorithms2026c, sonnaraEfficientRealtimeLicense2025}.
+
+El enfoque secuencial o multietapa es el diseño más extendido y se basa en la ejecución 
+de modelos independientes para la localización (LPD) y el reconocimiento (LPR) 
+\parencite{larocaAdvancingMultinationalLicense2025, mobeenRealTimeAutomaticLicense2026, 
+ammarMultiStageDeepLearningBasedVehicle2023}. 
+En este flujo, una primera red neuronal detecta la placa y genera un recorte de la 
+imagen (\textit{crop}), el cual es preprocesado y enviado a un segundo motor de OCR 
+para la extracción de texto 
+\parencite{kuyunsaDeepLearningEnhancedAutomatic2025, mobeenRealTimeAutomaticLicense2026}. 
+Si bien este paradigma permite una mayor modularidad y facilidad de entrenamiento 
+individual, presenta dos desventajas críticas para dispositivos de borde: la redundancia 
+paramétrica, causada por la duplicación de extractores de características 
+(\textit{backbones}) en cada etapa, y la propagación de errores, donde cualquier 
+imprecisión en la detección inicial degrada irreversiblemente la calidad del 
+reconocimiento subsecuente 
+\parencite{sonnaraEfficientRealtimeLicense2025, xuDeepLearningAlgorithms2026c}.
+
+Frente a estas limitaciones, han surgido los sistemas integrados extremo a extremo de 
+un solo paso (\textit{single-pass}), los cuales unifican la detección y el reconocimiento 
+en un único grafo computacional 
+\parencite{buleuDeepLearningBasedSystem2025a, sonnaraEfficientRealtimeLicense2025, 
+zherzdevLPRNetLicensePlate2018}. 
+Estas arquitecturas, como el modelo Light-Edge, emplean un \textit{backbone} compartido 
+(frecuentemente basado en ResNet o MobileNet) que extrae un mapa de características 
+único para ambas tareas, eliminando transferencias de datos ineficientes entre CPU y GPU 
+\parencite{sonnaraEfficientRealtimeLicense2025}. 
+Al optimizar una función de pérdida conjunta, estos modelos reducen la latencia de 
+inferencia de forma drástica ---logrando tasas de procesamiento superiores a los 14 FPS 
+en hardware como NVIDIA Jetson Nano--- y minimizan la huella de memoria, consolidándose 
+como el estándar de mayor proyección científica para el despliegue de soluciones 
+inteligentes en el borde periférico 
+\parencite{sonnaraEfficientRealtimeLicense2025, zherzdevLPRNetLicensePlate2018}.
+
+
+% ============================================================================
+% SECCIÓN 2: Análisis del Estado del Arte en Detección (LPD)
+% ============================================================================
+\section{Análisis del Estado del Arte en Detección (LPD)}
+
+La arquitectura de un sistema ALPR comienza con la capacidad de aislar la región de 
+interés (ROI) que contiene la placa patente dentro de una escena compleja. En la 
+literatura científica, los algoritmos de detección de objetos se dividen 
+taxonómicamente en dos categorías: detectores de dos etapas (\textit{two-stage}) y 
+detectores de una sola etapa (\textit{one-stage}) 
+\parencite{PDFRealTimeLicense2026, xuDeepLearningAlgorithms2026c}. 
+Mientras que los modelos de dos etapas (como Faster R-CNN) utilizan una Red de 
+Propuesta de Regiones (RPN) para preseleccionar candidatos, los modelos de una sola 
+etapa realizan la clasificación y la regresión de coordenadas en un único paso 
+computacional. Esta distinción es crítica para el control de acceso vehicular, ya que 
+la naturaleza estocástica del tráfico exige algoritmos que prioricen la eficiencia 
+temporal sin sacrificar la robustez espacial 
+\parencite{oluwaseyiComparativeAnalysisYOLOv52025, swatiEfficientDeepLearning2024, 
+xuDeepLearningAlgorithms2026c}.
+
+\subsection{La Evolución de la Familia YOLO (\textit{You Only Look Once})}
+
+Los modelos de la serie YOLO se han consolidado como el estándar de la industria 
+debido a su capacidad para reformular la detección como un problema de regresión 
+unificado \parencite{athilakshmiAutomaticNumberPlate2023, mobeenRealTimeAutomaticLicense2026}. 
+Su evolución técnica refleja una búsqueda constante por optimizar el flujo de gradientes 
+y reducir la latencia de post-procesamiento.
+
+\textbf{YOLOv5}: Representa la madurez de las arquitecturas basadas en cajas de anclaje 
+(\textit{anchor-based}). Utiliza descriptores geométricos predefinidos que el modelo emplea 
+como referencia para ajustar las coordenadas del objeto 
+\parencite{athilakshmiAutomaticNumberPlate2023, oluwaseyiComparativeAnalysisYOLOv52025}. 
+Aunque su velocidad es sobresaliente, alcanzando los 92 FPS en entornos controlados, su 
+rigidez ante cambios de escala limita su eficacia cuando la cámara de portería captura 
+vehículos a diferentes distancias o ángulos oblicuos 
+\parencite{oluwaseyiComparativeAnalysisYOLOv52025, swatiEfficientDeepLearning2024}. 
+No obstante, su estabilidad la posiciona como un \textit{baseline} confiable para este 
+proyecto en caso de requerir una implementación de baja complejidad.
+
+\textbf{YOLOv7}: Introdujo innovaciones en el entrenamiento mediante estrategias de 
+``bolsa de obsequios'' (\textit{bag-of-freebies}), optimizando el costo de inferencia sin 
+aumentar la carga paramétrica 
+(Wang et al., 2023 citado en \cite{mobeenRealTimeAutomaticLicense2026}; \cite{wijayaEfficientLicensePlate2024}). 
+Su arquitectura destaca por el uso de redes de agregación de capas eficientes, logrando 
+un balance que la hace viable para dispositivos con recursos limitados como la Raspberry Pi, 
+permitiendo detecciones precisas en sistemas de portones inteligentes con una latencia controlada 
+\parencite{wijayaEfficientLicensePlate2024}.
+
+\textbf{YOLOv8}: Marcó un hito al adoptar un cabezal de detección libre de anclas 
+(\textit{anchor-free}), lo que permite predecir directamente el centro de los objetos en 
+lugar de ajustar cajas predefinidas, agilizando notablemente la convergencia 
+\parencite{mobeenRealTimeAutomaticLicense2026, YOLOv10VsYOLOv82025}. 
+Técnicamente, su éxito reside en el módulo C2f (Cross-Stage Partial bottleneck con dos 
+convoluciones), el cual combina características de alto nivel con flujos de gradientes 
+optimizados, permitiendo al modelo aprender representaciones ricas con una menor 
+densidad paramétrica 
+\parencite{mobeenRealTimeAutomaticLicense2026, YOLOv10VsYOLOv82025}. 
+Esta capacidad de representar detalles de grano fino hace de YOLOv8s un candidato ideal 
+para el prototipo UTEM, asegurando la detección de placas bajo condiciones ruidosas.
+
+\textbf{YOLOv10}: Revolucionó el despliegue en el borde mediante la implementación de 
+la Doble Asignación Consistente durante el entrenamiento. Este mecanismo emplea 
+simultáneamente una estrategia ``uno-a-muchos'' (para proporcionar señales de supervisión 
+ricas) y una ``uno-a-uno'' que permite una inferencia nativa libre de Supresión de No 
+Máximos (NMS-free) 
+\parencite{PDFRealTimeLicense2026, YOLOv8VsYOLOv102025, YOLOv10VsYOLOv82025}. 
+Al eliminar el cuello de botella del NMS, que tradicionalmente se ejecuta en CPU, 
+YOLOv10 logra una latencia predecible y una eficiencia superior en dispositivos embebidos, 
+manteniendo precisiones de hasta 99.16\,\% en escenarios de tráfico denso 
+\parencite{meesadAdvancedDeepLearning2025a}.
+
+\textbf{YOLOv11 y YOLOv12}: Representan la integración de mecanismos de atención espacial 
+interna. YOLOv12, lanzado en febrero de 2025, emplea arquitecturas centradas en la atención 
+de largo alcance, lo que le permite ``limpiar'' el mapa de características y enfocarse en la 
+placa incluso ante fondos complejos o degradaciones climáticas 
+\parencite{buleuDeepLearningBasedSystem2025a, suhartoComparativeEvaluationYOLObased2025}. 
+Resultados experimentales demuestran que YOLOv12 logra un incremento del 2.3\,\% en 
+precisión sobre la v11, estableciendo la frontera actual de exactitud para sistemas 
+inteligentes de transporte \parencite{buleuDeepLearningBasedSystem2025a}.
+
+\textbf{YOLOv26}: La iteración más reciente (enero 2026) se enfoca en el dominio de la 
+inferencia por CPU, logrando ser un 43\,\% más rápida que generaciones previas. Esto se 
+consigue mediante la eliminación de la Pérdida Focal de Distribución (DFL), simplificando 
+la representación probabilística de las cajas delimitadoras para aliviar la carga de los 
+procesadores de bajo costo 
+\parencite{YOLOv8VsYOLOv102025, YOLOv10VsYOLOv82025}. 
+Además, introduce el optimizador MuSGD, inspirado en los paradigmas de estabilidad de los 
+grandes modelos de lenguaje, garantizando que el entrenamiento sea resiliente ante la 
+escasez de datos reales \parencite{YOLOv8VsYOLOv102025, YOLOv10VsYOLOv82025}. 
+Esta arquitectura representa el estándar de ``futuro asegurado'' para el prototipo propuesto 
+en esta investigación.
+
+\subsection{Arquitecturas de Detección Alternativas}
+
+A pesar del dominio de la familia YOLO, la literatura documenta alternativas que ofrecen 
+ventajas específicas según el entorno de despliegue:
+
+\textbf{Faster R-CNN}: Es el referente de los detectores de dos etapas. Al utilizar un 
+extractor de características (\textit{Backbone}) como Inception V2, logra una precisión 
+superior en la detección de patrones visuales extremadamente finos 
+\parencite{kuyunsaDeepLearningEnhancedAutomatic2025}. 
+Sin embargo, su naturaleza secuencial impone una latencia elevada (aprox. 4.5 ms/imagen 
+en GPUs de alto rendimiento), lo que la hace inviable para el control de acceso en tiempo 
+real sobre hardware de bajo costo como el que se validará en el Campus Ñuñoa 
+\parencite{meesadAdvancedDeepLearning2025a, swatiEfficientDeepLearning2024}.
+
+\textbf{EfficientDet-D0}: Desarrollada para maximizar la eficiencia paramétrica mediante 
+redes de pirámide de características bidireccionales (BiFPN), permitiendo una fusión de 
+características de diferentes escalas de forma equilibrada 
+\parencite{swatiEfficientDeepLearning2024}. 
+Aunque su precisión en localización es competitiva, su rendimiento suele ser inferior a 
+las versiones recientes de YOLO cuando se enfrenta a distorsiones de perspectiva severas 
+en el flujo vehicular continuo \parencite{swatiEfficientDeepLearning2024}.
+
+\textbf{SSD (Single Shot Detector)}: Fue pionera en la detección de un solo paso, 
+prediciendo cajas desde múltiples mapas de características. No obstante, estudios 
+recientes indican que presenta fluctuaciones de precisión ante objetos pequeños (como 
+placas distantes) y una menor capacidad de generalización comparada con los modelos 
+\textit{anchor-free} modernos, situándose frecuentemente al final de los \textit{benchmarks} 
+de robustez ambiental 
+\parencite{meesadAdvancedDeepLearning2025a, swatiEfficientDeepLearning2024}.
+
+
+% ============================================================================
+% SECCIÓN 3: Motores de Extracción de Texto (LPR) y OCR
+% ============================================================================
+\section{Motores de Extracción de Texto (LPR) y OCR}
+
+Una vez aislada la región de la placa patente, el sistema debe transcribir los patrones 
+visuales en cadenas alfanuméricas estructuradas. La eficiencia de este proceso es 
+determinante para el rendimiento global del sistema de control de acceso.
+
+\subsection{Metodologías de Reconocimiento}
+
+Históricamente, el reconocimiento de caracteres vehiculares se abordó mediante el enfoque 
+basado en segmentación. Este paradigma tradicional fragmenta la placa detectada en 
+sub-imágenes que contienen letras y números individuales para ser procesados por 
+clasificadores independientes \parencite{xuDeepLearningAlgorithms2026c}. 
+Arquitectónicamente, depende de algoritmos de binarización y componentes conectados para 
+aislar los glifos, lo que lo hace extremadamente vulnerable a fallos ante caracteres 
+adheridos, ruido visual, desenfoque por movimiento o variaciones en la alineación del vehículo 
+\parencite{sonnaraEfficientRealtimeLicense2025, xuDeepLearningAlgorithms2026c, zherzdevLPRNetLicensePlate2018}. 
+Cualquier error en la segmentación inicial resulta en una falla irreversible en la etapa de 
+clasificación \parencite{xiongLicensePlateRecognition2026}.
+
+En contraposición, las arquitecturas modernas adoptan un enfoque libre de segmentación 
+(\textit{segmentation-free}), tratando la lectura de la placa como un problema de etiquetado 
+secuencial holístico. Este método procesa la imagen completa como una secuencia continua de 
+características espaciales, evitando la frágil etapa de binarización manual y recorte 
+\parencite{kuyunsaDeepLearningEnhancedAutomatic2025, xuDeepLearningAlgorithms2026c}. 
+Al permitir que la red aprenda representaciones directamente de los píxeles sin procesar, 
+se incrementa significativamente la robustez en entornos no restringidos 
+\parencite{PDFRealTimeLicense2026, sonnaraEfficientRealtimeLicense2025}.
+
+\textbf{Arquitecturas CRNN y el Rol del CTC}: 
+El estándar de facto para este enfoque holístico son las Redes Neuronales Recurrentes 
+Convolucionales (CRNN). Estas combinan las fortalezas de las redes convolucionales (CNN) 
+para la extracción de características con las redes recurrentes (RNN) para el modelado de secuencias 
+\parencite{vargooraniLicensePlateDetection2024, zherzdevLPRNetLicensePlate2018}. 
+Internamente, una CNN (como ResNet o MobileNet) actúa como \textit{backbone} para generar un 
+mapa de características. Luego, capas bidireccionales de Memoria a Corto y Largo Plazo (Bi-LSTM) 
+escanean este mapa para capturar dependencias contextuales entre caracteres, entendiendo el 
+orden y la estructura sintáctica de la patente 
+\parencite{kuyunsaDeepLearningEnhancedAutomatic2025, mobeenRealTimeAutomaticLicense2026, vargooraniLicensePlateDetection2024}.
+
+Para viabilizar el entrenamiento de extremo a extremo sin etiquetas segmentadas a nivel 
+de carácter, la capa de Clasificación Temporal Conexionista (CTC) resulta indispensable 
+\parencite{sonnaraEfficientRealtimeLicense2025, zherzdevLPRNetLicensePlate2018}. 
+El CTC resuelve el problema de alineación prediciendo una distribución de probabilidad para 
+cada intervalo espacial, utilizando un carácter ``blanco'' (\textit{blank}) para manejar espacios 
+o separar caracteres repetidos \parencite{mobeenRealTimeAutomaticLicense2026, sonnaraEfficientRealtimeLicense2025, zherzdevLPRNetLicensePlate2018}.
+
+\textbf{Transformers y Mecanismos de Atención}: 
+La literatura más reciente documenta la evolución hacia mecanismos de atención, sustituyendo 
+las capas LSTM por bloques tipo Transformer. Modelos como el Spatial Visual Transformer (SVTR) 
+permiten capturar dependencias espaciales de largo alcance, resultando en mapas de 
+características más limpios y resilientes ante ruidos o ángulos inclinados 
+\parencite{buleuDeepLearningBasedSystem2025a, xuDeepLearningAlgorithms2026c}. 
+Incluso, se aprovecha la atención global para mejorar el reconocimiento en capturas 
+borrosas de baja resolución (Azadbakht et al., 2022 citado en \cite{xiongLicensePlateRecognition2026}).
+
+\subsection{Benchmarking de Motores y Viabilidad en el Borde}
+
+La elección del motor OCR impacta directamente en la viabilidad técnica del despliegue en 
+el Campus Ñuñoa, donde las restricciones de \textit{hardware} exigen un estricto equilibrio 
+entre latencia y precisión.
+
+\textbf{Tesseract OCR}: 
+Mantenido históricamente por Google, Tesseract utiliza redes LSTM, pero su diseño está 
+fuertemente optimizado para documentos impresos estáticos 
+\parencite{athilakshmiAutomaticNumberPlate2023, meesadAdvancedDeepLearning2025a, swatiEfficientDeepLearning2024}. 
+Su naturaleza secuencial de ejecución en CPU restringe su rendimiento a aproximadamente 
+25 lecturas por minuto, haciéndolo ineficiente para flujos de video continuo 
+\parencite{xuDeepLearningAlgorithms2026c}. 
+Adicionalmente, experimenta una severa degradación de precisión ante distorsiones de 
+perspectiva o rotaciones vehiculares \parencite{swatiEfficientDeepLearning2024, xuDeepLearningAlgorithms2026c}.
+
+\textbf{EasyOCR}: 
+Esta biblioteca basada en PyTorch emplea un detector de texto CRAFT acoplado a una red 
+CRNN con decodificador CTC \parencite{kuyunsaDeepLearningEnhancedAutomatic2025, mobeenRealTimeAutomaticLicense2026, xuDeepLearningAlgorithms2026c}. 
+Si bien exhibe una alta robustez ante tipografías complejas y placas deterioradas, su 
+carga computacional en entornos carentes de aceleración gráfica es crítica. Su ejecución en CPU 
+apenas alcanza 8 lecturas por minuto, mostrando niveles de confianza altamente oscilatorios 
+(promedio de 0.41) en secuencias de video real 
+\parencite{mobeenRealTimeAutomaticLicense2026, xuDeepLearningAlgorithms2026c}.
+
+\textbf{PaddleOCR}: 
+Posicionado como un pipeline de grado industrial, integra el algoritmo de binarización 
+DBNet con el modelo de reconocimiento SVTR basado en Transformers 
+\parencite{buleuDeepLearningBasedSystem2025a, xuDeepLearningAlgorithms2026c}. 
+Es el motor más rápido y preciso documentado, logrando procesar hasta 120 lecturas por 
+minuto (en GPU) y alcanzando precisiones del 99.6\,\% al integrarse con versiones recientes 
+de YOLO \parencite{buleuDeepLearningBasedSystem2025a, xuDeepLearningAlgorithms2026c}. 
+Su manejo eficiente de texto ruidoso y placas oblicuas lo establece como la alternativa 
+de código abierto predominante para aplicaciones ALPR \parencite{xuDeepLearningAlgorithms2026c}.
+
+\textbf{Impacto en Hardware de Borde}: 
+Para el prototipo UTEM, la NVIDIA Jetson Nano emerge como la plataforma ideal, aprovechando 
+sus 128 núcleos CUDA para optimizar arquitecturas como PaddleOCR mediante TensorRT. 
+La cuantización del modelo a enteros de 8 bits (INT8) garantiza tasas superiores a los 
+14 FPS, satisfaciendo la cuota de latencia de 100\,ms exigida para sistemas de barrera 
+automatizada \parencite{sonnaraEfficientRealtimeLicense2025, swatiEfficientDeepLearning2024, xuDeepLearningAlgorithms2026c}. 
+En contraste, la utilización de una Raspberry Pi convencional requeriría forzosamente la 
+integración de un acelerador NPU dedicado (como el Hailo-8L) para evitar que el cuello 
+de botella de inferencia por CPU impida una operación fluida 
+\parencite{sonnaraEfficientRealtimeLicense2025, xuDeepLearningAlgorithms2026c}.
+
+
+% ============================================================================
+% SECCIÓN 4: Hardware de Borde y Optimización (Edge AI)
+% ============================================================================
+\section{Hardware de Borde y Optimización (\textit{Edge AI})}
+
+La transición de modelos desde servidores de alto rendimiento hacia el borde de la 
+red (\textit{Edge AI}) es un requerimiento fundamental para sistemas ALPR operativos, 
+donde la dependencia de la nube introduce latencias inaceptables y riesgos de privacidad. 
+Sin embargo, el despliegue local impone severas restricciones de memoria, consumo 
+energético y capacidad de cómputo.
+
+\subsection{Ecosistemas de Cómputo en el Borde: Arquitecturas y Rendimiento}
+
+La literatura documenta dos grandes familias de ecosistemas de cómputo para el despliegue 
+de redes neuronales profundas en el borde: aquellas con aceleración nativa por GPU y 
+aquellas basadas primordialmente en procesamiento de CPU.
+
+\textbf{Aceleración Nativa por GPU (Arquitectura NVIDIA Jetson)}: 
+La familia NVIDIA Jetson (incluyendo Nano, Xavier AGX y Orin) está diseñada específicamente 
+para satisfacer las demandas de cómputo paralelo masivo del \textit{Deep Learning} 
+\parencite{ammarMultiStageDeepLearningBasedVehicle2023, sonnaraEfficientRealtimeLicense2025}. 
+A diferencia de las CPUs convencionales, la Jetson Nano integra una GPU de arquitectura Maxwell 
+con 128 núcleos CUDA, lo que permite la ejecución concurrente de operaciones tensoriales. 
+Esta paralelización optimiza el rendimiento en modelos de detección de una sola etapa como 
+YOLOv8 y YOLOv10 \parencite{meesadAdvancedDeepLearning2025a, sonnaraEfficientRealtimeLicense2025}. 
+El ecosistema se apoya en la suite NVIDIA JetPack, la cual incluye el motor de inferencia 
+TensorRT, capaz de optimizar los grafos computacionales para maximizar la tasa de procesamiento 
+(FPS) y cumplir con el presupuesto de latencia de $\approx$100\,ms, métrica exigida para 
+el control de acceso vehicular en tiempo real \parencite{ammarMultiStageDeepLearningBasedVehicle2023, sonnaraEfficientRealtimeLicense2025}.
+
+\textbf{Procesamiento Basado en CPU (Arquitectura Raspberry Pi)}: 
+Por otro lado, plataformas como la Raspberry Pi 5 utilizan procesadores de propósito 
+general (e.g., Broadcom BCM2712 Cortex-A76) que, si bien son eficientes en tareas 
+lógicas secuenciales, carecen de unidades de procesamiento gráfico compatibles con 
+marcos de IA de alto nivel como CUDA \parencite{oluwaseyiComparativeAnalysisYOLOv52025}. 
+Ejecutar modelos de detección complejos directamente en su CPU resulta en una latencia 
+prohibitiva para aplicaciones vehiculares, logrando frecuentemente tasas de inferencia 
+inferiores a 5 FPS \parencite{oluwaseyiComparativeAnalysisYOLOv52025, xuDeepLearningAlgorithms2026c}. 
+Esto podría traducirse en la pérdida de detección de vehículos con movimiento rápido en 
+entornos de portería.
+
+Para viabilizar el uso de placas como la Raspberry Pi en tareas de inferencia pesada, 
+resulta imperativa la incorporación de Unidades de Procesamiento Neuronal (NPU) externas, 
+como el módulo AI HAT+ basado en chips Hailo-8L \parencite{oluwaseyiComparativeAnalysisYOLOv52025}. 
+Arquitectónicamente, estas NPUs están optimizadas para los flujos de datos de redes neuronales, 
+ejecutando cálculos matriciales con una eficiencia energética (TOPS por Watt) muy superior 
+a la de una CPU convencional \parencite{oluwaseyiComparativeAnalysisYOLOv52025, xuDeepLearningAlgorithms2026c}.
+
+\subsection{Técnicas de Compilación y Cuantización}
+
+\textbf{Fundamentos de la Cuantización}: 
+Para adaptar modelos masivos a las restricciones de memoria del hardware de borde, se 
+emplea el proceso de cuantización. Esta técnica consiste en reducir la precisión numérica 
+de los pesos y las funciones de activación de la red neuronal, trasladándolos desde 
+representaciones de punto flotante de 32 bits (FP32) a formatos más compactos como 16 bits 
+(FP16) o números enteros de 8 bits (INT8) 
+\parencite{sonnaraEfficientRealtimeLicense2025, swatiEfficientDeepLearning2024}. 
+Matemáticamente, esto implica mapear los valores continuos del modelo original a un 
+conjunto discreto de niveles, utilizando frecuentemente la calibración por divergencia 
+de Kullback-Leibler (KL) para minimizar la distorsión estadística de los datos 
+\parencite{ammarMultiStageDeepLearningBasedVehicle2023}.
+
+\textbf{Beneficios en Memoria y Aceleración de Inferencia}: 
+La transición de FP32 a INT8 reduce la huella del modelo en disco y RAM en un factor 
+de hasta 4x. En contextos operativos, modelos ALPR con un peso inicial de 37 MB logran 
+comprimirse a 11 MB al ser cuantizados a 16 bits, un factor crítico para microordenadores 
+con recursos limitados (e.g., los 4 GB de RAM de la Jetson Nano) 
+\parencite{sonnaraEfficientRealtimeLicense2025, swatiEfficientDeepLearning2024}. 
+A nivel de ejecución, el menor tamaño de los datos disminuye drásticamente el ancho de 
+banda requerido para las transferencias de memoria. Además, el hardware moderno incorpora 
+instrucciones SIMD que permiten procesar múltiples operaciones INT8 en un único ciclo de 
+reloj, posibilitando aceleraciones de inferencia de hasta 4.6x 
+\parencite{ammarMultiStageDeepLearningBasedVehicle2023, sonnaraEfficientRealtimeLicense2025}.
+
+\textbf{Rol de Motores de Optimización}: 
+La eficiencia en el despliegue requiere de compiladores especializados. 
+TensorRT, por ejemplo, ejecuta una "fusión de capas" (\textit{Layer \& Tensor Fusion}), 
+combinando operaciones de convolución, sesgo y activación en un único \textit{kernel} de 
+cómputo, lo que mitiga las ineficientes transferencias de datos en memoria 
+\parencite{ammarMultiStageDeepLearningBasedVehicle2023, sonnaraEfficientRealtimeLicense2025}. 
+Por su parte, TensorFlow Lite ofrece formatos de serialización (\textit{FlatBuffers}) e 
+intérpretes optimizados para arquitecturas ARM, facilitando el despliegue en microprocesadores 
+móviles \parencite{swatiEfficientDeepLearning2024}.
+
+\textbf{Impacto en la Precisión (mAP)}: 
+Pese a la compresión numérica, la literatura empírica demuestra que la pérdida de 
+precisión media (mAP) es marginal cuando se emplean técnicas de calibración rigurosas. 
+En evaluaciones del modelo Light-Edge optimizado mediante Torch-TensorRT a INT8, se 
+reportó un incremento de velocidad de 3.1 FPS a 14.2 FPS, incurriendo en una penalización 
+de apenas 0.4 puntos porcentuales en mAP respecto al modelo FP32 base 
+\parencite{sonnaraEfficientRealtimeLicense2025}. 
+Esto evidencia que la cuantización no es una concesión comprometedora, sino la técnica 
+habilitadora que hace factible el funcionamiento de arquitecturas de \textit{Deep Learning} 
+en escenarios comerciales de borde 
+\parencite{sonnaraEfficientRealtimeLicense2025, swatiEfficientDeepLearning2024}.
+
+
+% ============================================================================
+% SECCIÓN 5: Robustez en Entornos No Restringidos
+% ============================================================================
+\section{Robustez en Entornos No Restringidos}
+
+% [PENDIENTE: Párrafo introductorio sobre los desafíos del mundo real.]
+
+\subsection{Técnicas de Preprocesamiento Crítico}
+% Uso de filtros bilaterales para reducción de ruido, normalización min-max,
+% conversión a escala de grises y algoritmos de mejora de contraste (como
+% CLAHE).
+% [PENDIENTE]
+
+\subsection{Módulos de Mejora Dinámica}
+% Tecnologías como CPA-Enhancer para optimizar imágenes degradadas por
+% lluvia, niebla o baja luminosidad.
+% [PENDIENTE]
+
+\subsection{Datos Sintéticos y Aumento (\textit{Data Augmentation})}
+% El rol de las redes GAN para entrenar modelos robustos ante la escasez
+% de datos reales.
+% [PENDIENTE]
+
+
+% ============================================================================
+% SECCIÓN 6: Consistencia Temporal y Seguimiento (Tracking)
+% ============================================================================
+\section{Consistencia Temporal y Seguimiento (\textit{Tracking})}
+
+% [PENDIENTE: Párrafo introductorio sobre la importancia del seguimiento
+% temporal en un sistema de control de acceso vehicular.]
+
+\subsection{Algoritmos de \textit{Tracking}}
+% Uso de SORT y DeepSort para vincular placas entre cuadros de video,
+% evitando detecciones duplicadas y permitiendo la redundancia temporal.
+% [PENDIENTE]
+
+\subsection{Votación Temporal e Interpolación}
+% Cómo promediar los resultados de varios cuadros para elevar la precisión
+% final del acceso.
+% [PENDIENTE]
+
+
+% ============================================================================
+% SECCIÓN 7: Contexto Normativo y Operacional Chileno
+% ============================================================================
+\section{Contexto Normativo y Operacional Chileno}
+
+% [PENDIENTE: Párrafo introductorio que aterrice el proyecto a la realidad
+% local chilena.]
+
+\subsection{Estándares de Patentes en Chile}
+% Reconocimiento de los 5 formatos civiles, incluyendo la transición al
+% sistema de 5 letras y el nuevo estándar de Movilidad Sostenible
+% (Patentes Verdes).
+% [PENDIENTE]
+
+\subsection{Requerimientos Funcionales del Prototipo}
+% Presupuesto de latencia (<100ms), consumo energético (<10W) y gestión
+% de logs administrativos.
+% [PENDIENTE]
