@@ -16,33 +16,41 @@
 \addcontentsline{toc}{chapter}{INTRODUCCIÓN}  % Agrega la Introducción a la tabla de contenido
 
 % --- Contexto y motivación ---
-% Explica las razones que motivaron la elección del tema y el contexto general.
+La Universidad Tecnológica Metropolitana (UTEM), en su búsqueda constante por la modernización de sus procesos infraestructurales y la optimización de los recursos destinados a la gestión de sus campus, enfrenta desafíos significativos en la administración de sus espacios de estacionamiento. En el Campus Ñuñoa, específicamente en el área destinada a los funcionarios, el proceso de ingreso vehicular actual depende de un sistema de validación manual que ha demostrado ser ineficiente desde una perspectiva logística y operativa.
 
-[Escribe aquí el contexto y la motivación de tu trabajo...]
+Actualmente, el acceso se rige por un protocolo en el que el funcionario debe contactar directamente al personal de seguridad o conserjería para solicitar la apertura del portón, ya sea mediante llamadas telefónicas o señales visuales. Este modelo obliga al personal de seguridad a dedicar una parte sustancial de su jornada laboral a tareas de baja complejidad técnica, como es el reconocimiento visual y la apertura de portones, lo que distrae su atención de labores críticas de vigilancia y prevención de riesgos en el resto de las instalaciones.
 
-% --- Justificación ---
-% Explica los fundamentos que sustentan el tema y la relevancia del trabajo.
-
-% --- Problema de investigación ---
-% Formula de manera clara el problema que investigaste, presentando los
-% objetivos generales y la naturaleza del trabajo.
+% --- Problema de investigación y Justificación ---
+Por tanto, el problema central se identifica como una ineficiencia logística crítica en el control de acceso vehicular del Campus Ñuñoa, caracterizada por la dependencia del factor humano para tareas repetitivas, la generación de latencias operativas y la ausencia de una infraestructura digital que sustente la toma de decisiones basada en datos. La solución propuesta busca automatizar este proceso mediante el uso de inteligencia artificial, específicamente detección de placas patentes, para transformar el acceso en un procedimiento autónomo, seguro y eficiente.
 
 % --- Objetivos ---
-% Describe brevemente los objetivos de tu trabajo.
+\section*{Objetivo General}
+Validar la viabilidad técnica y operativa de un sistema de control de acceso vehicular automatizado mediante el desarrollo de un prototipo funcional basado en modelos de inteligencia artificial para el reconocimiento de patentes, orientado a optimizar la eficiencia y trazabilidad en el ingreso de funcionarios al Campus Ñuñoa de la UTEM.
 
-% Objetivo general:
-% - ...
+\section*{Objetivos Específicos}
+\begin{itemize}
+    \item Analizar el estado del arte de las tecnologías de visión computacional y modelos de aprendizaje profundo aplicados a la detección de objetos en tiempo real en entornos de seguridad física.
+    \item Diseñar una arquitectura de software basada en el paradigma de \textit{Edge Computing} que permita el procesamiento local de datos para garantizar bajas latencias en la apertura del portón y una mayor protección de la privacidad de los datos.
+    \item Entrenar y validar un modelo de detección de placas patentes chilenas que reconozca los cinco formatos definitivos, abarcando desde el sistema clásico de 1985 hasta las nuevas configuraciones aprobadas recientemente.
+    \item Implementar una plataforma web unificada que actúe como panel de administración para el registro de funcionarios, y que integre el flujo de captura de video por cámara web local para simular la validación de patentes en tiempo real.
+\end{itemize}
 
-% Objetivos específicos:
-% - ...
-% - ...
-% - ...
+% --- Alcances y Limitaciones ---
+\section*{Alcances y Limitaciones}
+El presente trabajo define una hoja de ruta técnica que abarca desde la investigación conceptual hasta la entrega de un artefacto de software funcional en modo de simulación. Para enmarcar de forma precisa el impacto del proyecto, se establecen las siguientes limitaciones:
+
+\begin{itemize}
+    \item \textbf{Exclusión de Motocicletas:} Dado que las normativas chilenas establecen que las motocicletas solo portan placa trasera, y considerando que la geometría de captura de las cámaras en porterías de acceso institucional es inherentemente frontal, resulta físicamente inviable su detección. Las motocicletas quedan excluidas del alcance funcional del prototipo.
+    \item \textbf{Vehículos Especiales:} El modelo omitirá deliberadamente del entrenamiento aquellas patentes de carácter especial (ej. Bomberos, Carabineros, diplomáticos o de carga pesada), dado que su flujo de acceso no corresponde al perfil de usuario funcionario definido para este recinto.
+    \item \textbf{Despliegue Local (On-Premise):} En estricto apego al paradigma de \textit{Edge Computing} y a la legislación de protección de datos (Ley 19.628), el prototipo de software ---tanto el motor de inferencia como el panel de gestión web--- operará de forma estrictamente local (\textit{Localhost}) en el hardware asignado al procesamiento. No se contempla el despliegue del sistema en infraestructuras \textit{Cloud} (nube pública) de producción, para evitar latencias de red y salvaguardar la privacidad de la comunidad.
+    \item \textbf{Simulación de Actuadores Físicos:} La interacción con el portón será una simulación digital dentro de la aplicación web. El prototipo mostrará indicadores visuales de "Apertura" o "Cierre" en pantalla, sin ejecutar la instalación de motores, cremalleras ni cableado eléctrico en el Campus Ñuñoa.
+\end{itemize}
 
 % --- Estructura del documento ---
-% Orienta al lector sobre cómo se ha organizado el texto.
-% Ejemplo:
-% "El presente trabajo se organiza de la siguiente manera: en el Capítulo 1 se
-% presenta el marco teórico; en el Capítulo 2 se describe la metodología
-% utilizada; en el Capítulo 3 se desarrolla la propuesta; en el Capítulo 4
-% se presentan los resultados obtenidos; y finalmente, se exponen las
-% conclusiones del trabajo."
+\section*{Estructura del Documento}
+El presente trabajo de título se encuentra estructurado en los siguientes capítulos: 
+El \textbf{Capítulo 1} aborda el marco teórico y el estado del arte de las tecnologías de visión computacional y redes neuronales convolucionales. 
+El \textbf{Capítulo 2} expone el diseño metodológico de la solución y la arquitectura de infraestructura basada en Edge Computing. 
+El \textbf{Capítulo 3} detalla el proceso de desarrollo de software y el entrenamiento de los modelos de detección. 
+El \textbf{Capítulo 4} presenta los resultados obtenidos en las pruebas de latencia y precisión del modelo. 
+Finalmente, se exponen las conclusiones, donde se evalúa el cumplimiento de los objetivos y se proponen proyecciones para trabajos futuros.

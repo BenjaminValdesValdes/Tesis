@@ -437,6 +437,12 @@ donde la dependencia de la nube introduce latencias inaceptables y riesgos de pr
 Sin embargo, el despliegue local impone severas restricciones de memoria, consumo 
 energético y capacidad de cómputo.
 
+\subsection{Descentralización y Sincronización Local (\textit{Edge Caching})}
+
+Uno de los desafíos principales en arquitecturas IoT orientadas al control de acceso es mitigar la dependencia de la red troncal para la validación de los datos. Si bien los dispositivos de borde realizan la inferencia de visión artificial localmente, la decisión final (autorizar una patente) requiere contrastar el resultado contra una base de datos. Realizar esta validación de forma síncrona contra la nube reintroduce latencias críticas de red y expone el sistema a fallos por desconexión. La literatura enfatiza que la ventaja del despliegue en el borde es precisamente ``cortar el vínculo entre internet y la máquina host, evitando así la latencia de la red y creando un tiempo de respuesta más rápido'' [traducción propia] \parencite{swatiEfficientDeepLearning2024}.
+
+Para resolver este desafío de diseño, el estado del arte en redes IoT incorpora el patrón arquitectónico de descentralización de datos o \textit{Edge Caching}. Esta estrategia consiste en almacenar la información de las patentes habilitadas en una base de datos local dentro del dispositivo \parencite{xuDeepLearningAlgorithms2026c}. El nodo perimetral sincroniza periódicamente la lista maestra en segundo plano, logrando que la consulta sea local e inmediata. Esto fomenta un entorno de procesamiento distribuido que reduce drásticamente el consumo de ancho de banda y mejora la escalabilidad \parencite{buleuDeepLearningBasedSystem2025a, kuyunsaDeepLearningEnhancedAutomatic2025}. Así, el sistema garantiza resiliencia operativa (\textit{offline-first}), asegurando que el control de acceso actúe en el orden de los milisegundos sin depender de servidores centrales.
+
 \subsection{Ecosistemas de Cómputo en el Borde: Arquitecturas y Rendimiento}
 
 La literatura documenta dos grandes familias de ecosistemas de cómputo para el despliegue 
