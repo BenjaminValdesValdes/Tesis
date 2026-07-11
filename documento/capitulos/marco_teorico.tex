@@ -477,8 +477,22 @@ Para viabilizar el uso de placas como la Raspberry Pi en tareas de inferencia pe
 resulta imperativa la incorporación de Unidades de Procesamiento Neuronal (NPU) externas, 
 como el módulo AI HAT+ basado en chips Hailo-8L \parencite{oluwaseyiComparativeAnalysisYOLOv52025}. 
 Arquitectónicamente, estas NPUs están optimizadas para los flujos de datos de redes neuronales, 
-ejecutando cálculos matriciales con una eficiencia energética (TOPS por Watt) muy superior 
 a la de una CPU convencional \parencite{oluwaseyiComparativeAnalysisYOLOv52025, xuDeepLearningAlgorithms2026c}.
+
+\subsection{Dimensionamiento del Modelo y Selección de Arquitectura}
+
+El diseño de un sistema ALPR para el borde (\textit{Edge AI}) difiere fundamentalmente de las implementaciones basadas en la nube. La literatura científica establece que los procesadores perimetrales operan bajo restricciones energéticas (frecuentemente inferiores a 10 W) y de memoria que descartan el uso de modelos con alto recuento de parámetros. Para garantizar la validación de vehículos en movimiento, estos dispositivos están condicionados por un estricto presupuesto de latencia de aproximadamente 100 milisegundos por fotograma \parencite{sonnaraEfficientRealtimeLicense2025}. Este umbral no es arbitrario: un procesamiento de 100 ms equivale a una tasa mínima operativa de 10 cuadros por segundo (FPS). La literatura indica que sostener al menos 10 FPS es indispensable para asegurar que el desplazamiento del vehículo no resulte en pérdida de cuadros, permitiendo que mecanismos algorítmicos posteriores de seguimiento (\textit{tracking}) y consolidación operen correctamente. En este contexto, el uso de modelos profundos de gran escala (variantes \textit{Large} o \textit{Extra-Large}) resulta inviable; su elevada exigencia de memoria y cómputo impide su aplicación directa en hardware integrado.
+
+Para resolver esta limitación, la estrategia imperante en la industria es el uso de arquitecturas ligeras (\textit{lightweight}), específicamente las variantes \textit{Nano} (n) o \textit{Small} (s). Estas variantes logran una extrema eficiencia paramétrica y están altamente optimizadas para la inferencia en tiempo real en dispositivos IoT \parencite{mobeenRealTimeAutomaticLicense2026}. Además, extender el entrenamiento hacia modelos más grandes no reporta beneficios críticos en tareas de detección mono-clase como las patentes vehiculares, pero sí incrementa injustificadamente el consumo de recursos \parencite{buleuDeepLearningBasedSystem2025a}.
+
+Otra ventaja crítica de las variantes ligeras es su viabilidad en la fase de entrenamiento. Los modelos compactos demandan sustancialmente menos memoria de video (VRAM), lo que permite a los desarrolladores y estudiantes entrenar modelos del estado del arte utilizando hardware de grado consumidor o servicios en la nube de acceso libre, democratizando el desarrollo sin requerir clusters de alto costo \parencite{YOLOv10VsYOLOv82025}.
+
+\textbf{Veredicto Arquitectónico para el Proyecto UTEM}: 
+El análisis cruzado de la infraestructura de hardware y los modelos de visión artificial determina que la solución de grado industrial óptima es la integración de la arquitectura \textbf{NVIDIA Jetson} con el modelo \textbf{YOLOv12s}. 
+En primer lugar, la exigencia de un entorno operativo sin cuellos de botella favorece categóricamente la paralelización masiva de las GPUs (128 núcleos CUDA) frente a la ejecución secuencial de micro-ordenadores sin aceleración gráfica \parencite{ammarMultiStageDeepLearningBasedVehicle2023}. En segundo lugar, evaluando la evolución de la familia YOLO, la literatura demuestra que YOLOv12 supera a iteraciones previas al incorporar mecanismos de atención espacial que elevan la precisión a un 99.6\,\% \parencite{buleuDeepLearningBasedSystem2025a}. 
+Adicionalmente, bajo el ecosistema Jetson, se recomienda la adopción de la variante \textit{Small} (s) sobre la \textit{Nano} (n). La aceleración por GPU, sumada a la compilación mediante TensorRT, permite procesar los parámetros adicionales de YOLOv12s sin exceder el presupuesto estricto de 100 ms, habilitando tasas de procesamiento de entre 14 y 30 FPS \parencite{sonnaraEfficientRealtimeLicense2025, meesadAdvancedDeepLearning2025a}. Esta sinergia establece el balance definitivo entre eficiencia paramétrica, resiliencia ante distorsiones y latencia operativa, consolidándose como la arquitectura idónea para este sistema de control de acceso.
+
+Cabe destacar el aporte investigativo de esta decisión arquitectónica. En la revisión exhaustiva de la literatura reciente, Buleu et al. \parencite{buleuDeepLearningBasedSystem2025a} validaron el dominio de YOLOv12 en la detección de patentes vehiculares, pero sus experimentos se limitaron a tarjetas gráficas de grado de servidor (NVIDIA T4), indicando explícitamente que la optimización de este sistema para dispositivos de borde en tiempo real quedaba como una dirección de investigación futura. Por su parte, autores como Sonnara et al. \parencite{sonnaraEfficientRealtimeLicense2025} y Ammar et al. \parencite{ammarMultiStageDeepLearningBasedVehicle2023} consolidaron la arquitectura Jetson optimizada mediante TensorRT como el estándar definitivo para la inferencia de latencia ultrabaja en el perimetral. Al integrar ambas vertientes tecnológicas ---el estado del arte en precisión (YOLOv12s) con el estándar \textit{Enterprise} de aceleración periférica (Jetson+TensorRT)---, la presente propuesta no solo cumple con los rigurosos requerimientos del Campus Ñuñoa, sino que ejecuta directamente el vacío investigativo demandado por la literatura científica reciente.
 
 \subsection{Técnicas de Compilación y Cuantización}
 
@@ -557,8 +571,8 @@ Por otra parte, para el manejo de sombras o deslumbramiento severo, la Ecualizac
 de Histograma Adaptativa Limitada por Contraste (CLAHE) demuestra superioridad sobre la 
 ecualización global. Al operar mediante regiones localizadas (\textit{tiles}), CLAHE 
 optimiza el contraste sin amplificar el ruido en zonas homogéneas, permitiendo que 
-detectores como YOLOv11 aíslen la placa con mayor fiabilidad 
-\parencite{buleuDeepLearningBasedSystem2025a, suhartoComparativeEvaluationYOLObased2025}.
+detectores como YOLOv11n aíslen la placa con mayor fiabilidad 
+\parencite{suhartoComparativeEvaluationYOLObased2025}.
 
 Para la atenuación de ruido visual sin comprometer la morfología alfanumérica, la 
 literatura prioriza los Filtros Bilaterales sobre el filtrado Gaussiano tradicional. 
