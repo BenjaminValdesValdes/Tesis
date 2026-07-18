@@ -108,6 +108,10 @@
 \captionsetup[figure]{labelsep=period, justification=centering}
 \captionsetup[table]{labelsep=period, justification=centering}
 
+% Numeración continua (ej: Figura 1, 2, 3...) en lugar de por capítulo (3.1, 3.2...)
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+
 % ============================================================================
 % NOTAS AL PIE
 % ============================================================================

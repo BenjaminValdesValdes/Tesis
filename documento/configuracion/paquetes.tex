@@ -9,7 +9,7 @@
 \usepackage{cmap}                    % Permite copiar-pegar texto desde el PDF sin guiones ni saltos de línea feos
 \usepackage[utf8]{inputenc}          % Permite usar tildes y ñ directamente
 \usepackage[T1]{fontenc}             % Codificación de fuentes para español
-\usepackage[spanish,es-tabla]{babel} % Idioma español (cambia "Table" por "Tabla", etc.)
+\usepackage[spanish,es-tabla,es-noshorthands]{babel} % Idioma español sin shorthands problemáticos
 \usepackage{microtype}               % Mejora la micro-tipografía (reduce el número de palabras cortadas al final)
 
 % --- Fuente Arial (equivalente: Helvetica) ---
@@ -40,6 +40,7 @@
 \usepackage{graphicx}                % Insertar imágenes
 \usepackage{float}                   % Mejor control de posición de figuras/tablas
 \usepackage[font=small,labelfont=bf]{caption} % Formato de pies de figura/tabla
+\usepackage{chngcntr}                % Para cambiar numeración (evitar por capítulo)
 
 % --- Tablas ---
 \usepackage{array}                   % Mejoras para tablas
@@ -90,3 +91,7 @@
 \usepackage{pdfpages}                % Incluir páginas PDF externas (útil para anexos)
 \usepackage{xcolor}                  % Colores (por si se necesitan)
 \usepackage{emptypage}               % Páginas en blanco sin encabezado/pie
+
+% --- TikZ (Diagramas Arquitectónicos C4, E-R y Flujos) ---
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning, fit, calc, babel}

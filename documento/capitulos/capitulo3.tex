@@ -30,6 +30,75 @@ Para aislar la carga de procesamiento computacional continuo (que exige la red n
     \item \textbf{Nodo de Borde (Edge / Prototipo Local):} Encargado exclusivamente de la captura de video en tiempo real, la inferencia de Inteligencia Artificial (YOLOv12s apoyado por EasyOCR) y la validación de ingreso. Está diseñado para operar localmente en la portería (simulado en PC para efectos de este prototipo) con el fin de garantizar tiempos de respuesta críticos sin depender de una conexión a internet constante.
 \end{itemize}
 
+\vspace{1cm}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=2.5cm and 2cm,
+    box/.style={rectangle, draw=black, thick, fill=blue!10, text width=3.5cm, align=center, rounded corners, minimum height=1.5cm},
+    user/.style={circle, draw=black, thick, fill=green!10, text width=2.2cm, align=center, minimum height=2.2cm},
+    ext/.style={rectangle, draw=black, thick, fill=gray!20, text width=3.5cm, align=center, rounded corners, minimum height=1.5cm}
+]
+
+% Nodos
+\node[user] (conserje) {Conserje / Admin};
+\node[box, right=of conserje] (sistema) {\textbf{Sistema ALPR}\\ (UTEM Campus)};
+\node[ext, right=of sistema] (porton) {Portón Vehicular\\ (Hardware)};
+\node[user, below=of sistema] (vehiculo) {Vehículo / Funcionario};
+
+% Flechas
+\draw[->, thick, >=stealth] (conserje) -- node[anchor=south, font=\scriptsize] {Gestiona usuarios} (sistema);
+\draw[->, thick, >=stealth] (vehiculo) -- node[anchor=east, font=\scriptsize] {Se aproxima (Video)} (sistema);
+\draw[->, thick, >=stealth] (sistema) -- node[anchor=south, font=\scriptsize] {Abre/Cierra} (porton);
+
+\end{tikzpicture}
+\caption{Diagrama de Contexto (Nivel 1) del Sistema ALPR.}
+\label{fig:c1_contexto}
+\end{figure}
+
+Al profundizar un nivel más en la arquitectura, la separación lógica entre ambos ambientes y sus contenedores de software internos se ilustra en la Figura \ref{fig:c2_contenedores}:
+
+\vspace{1cm}
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[
+    node distance=1.5cm and 2cm,
+    layer/.style={rectangle, draw=blue, thick, fill=blue!5, text width=4cm, align=center, minimum height=1.2cm},
+    db/.style={cylinder, draw=black, thick, shape border rotate=90, aspect=0.25, fill=gray!10, text width=2.5cm, align=center, minimum height=1.5cm}
+]
+
+% Nube (Central)
+\node[layer] (spa) {\textbf{Panel Web}\\ (React SPA)};
+\node[layer, below=of spa] (api) {\textbf{API Central}\\ (FastAPI)};
+\node[db, right=of api, xshift=1cm] (pg) {\textbf{Base Maestra}\\ (PostgreSQL)};
+
+\node[draw, dashed, thick, fit=(spa) (api) (pg), inner sep=0.5cm, label=above:\textbf{Nodo Central (Nube)}] (nube) {};
+
+% Borde (Local)
+\node[layer, below=of api, yshift=-1.5cm] (edge) {\textbf{Pipeline IA}\\ (Python + YOLO)};
+\node[db, right=of edge, xshift=1cm] (sqlite) {\textbf{Caché Local}\\ (SQLite)};
+\node[layer, left=of edge, xshift=-1cm] (cam) {\textbf{Cámara IP}\\ (Video Stream)};
+
+\node[draw, dashed, thick, fit=(cam) (edge) (sqlite), inner sep=0.5cm, label=below:\textbf{Nodo de Borde (Portería)}] (borde) {};
+
+% Flechas
+\draw[->, thick, >=stealth] (spa) -- node[anchor=east, font=\scriptsize] {HTTP/REST} (api);
+\draw[->, thick, >=stealth] (api) -- node[anchor=south, font=\scriptsize] {SQL} (pg);
+\draw[->, thick, >=stealth] (cam) -- node[anchor=south, font=\scriptsize] {RTSP} (edge);
+\draw[->, thick, >=stealth] (edge) -- node[anchor=south, font=\scriptsize] {Lee/Escribe} (sqlite);
+
+% Sincronización
+\draw[<->, thick, >=stealth, dashed] (api) -- node[anchor=east, font=\scriptsize] {Sincronización Asíncrona} (edge);
+
+\end{tikzpicture}
+}
+\caption{Diagrama de Contenedores (Nivel 2) separando Nube y Borde.}
+\label{fig:c2_contenedores}
+\end{figure}
+
+
+
 \section{Nodo Central (Plataforma Administrativa)}
 
 El Nodo Central constituye el corazón administrativo del sistema. Está diseñado para ser desplegado en un servidor virtualizado (nube), garantizando disponibilidad ininterrumpida para el personal autorizado desde cualquier dispositivo con navegador web. Su arquitectura se compone de tres capas lógicas:
@@ -70,3 +139,53 @@ Dado que la base de datos maestra (PostgreSQL) y la base de datos local de infer
     \item \textbf{Sincronización descendente:} Periódicamente, el servicio backend del nodo de borde consultará al nodo central en la nube para descargar e indexar en su SQLite local cualquier alta, baja o modificación ocurrida en la lista de vehículos autorizados.
     \item \textbf{Sincronización ascendente:} Cada vez que el nodo de borde certifique un acceso vehicular, el sistema almacenará automáticamente el registro (patente, fecha y hora) de forma local. En paralelo, y sin bloquear la barrera de acceso, este registro se enviará al nodo central para engrosar el histórico en PostgreSQL. Si la conexión a internet falla, el nodo local encolará automáticamente los registros en su memoria y los transmitirá en lote una vez restablecido el enlace, asegurando una arquitectura tolerante a fallos de forma transparente para el conserje.
 \end{itemize}
+
+\section{Modelo de Datos}
+
+El modelo de datos se ha diseñado siguiendo principios de normalización relacional para garantizar la integridad referencial. A nivel macro, la base de datos maestra (PostgreSQL) centraliza la información completa, mientras que la base de datos local (SQLite) mantiene únicamente un subconjunto esencial de datos vigentes (las patentes autorizadas) para optimizar el rendimiento de las consultas en el borde.
+
+\vspace{0.5cm}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=2cm and 2.5cm,
+    entity/.style={rectangle, draw=black, thick, fill=blue!10, text width=4cm, align=center, rounded corners, minimum height=1.5cm},
+    relation/.style={diamond, draw=black, thick, fill=yellow!20, text width=2cm, align=center, aspect=2}
+]
+
+% Entidades
+\node[entity] (usuario) {\textbf{Funcionario}};
+\node[entity, right=of usuario, xshift=2.5cm] (vehiculo) {\textbf{Vehículo}};
+\node[entity, below=of vehiculo, yshift=-1.5cm] (acceso) {\textbf{Registro\_Acceso}};
+
+% Relaciones intercaladas
+\path (usuario) -- (vehiculo) node[midway, relation] (posee) {Posee};
+\path (vehiculo) -- (acceso) node[midway, relation] (genera) {Genera};
+
+% Conexiones
+\draw[->, thick, >=stealth] (usuario) -- node[above, font=\scriptsize] {1} (posee);
+\draw[->, thick, >=stealth] (posee) -- node[above, font=\scriptsize] {N} (vehiculo);
+\draw[->, thick, >=stealth] (vehiculo) -- node[right, font=\scriptsize] {1} (genera);
+\draw[->, thick, >=stealth] (genera) -- node[right, font=\scriptsize] {N} (acceso);
+
+\end{tikzpicture}
+\caption{Modelo Entidad-Relación conceptual del sistema ALPR.}
+\label{fig:modelo_er}
+\end{figure}
+
+A nivel de diseño conceptual, las entidades principales son:
+\begin{itemize}
+    \item \textbf{Funcionario:} Representa al trabajador de la institución.
+    \item \textbf{Vehículo:} Representa el automóvil autorizado, identificado inequívocamente por su placa patente, el cual pertenece a un funcionario.
+    \item \textbf{Registro\_Acceso:} Tabla transaccional de tipo \textit{log} que guarda el historial exclusivo de los accesos exitosos (fecha y hora) para propósitos de auditoría.
+\end{itemize}
+
+\section{Casos de Uso y Flujos del Sistema}
+
+Para comprender la operatividad del sistema integrado, se definen los tres flujos de trabajo principales que abordan el ciclo de vida completo de la información, desde el empadronamiento hasta el control físico en portería:
+
+\begin{enumerate}
+    \item \textbf{Gestión Administrativa (Alta de Vehículo):} El Administrador institucional ingresa al panel web del Nodo Central. Crea el perfil de un Funcionario e inscribe su vehículo asociado a su placa patente. Esta información se guarda en PostgreSQL. En el siguiente ciclo de sincronización, el Nodo de Borde descarga esta nueva patente y la indexa en su SQLite local, preparándose para leerla.
+    \item \textbf{Inferencia Positiva (Acceso Autorizado):} Un vehículo llega al portón del Campus Ñuñoa. La cámara IP captura el video, el algoritmo YOLOv12s recorta la patente y EasyOCR la convierte a texto (ej. "AB-CD-12"). El script en Python consulta SQLite. Al encontrar la patente en estado activo, el sistema emite el pulso de apertura a la barrera y genera un registro temporal de acceso exitoso. Posteriormente, de forma asíncrona, este evento se envía al Nodo Central para alimentar el historial.
+    \item \textbf{Inferencia Negativa (Acceso Denegado):} Un vehículo no registrado o transeúnte se aproxima al portón. El flujo de captura e inferencia se ejecuta normalmente, pero al consultar SQLite, la patente digitalizada no coincide con ningún registro activo. El sistema simplemente ignora la lectura y no emite señal a la barrera (permanece cerrada). En este escenario, \textbf{no se genera ningún registro en la base de datos} para evitar la saturación del almacenamiento (\textit{storage}) con vehículos ajenos a la institución que circulan por la calle o se detienen temporalmente frente al portón.
+\end{enumerate}
