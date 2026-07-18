@@ -9,32 +9,59 @@
 \chapter{Metodología}
 
 % --- Introducción al capítulo ---
-% En este capítulo se detalla el marco metodológico adoptado para alcanzar los objetivos...
+En este capítulo se detalla el marco metodológico adoptado para alcanzar los objetivos del proyecto. Se justifica la elección de un enfoque híbrido para la gestión del proyecto, combinando marcos de trabajo ágiles y orientados a datos, así como el uso de prototipado evolutivo para el desarrollo del software. Finalmente, se describen las fases del proyecto, las herramientas tecnológicas utilizadas y los elementos de estudio.
 
 \section{Diseño metodológico}
 
-[Describe el tipo de investigación o metodología empleada en tu proyecto (por ejemplo, desarrollo ágil de software, investigación experimental, diseño cuantitativo o cualitativo, etc.) y justifica su elección.]
+La naturaleza de este proyecto, que combina el desarrollo de una arquitectura de software distribuida (plataforma administrativa en la nube y aplicación web de simulación en el borde) con la implementación y entrenamiento de un modelo de Inteligencia Artificial (IA) basado en visión computacional, requiere una aproximación metodológica flexible y estructurada. Además, dado que el equipo de desarrollo está compuesto por dos integrantes, es fundamental establecer una dinámica de comunicación y división de tareas clara.
 
-\section{Fases o etapas del proyecto}
+Por lo tanto, se ha optado por un \textbf{enfoque metodológico híbrido} para la gestión del proyecto, combinando las prácticas ágiles de \textbf{Scrum} con el modelo estándar de la industria para minería de datos e IA, \textbf{CRISP-DM} (Cross-Industry Standard Process for Data Mining).
+Por otro lado, para la construcción del sistema, se adoptó el modelo de desarrollo basado en \textbf{Prototipado Evolutivo}.
 
-[Detalla las diferentes fases del desarrollo de tu proyecto. Si sigues una metodología de desarrollo de software como Scrum, XP o Cascada, describe cada una de sus fases adaptadas a tu tesis.]
+\subsection{Gestión del Proyecto: Enfoque Híbrido (Scrum y CRISP-DM)}
 
-\subsection{Etapa 1: Levantamiento de requerimientos y análisis}
-[Describe cómo se identificaron las necesidades y requerimientos iniciales del sistema o de la investigación.]
+\textbf{Scrum} se utiliza como el marco de trabajo ágil para la gestión del equipo. Para un equipo de dos personas, Scrum aporta un alto valor al estructurar el trabajo en ciclos cortos llamados \textit{Sprints}. Esto permite una asignación clara de roles (donde las responsabilidades de \textit{Product Owner} y \textit{Scrum Master} pueden distribuirse o compartirse), realizar reuniones de sincronización eficientes y tener revisiones incrementales del avance. La flexibilidad de Scrum permite adaptar los requisitos del sistema de control de acceso vehicular de forma dinámica.
 
-\subsection{Etapa 2: Diseño y arquitectura}
-[Explica la fase de diseño del sistema, modelado de base de datos, arquitectura de software, diagramas UML, etc.]
+De manera paralela, \textbf{CRISP-DM} gobierna el ciclo de vida del modelo de Machine Learning. Mientras Scrum organiza ``quién'' y ``cuándo'' realiza el trabajo, CRISP-DM define ``qué'' fases técnicas deben ejecutarse para el desarrollo exitoso del modelo de reconocimiento de patentes, desde la comprensión de la necesidad institucional hasta el despliegue del modelo YOLOv12s.
 
-\subsection{Etapa 3: Desarrollo e implementación}
-[Menciona brevemente cómo se llevó a cabo la construcción o programación del sistema/solución.]
+\subsection{Desarrollo de Software: Prototipado Evolutivo}
 
-\subsection{Etapa 4: Pruebas y validación}
-[Describe cómo se validaron los resultados o el correcto funcionamiento del sistema desarrollado.]
+El \textbf{Prototipado Evolutivo} es un modelo de desarrollo de software donde se construye una versión inicial básica que cumple con funciones fundamentales, la cual se refina y amplía en iteraciones sucesivas. En el contexto de I+D de Inteligencia Artificial, este modelo es altamente adecuado porque es común que la integración de redes neuronales requiera múltiples ajustes sobre la marcha. En lugar de intentar construir un sistema completo y perfecto desde el inicio, se desarrolla un prototipo de validación en PC (simulación) que evolucionará iterativamente, incorporando la base de datos y el panel web, hasta convertirse en el producto final integrable en la infraestructura teórica de borde.
+
+\section{Fases del proyecto (Integración CRISP-DM)}
+
+Las fases del desarrollo del proyecto se estructuraron siguiendo el ciclo de vida de CRISP-DM, adaptado a los \textit{sprints} de Scrum:
+
+\subsection{Fase 1: Comprensión del Negocio y Análisis de Requerimientos}
+Esta fase abarca la identificación de las necesidades específicas del Campus Ñuñoa de la UTEM, estableciendo como objetivo el reconocimiento automático de vehículos de funcionarios mediante sus patentes (civiles y verdes), y determinando explícitamente la exclusión de vehículos de emergencia, gran tonelaje y motocicletas. Asimismo, se establece el límite teórico de $<100$ ms de latencia.
+
+\subsection{Fase 2: Comprensión y Preparación de los Datos}
+Consiste en la recolección, estructuración y depuración de un dataset de imágenes de vehículos y placas patentes chilenas en entornos urbanos y condiciones representativas a un acceso institucional. Se aplicarán técnicas de preprocesamiento considerando las restricciones operativas de la portería del campus.
+
+\subsection{Fase 3: Modelado (Entrenamiento de IA)}
+En esta etapa de desarrollo, se configurará y entrenará la arquitectura de la red neuronal convolucional para la tarea de detección y recorte de la patente, apoyada por un motor de reconocimiento óptico de caracteres (OCR) para extraer el texto alfanumérico. Se probarán diferentes hiperparámetros para balancear la precisión de detección frente a la necesidad de baja latencia requerida para el procesamiento en el borde.
+
+\subsection{Fase 4: Evaluación y Pruebas}
+El modelo entrenado y el sistema de software integrado serán sometidos a pruebas de rendimiento y precisión (cálculo de mAP, \textit{recall}, \textit{precision}). Se validará el correcto funcionamiento de las lógicas de acceso programadas en el backend y se evaluará el desempeño computacional de la simulación.
+
+\subsection{Fase 5: Despliegue (Prototipo y Arquitectura Teórica)}
+La fase final contempla el empaquetamiento del sistema bajo una arquitectura distribuida. A nivel local (nodo de borde), se levantará el prototipo de inferencia junto a su propia persistencia de datos para validación en tiempo real. En paralelo, se definirá el despliegue del nodo central administrativo en la nube. Asimismo, se documentará la arquitectura teórica para la migración del prototipo hacia el hardware definitivo en una eventual instalación física.
 
 \section{Herramientas y tecnologías}
 
-[Describe las herramientas, lenguajes de programación, frameworks, plataformas y bases de datos utilizadas en tu proyecto, y por qué fueron elegidos.]
+El desarrollo del proyecto se sustenta en un stack tecnológico moderno y distribuido, dividiendo el sistema en un nodo central (nube) y un nodo de borde (\textit{Edge}):
 
-\section{Sujetos o elementos de estudio (Población y Muestra)}
+\begin{itemize}
+    \item \textbf{YOLOv12s:} Arquitectura de red neuronal convolucional de estado del arte utilizada para la detección de objetos en tiempo real, seleccionada por su excelente equilibrio entre velocidad y eficiencia paramétrica, ideal para el nodo de borde.
+    \item \textbf{EasyOCR:} Motor de reconocimiento óptico de caracteres que extrae el texto alfanumérico a partir de los recortes generados por el modelo YOLO.
+    \item \textbf{Python y FastAPI:} El backend de ambas aplicaciones (nodo central y nodo de borde) se desarrolla en Python utilizando FastAPI. Este framework permite manejar asincronía de forma nativa, lo que es vital para procesar los flujos de video sin bloquear los procesos web.
+    \item \textbf{React y TypeScript:} Biblioteca y lenguaje utilizados para construir las interfaces web de ambas aplicaciones (el panel de administración central y el visualizador del prototipo local), garantizando una experiencia de usuario robusta y tipada.
+    \item \textbf{PostgreSQL:} Motor de base de datos relacional robusto utilizado en la aplicación central (nube) para almacenar de forma centralizada el registro de accesos, funcionarios y sus vehículos autorizados.
+    \item \textbf{SQLite:} Motor de base de datos relacional \textit{serverless} utilizado en la aplicación de borde (prototipo) para mantener una réplica local de las patentes autorizadas, permitiendo que la inferencia opere sin latencia de red e independiente de la conectividad a internet.
+    \item \textbf{OpenCV:} Biblioteca de visión por computadora empleada para la captura, procesamiento y manipulación en tiempo real de los flujos de video de la cámara en el prototipo.
+\end{itemize}
 
-[Si aplica, define sobre qué universo, muestra de usuarios, datos o infraestructura se aplicó el estudio o se validó la solución.]
+\section{Elementos de estudio}
+
+El universo de estudio corresponde a los vehículos que ingresan al estacionamiento de la Universidad Tecnológica Metropolitana, Sede Campus Ñuñoa. Específicamente, el sistema se enfoca en el reconocimiento de placas patentes chilenas de formato civil estándar y vehículos eléctricos (patentes verdes) pertenecientes a funcionarios de la institución. 
+Como parte de los límites de este estudio, quedan excluidos los vehículos de emergencia y los vehículos de carga de gran tonelaje, dado que su tipología escapa al perfil lógico de un funcionario universitario, el cual constituye el objetivo de acceso central del sistema. Por otro lado, las motocicletas quedan excluidas por una limitante física de la normativa de tránsito chilena: carecen de patente frontal, haciéndolas incompatibles con el ángulo de escaneo propuesto para la cámara en la portería del recinto.

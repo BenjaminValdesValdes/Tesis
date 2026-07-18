@@ -6,9 +6,11 @@
 % ============================================================================
 
 % --- Codificación y lenguaje ---
+\usepackage{cmap}                    % Permite copiar-pegar texto desde el PDF sin guiones ni saltos de línea feos
 \usepackage[utf8]{inputenc}          % Permite usar tildes y ñ directamente
 \usepackage[T1]{fontenc}             % Codificación de fuentes para español
 \usepackage[spanish,es-tabla]{babel} % Idioma español (cambia "Table" por "Tabla", etc.)
+\usepackage{microtype}               % Mejora la micro-tipografía (reduce el número de palabras cortadas al final)
 
 % --- Fuente Arial (equivalente: Helvetica) ---
 \usepackage{helvet}                  % Carga la fuente Helvetica (muy similar a Arial)
@@ -57,6 +59,10 @@
     language=spanish                 % Idioma español para la bibliografía
 ]{biblatex}
 \addbibresource{finales/bibliografia.bib} % Archivo de bibliografía
+
+% Permitir quiebre de línea en URLs largas de la bibliografía
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{8000}
 
 % --- Hipervínculos ---
 \usepackage[
