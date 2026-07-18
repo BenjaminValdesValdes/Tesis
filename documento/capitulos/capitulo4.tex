@@ -1,47 +1,49 @@
 % ============================================================================
-% CAPÍTULO 4: RESULTADOS Y DISCUSIÓN
-% ============================================================================
-% Este capítulo presenta los resultados obtenidos tras la implementación de la
-% solución, las pruebas realizadas (unitarias, de carga, de usabilidad, etc.),
-% la evaluación de rendimiento y la discusión comparativa de la propuesta.
+% CAPÍTULO 4: PLAN DE VALIDACIÓN Y PRUEBAS (TT1)
 % ============================================================================
 
-\chapter{Resultados y Discusión}
+\chapter{Plan de Validación y Pruebas}
 
-% --- Introducción al capítulo ---
-% En este capítulo se exponen y analizan los resultados de la validación del sistema...
+Considerando que el presente documento corresponde a la fase de diseño arquitectónico y estado del arte (Trabajo de Título I), este capítulo tiene como objetivo establecer de forma rigurosa la metodología, las métricas y los escenarios de prueba que regirán el desarrollo empírico del sistema durante el Trabajo de Título II.
 
-\section{Plan de pruebas y validación}
+El propósito de este plan es definir un marco de evaluación objetivo que permita comprobar si el prototipo construido cumple satisfactoriamente con los tiempos de respuesta y los niveles de precisión exigidos para un entorno de control de acceso vehicular institucional.
 
-[Describe la estrategia utilizada para verificar que el sistema funciona correctamente y cumple con los requerimientos técnicos y operacionales.]
+\section{Metodología de Validación}
 
-\subsection{Pruebas unitarias y de integración}
-[Describe cómo se probaron los componentes individuales y su interacción conjunta.]
+La validación del sistema se llevará a cabo simulando las condiciones reales de operación en un entorno controlado. Para ello, el prototipo del Nodo de Borde se ejecutará localmente procesando secuencias de video pregrabadas que simulen el pórtico de acceso de la universidad, mientras que el Nodo Central operará levantando los servicios de API y base de datos de forma concurrente.
 
-\subsection{Pruebas de rendimiento o estrés}
-[Si aplica, detalla los tiempos de respuesta del sistema bajo carga, consumo de recursos, etc.]
+Se recopilará un conjunto de datos (dataset) de prueba compuesto por imágenes y videos de vehículos transitando bajo diferentes condiciones de iluminación (día, tarde, noche) y portando los distintos estándares vigentes de placas patentes chilenas:
+\begin{itemize}
+    \item Formato clásico (1985): Dos letras y cuatro números (ej. \texttt{AA-11-22}).
+    \item Formato estándar (2007): Cuatro letras y dos números (ej. \texttt{BBCC-11}).
+    \item Nuevo formato (Transición): Cinco letras y un número (ej. \texttt{BBCCC-1}).
+\end{itemize}
 
-\subsection{Pruebas de aceptación de usuarios}
-[Describe si se realizaron pruebas con usuarios reales (encuestas de usabilidad, métricas de satisfacción, System Usability Scale - SUS, etc.).]
+\section{Métricas de Evaluación de Inteligencia Artificial}
 
-\section{Presentación de resultados}
+El desempeño del pipeline de inferencia local será el factor más crítico a medir. Para cuantificar la viabilidad técnica del modelo propuesto (YOLOv12s acoplado con EasyOCR), se proyecta recolectar las siguientes métricas durante la fase de Trabajo de Título II:
 
-[Muestra los datos obtenidos de las pruebas mediante tablas, gráficos o capturas. Asegúrate de referenciar todas tus figuras y tablas en el texto (ejemplo: ``como se observa en la Tabla \ref{tab:ejemplo}'').]
-
-% Ejemplo de tabla para el usuario
 \begin{table}[H]
     \centering
-    \caption{Ejemplo de tabla de resultados}
-    \begin{tabular}{|l|c|c|}
+    \caption{Métricas proyectadas para la evaluación del modelo de IA.}
+    \begin{tabular}{|p{4cm}|p{10cm}|}
         \hline
-        \textbf{Métrica de Evaluación} & \textbf{Valor Esperado} & \textbf{Valor Obtenido} \\ \hline
-        Tiempo de carga de página & < 2.0 s & 1.45 s \\ \hline
-        Precisión del algoritmo   & > 90\%  & 93.2\% \\ \hline
-        Tasa de éxito de transacciones & 100\% & 100\% \\ \hline
+        \textbf{Métrica} & \textbf{Descripción y Objetivo} \\ \hline
+        \textbf{Mean Average Precision (mAP)} & Evaluará la exactitud del modelo YOLOv12s al momento de detectar y generar la caja delimitadora (bounding box) sobre la patente en el frame del video. \\ \hline
+        \textbf{Precisión de Lectura OCR (Accuracy)} & Porcentaje de caracteres correctamente digitalizados por EasyOCR respecto al texto real de la patente, abarcando los distintos formatos chilenos. \\ \hline
+        \textbf{Tasa de Falsos Positivos} & Medición de cuántas veces el sistema confunde otro texto del entorno (letreros, marcas de auto) con una placa patente. \\ \hline
     \end{tabular}
-    \label{tab:ejemplo}
+    \label{tab:metricas_ia}
 \end{table}
 
-\section{Discusión de los resultados}
+\section{Métricas de Rendimiento del Sistema}
 
-[Analiza críticamente los resultados obtenidos. Compara tu propuesta frente a soluciones existentes (estado del arte) y explica cómo se resolvieron las limitaciones del problema planteado.]
+Para garantizar que la solución pueda operar en "tiempo real" sin generar cuellos de botella en el acceso vehicular, se someterá el prototipo a pruebas de rendimiento tecnológico, capturando los siguientes indicadores:
+
+\begin{itemize}
+    \item \textbf{Latencia de Inferencia (Milisegundos):} Tiempo total que toma el pipeline local desde que extrae un cuadro (frame) de video hasta que la patente es leída y validada en la base de datos SQLite local.
+    \item \textbf{Cuadros por Segundo (FPS):} Tasa de refresco que logra sostener el Nodo de Borde al procesar el video de forma continua.
+    \item \textbf{Tiempos de Respuesta API (FastAPI):} Latencia de las peticiones HTTP al momento de realizar la sincronización asíncrona de los registros de acceso hacia el Nodo Central, validando que el servidor pueda manejar ráfagas de datos sin bloqueos.
+\end{itemize}
+
+ 
