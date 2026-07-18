@@ -9,26 +9,64 @@
 \chapter{Desarrollo de la Solución}
 
 % --- Introducción al capítulo ---
-% En este capítulo se describe de manera detallada la implementación física y lógica de la solución propuesta...
+Este capítulo detalla la arquitectura de software propuesta para el sistema de control de acceso vehicular de la Universidad Tecnológica Metropolitana, Sede Campus Ñuñoa. Dado el requerimiento de alta disponibilidad y la estricta restricción de baja latencia ($<100$ ms) para la lectura de patentes, la solución se diseña bajo un paradigma de computación distribuida. 
 
-\section{Arquitectura de la solución}
+A continuación, se describen los dos nodos principales que componen el ecosistema: la plataforma de gestión centralizada (alojada en la nube) y el prototipo de inferencia local (ejecutado en el borde o \textit{Edge}), así como los mecanismos lógicos de sincronización de datos entre ambos. Cabe destacar que, al encontrarse el proyecto en la fase de propuesta, el diseño descrito a continuación representa la arquitectura teórica y el andamiaje lógico que guiará la implementación técnica del sistema en etapas posteriores de desarrollo.
 
-[Presenta aquí el esquema general de tu sistema (patrón arquitectónico como MVC, microservicios, cliente-servidor, etc.). Puedes incluir diagramas de arquitectura en la carpeta `figuras/` e insertarlos con el comando \texttt{\textbackslash includegraphics}.]
+\section{Aclaración de Alcance Arquitectónico}
 
-\section{Modelo de datos y almacenamiento}
+Previo a detallar los componentes tecnológicos de la solución, es imperativo establecer una diferenciación conceptual entre el diseño teórico proyectado y el entregable material de esta investigación:
+\begin{itemize}
+    \item \textbf{Arquitectura de Referencia:} Corresponde al diseño a escala industrial (descrito en este capítulo) que contempla una red estructurada en la Nube y nodos físicos de hardware embebido (como NVIDIA Jetson) instalados en la portería del Campus.
+    \item \textbf{Prototipo de Validación:} Corresponde a la implementación material acotada de este Trabajo de Título. Para validar la viabilidad lógica de la Arquitectura de Referencia y el rendimiento del modelo YOLOv12s, el sistema se construirá íntegramente en software y será simulado localmente en una computadora personal (PC), emulando el comportamiento del nodo de borde sin requerir instalación de hardware institucional en esta etapa.
+\end{itemize}
 
-[Detalla el diseño de tu base de datos o estructura de almacenamiento. Incluye diagramas entidad-relación (DER) o esquemas NoSQL y explica las tablas o colecciones principales.]
+\section{Arquitectura General (Topología Distribuida)}
 
-\section{Implementación detallada de componentes}
+Para aislar la carga de procesamiento computacional continuo (que exige la red neuronal) de las tareas administrativas cotidianas, la Arquitectura de Referencia divide el sistema físicamente en dos componentes interconectados:
 
-[Describe la programación y construcción de los módulos principales del sistema, incluyendo algoritmos clave, consumo de APIs, servicios en la nube o lógica del negocio relevante.]
+\begin{itemize}
+    \item \textbf{Nodo Central (Nube):} Encargado de la gestión administrativa institucional. Aloja el panel de control web principal y la base de datos maestra donde residen todos los registros históricos de acceso y usuarios.
+    \item \textbf{Nodo de Borde (Edge / Prototipo Local):} Encargado exclusivamente de la captura de video en tiempo real, la inferencia de Inteligencia Artificial (YOLOv12s apoyado por EasyOCR) y la validación de ingreso. Está diseñado para operar localmente en la portería (simulado en PC para efectos de este prototipo) con el fin de garantizar tiempos de respuesta críticos sin depender de una conexión a internet constante.
+\end{itemize}
 
-\subsection{Componente o módulo backend}
-[Descripción técnica del desarrollo del lado del servidor, endpoints principales, etc.]
+\section{Nodo Central (Plataforma Administrativa)}
 
-\subsection{Componente o módulo frontend (Interfaz de usuario)}
-[Descripción técnica del desarrollo del lado del cliente, diseño de interfaces, etc.]
+El Nodo Central constituye el corazón administrativo del sistema. Está diseñado para ser desplegado en un servidor virtualizado (nube), garantizando disponibilidad ininterrumpida para el personal autorizado desde cualquier dispositivo con navegador web. Su arquitectura se compone de tres capas lógicas:
 
-\section{Casos de uso principales y flujos de trabajo}
+\subsection{Frontend: Interfaz Web Administrativa}
+Se estructurará como una aplicación web de tipo SPA (\textit{Single Page Application}) construida con React y TypeScript. Esta interfaz proporcionará los módulos necesarios para que administradores y personal de conserjería puedan gestionar los perfiles de los funcionarios, matricular vehículos (asociando sus respectivas placas patentes) y visualizar en formato de tabla o gráfico los registros históricos de acceso al recinto.
 
-[Explica cómo los usuarios interactúan con el sistema mediante flujos clave. Apóyate de diagramas de secuencia o capturas de pantalla de la interfaz para ilustrar los procesos principales.]
+\subsection{Backend: API RESTful Central}
+La lógica de negocio transaccional será expuesta mediante una API REST desarrollada en Python con FastAPI. La elección de este framework se fundamenta en su capacidad nativa para manejar operaciones asíncronas de manera concurrente, lo que permite atender eficientemente múltiples peticiones simultáneas, tales como consultas al registro de ingresos o procesos de alta masiva de patentes.
+
+\subsection{Almacenamiento: Base de Datos Maestra}
+Se empleará PostgreSQL como motor de base de datos relacional principal. En esta base de datos se estructurará el modelo entidad-relación del proyecto, el cual mantendrá la integridad referencial entre la identidad de los funcionarios, la vigencia de sus vehículos y un \textit{log} inmutable de todos los accesos validados en el tiempo.
+
+\section{Nodo de Borde (Edge)}
+
+El Nodo de Borde representa la unidad computacional física que interactúa directamente con el entorno en la portería. El diseño arquitectónico recomienda para este fin hardware embebido con aceleración gráfica, como una NVIDIA Jetson Nano. Sin embargo, para los fines de validación técnica de este estudio, dicho nodo será simulado temporalmente mediante un computador estándar (PC).
+
+\subsection{Pipeline de Inferencia (Backend Local)}
+El núcleo funcional de este nodo es un servicio local de alto rendimiento, orquestado mediante Python. Para cumplir con las estrictas cuotas de latencia exigidas, la ejecución del modelo de IA se optimiza utilizando las bibliotecas y \textit{bindings} de TensorRT (tal como se recomendó en el Marco Teórico), delegando la carga pesada directamente a la GPU. Este servicio ejecuta un ciclo de procesamiento (\textit{loop}) continuo para el análisis de video:
+\begin{enumerate}
+    \item \textbf{Captura:} Se obtiene el flujo de video en tiempo real de una cámara IP o circuito cerrado (CCTV) mediante la biblioteca OpenCV.
+    \item \textbf{Preprocesamiento y Detección:} Se aplican filtros de mejora a la imagen y, posteriormente, la red convolucional YOLOv12s detecta y recorta espacialmente la placa patente dentro del encuadre.
+    \item \textbf{Extracción OCR:} El recorte de la patente es procesado por EasyOCR para digitalizar los caracteres alfanuméricos.
+    \item \textbf{Validación Lógica:} El texto digitalizado se contrasta inmediatamente contra la base de datos local para emitir un evento de autorización o denegación de acceso.
+\end{enumerate}
+
+\subsection{Visualización en Tiempo Real (Frontend Local)}
+Para propósitos puramente de validación técnica y demostración del prototipo, el sistema de borde integrará una interfaz web ligera. Construida igualmente en React, pero servida de forma local, esta pantalla permitirá a los evaluadores visualizar en vivo el flujo de video procesado, remarcando con cuadros delimitadores (\textit{bounding boxes}) las detecciones de la red neuronal y demostrando la capacidad de inferencia del algoritmo.
+
+\subsection{Persistencia Local (Caché \textit{Offline-First})}
+Para lograr la latencia estricta de validación requerida y blindar el sistema ante eventuales caídas de la red institucional, el Nodo de Borde implementará una base de datos local utilizando SQLite. Esta base de datos actuará como un caché de alto rendimiento que almacenará el listado vigente de patentes autorizadas (para consulta rápida) y permitirá al propio sistema registrar de forma automática y local los accesos validados cuando opere sin conexión a internet, con el fin de sincronizarlos posteriormente hacia el nodo central una vez restablecido el enlace (sin requerir ni permitir intervención manual de los conserjes sobre este nodo).
+
+\section{Mecanismo de Sincronización de Nodos}
+
+Dado que la base de datos maestra (PostgreSQL) y la base de datos local de inferencia (SQLite) operan de forma desacoplada, el diseño contempla un mecanismo de sincronización asíncrono para mantener la coherencia de la información:
+
+\begin{itemize}
+    \item \textbf{Sincronización descendente:} Periódicamente, el servicio backend del nodo de borde consultará al nodo central en la nube para descargar e indexar en su SQLite local cualquier alta, baja o modificación ocurrida en la lista de vehículos autorizados.
+    \item \textbf{Sincronización ascendente:} Cada vez que el nodo de borde certifique un acceso vehicular, el sistema almacenará automáticamente el registro (patente, fecha y hora) de forma local. En paralelo, y sin bloquear la barrera de acceso, este registro se enviará al nodo central para engrosar el histórico en PostgreSQL. Si la conexión a internet falla, el nodo local encolará automáticamente los registros en su memoria y los transmitirá en lote una vez restablecido el enlace, asegurando una arquitectura tolerante a fallos de forma transparente para el conserje.
+\end{itemize}
