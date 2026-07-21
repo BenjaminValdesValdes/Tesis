@@ -9,6 +9,7 @@ precio_jetson = 800000        # NVIDIA Jetson Orin Nano 8GB (Valor ref: MCI Elec
 precio_camara = 738395 * 2    # Cámara IP LPR Dahua ITC413 (x2 Entrada y Salida)
 precio_rele = 2300            # Relé Optoacoplado de 1 Canal (Un solo portón bidireccional)
 precio_cableado = 23220       # 30m de cable UTP Cat6 100% Cobre para exterior
+precio_control = 13900        # Cable de Control Paralelo 2x18 AWG (10m a 1390 c/u)
 precio_gabinete = 31500       # Gabinete Metálico Lexo IP65 250x200x150
 precio_switch_poe = 55835     # Switch administrable PoE Gigabit (DH-CS4006-4GT-60)
 precio_postes = 147084        # 1x Pedestal Metálico CCTV 3m Cónico (Base 250x250)
@@ -16,7 +17,7 @@ precio_pvc = 7398             # Tubos Conduit C4 20mm (x4) + Accesorios (Sodimac
 precio_hormigon = 14300       # 5x Sacos de Hormigón Preparado H20 25kg (Topex)
 costo_instalacion = 480050    # Mano de obra pura: 2 técnicos x 3 jornadas
 
-capex_total = precio_jetson + precio_camara + precio_rele + precio_cableado + precio_gabinete + precio_switch_poe + precio_postes + precio_pvc + precio_hormigon + costo_instalacion
+capex_total = precio_jetson + precio_camara + precio_rele + precio_cableado + precio_control + precio_gabinete + precio_switch_poe + precio_postes + precio_pvc + precio_hormigon + costo_instalacion
 
 # 2. Definición de OPEX Anual (Costos Operativos)
 costo_electricidad_anual = 33000 # Consumo Jetson+Cámara (Aprox 25W 24/7 a 150 CLP/kWh)
@@ -34,7 +35,7 @@ anos_proyeccion = 5
 tasa_descuento = 0.12 # 12% exigido típicamente en proyectos institucionales
 
 # Depreciación lineal a 3 años (solo de los equipos, no de la mano de obra de instalación)
-capex_equipos = precio_jetson + precio_camara + precio_rele + precio_cableado + precio_gabinete + precio_switch_poe + precio_postes + precio_pvc
+capex_equipos = precio_jetson + precio_camara + precio_rele + precio_cableado + precio_control + precio_gabinete + precio_switch_poe + precio_postes + precio_pvc
 depreciacion_anual = capex_equipos / 3
 
 flujos = [-capex_total] # El Año 0 es la inversión (negativo)
