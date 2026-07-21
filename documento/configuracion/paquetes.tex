@@ -66,6 +66,10 @@
 \setcounter{biburlucpenalty}{8000}
 
 % --- Hipervínculos ---
+% Configuramos el paquete url nativo para que permita saltar de línea en los guiones (-)
+\usepackage{url}
+\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks\do\-}
+
 \usepackage[
     colorlinks=true,                 % Enlaces con color (sin recuadros)
     linkcolor=black,                 % Color de enlaces internos

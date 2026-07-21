@@ -25,9 +25,11 @@ Por tanto, el problema central se identifica como una ineficiencia logística cr
 
 % --- Objetivos ---
 \section*{Objetivo General}
+\addcontentsline{toc}{section}{Objetivo General}
 Validar la viabilidad técnica y operativa de un sistema de control de acceso vehicular automatizado mediante el desarrollo de un prototipo funcional basado en modelos de inteligencia artificial para el reconocimiento de patentes, orientado a optimizar la eficiencia y trazabilidad en el ingreso de funcionarios al Campus Ñuñoa de la UTEM.
 
 \section*{Objetivos Específicos}
+\addcontentsline{toc}{section}{Objetivos Específicos}
 \begin{itemize}
     \item Analizar el estado del arte de las tecnologías de visión computacional y modelos de aprendizaje profundo aplicados a la detección de objetos en tiempo real en entornos de seguridad física.
     \item Diseñar una arquitectura de software basada en el paradigma de \textit{Edge Computing} que permita el procesamiento local de datos para garantizar bajas latencias en la apertura del portón y una mayor protección de la privacidad de los datos.
@@ -37,11 +39,12 @@ Validar la viabilidad técnica y operativa de un sistema de control de acceso ve
 
 % --- Alcances y Limitaciones ---
 \section*{Alcances y Limitaciones}
+\addcontentsline{toc}{section}{Alcances y Limitaciones}
 El presente trabajo define una hoja de ruta técnica que abarca desde la investigación conceptual hasta la entrega de un artefacto de software funcional en modo de simulación. Para enmarcar de forma precisa el impacto del proyecto, se establecen las siguientes limitaciones:
 
 \begin{itemize}
-    \item \textbf{Exclusión de Motocicletas:} Dado que las normativas chilenas establecen que las motocicletas solo portan placa trasera, y considerando que la geometría de captura de las cámaras en porterías de acceso institucional es inherentemente frontal, resulta físicamente inviable su detección. Las motocicletas quedan excluidas del alcance funcional del prototipo.
-    \item \textbf{Vehículos Especiales:} El modelo omitirá deliberadamente del entrenamiento aquellas patentes de carácter especial (ej. Bomberos, Carabineros, diplomáticos o de carga pesada), dado que su flujo de acceso no corresponde al perfil de usuario funcionario definido para este recinto.
+    \item \textbf{Exclusión de Motocicletas:} Dado que las normativas chilenas establecen que las motocicletas solo portan placa trasera, y considerando que la geometría de captura de las cámaras en porterías de acceso institucional es inherentemente frontal, resulta físicamente inviable su detección. Las motocicletas quedan excluidas del alcance funcional automatizado. No obstante, a nivel de diseño de hardware, el sistema contempla una topología paralela que mantiene operativa la apertura manual (vía control remoto o botonera) para resolver este acceso sin fricción.
+    \item \textbf{Vehículos Especiales:} El modelo omitirá deliberadamente del entrenamiento aquellas patentes de carácter especial (ej. Bomberos, Carabineros, diplomáticos o de carga pesada), dado que su flujo de acceso no corresponde al perfil de usuario funcionario definido para este recinto. Al igual que con las motocicletas, el acceso contingente para estos vehículos queda plenamente garantizado por el sistema manual preexistente operado por conserjería.
     \item \textbf{Arquitectura de Referencia vs. Prototipo de Validación:} Si bien el diseño arquitectónico de grado industrial propuesto para la institución (Arquitectura de Referencia) recomienda el uso de placas de borde con aceleración gráfica (NVIDIA Jetson) instaladas físicamente en la portería, el alcance material de este Trabajo de Título se enmarca en la creación de una Prueba de Concepto (\textit{Proof of Concept}). Por ende, el sistema entregable consiste en un Prototipo de Validación en software, el cual será ejecutado en un entorno de computadora personal (PC). Este alcance permite demostrar rigurosamente la viabilidad lógica de la arquitectura y la precisión del modelo de IA, dejando la migración a hardware embebido y la instalación física como trabajo futuro institucional.
     \item \textbf{Topología Distribuida (Nube/Local):} La Arquitectura de Referencia contempla una base de datos y panel de gestión en la Nube (para alta disponibilidad administrativa) y un nodo de inferencia operando localmente (\textit{Edge Computing}) en la portería, garantizando tiempos de respuesta $<100$ ms. Para efectos del Prototipo de Validación, el panel administrativo será desplegado en un entorno de nube gratuito (ej. Render), mientras que el nodo de inferencia se ejecutará de forma estrictamente local (\textit{Localhost}) en la PC de simulación, aislando el procesamiento de video de la latencia de internet.
     \item \textbf{Simulación de Actuadores Físicos:} La interacción con el portón será una simulación digital dentro de la aplicación web. El prototipo mostrará indicadores visuales de "Apertura" o "Cierre" en pantalla, sin ejecutar la instalación de hardware físico (motores, cremalleras ni cableado eléctrico) en el Campus Ñuñoa.
@@ -49,6 +52,7 @@ El presente trabajo define una hoja de ruta técnica que abarca desde la investi
 
 % --- Estructura del documento ---
 \section*{Estructura del Documento}
+\addcontentsline{toc}{section}{Estructura del Documento}
 El presente trabajo de título se encuentra estructurado en los siguientes capítulos: 
 El \textbf{Capítulo 1} aborda el marco teórico y el estado del arte de las tecnologías de visión computacional y redes neuronales convolucionales. 
 El \textbf{Capítulo 2} expone el diseño metodológico de la solución y la arquitectura de infraestructura basada en Edge Computing. 
