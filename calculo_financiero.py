@@ -13,7 +13,7 @@ precio_control = 13900        # Cable de Control Paralelo 2x18 AWG (10m a 1390 c
 precio_gabinete = 31500       # Gabinete Metálico Lexo IP65 250x200x150
 precio_switch_poe = 55835     # Switch administrable PoE Gigabit (DH-CS4006-4GT-60)
 precio_postes = 147084        # 1x Pedestal Metálico CCTV 3m Cónico (Base 250x250)
-precio_pvc = 7398             # Tubos Conduit C4 20mm (x4) + Accesorios (Sodimac)
+precio_pvc = 8308             # Tubos Conduit C4 20mm (x5) + Accesorios (Sodimac)
 precio_hormigon = 14300       # 5x Sacos de Hormigón Preparado H20 25kg (Topex)
 costo_instalacion = 480050    # Mano de obra pura: 2 técnicos x 3 jornadas
 
