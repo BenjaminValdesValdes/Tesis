@@ -87,9 +87,9 @@ La Tabla~\ref{tab:opex} resume la estructura de costos operativos anuales proyec
 
 El beneficio económico de la automatización del control de acceso no proviene de la venta de servicios ni de cobros directos a los usuarios, sino de la optimización del recurso humano disponible en la portería del campus.
 
-En la situación actual (sin automatización), los funcionarios de conserjería deben interrumpir sus labores de seguridad, vigilancia y atención a los usuarios para verificar de manera visual a cada conductor y accionar manualmente el portón vehicular a través de botonera o control remoto. Se estima empíricamente que el tiempo dedicado a esta labor repetitiva y de bajo valor agregado suma un total de \textbf{2 horas diarias} por jornada de operación del campus.
+En la situación actual (sin automatización), los funcionarios de conserjería deben interrumpir sus labores de seguridad, vigilancia y atención a los usuarios para verificar de manera visual a cada conductor y accionar manualmente el portón vehicular a través de control remoto. Se estima empíricamente que el tiempo dedicado a esta labor repetitiva y de bajo valor agregado suma un total de \textbf{2 horas diarias} por jornada de operación del campus.
 
-La implementación del sistema ALPR automatiza por completo este proceso de verificación, eliminando la necesidad de intervención manual para el flujo de vehículos de cuatro ruedas empadronados dentro del alcance definido del proyecto (véase Sección~\ref{sec:alcances_limitaciones}). De esta forma, el conserje puede reasignar estas 2 horas diarias a tareas críticas de seguridad activa y control de perímetros.
+La implementación del sistema ALPR automatiza por completo este proceso de verificación, eliminando la necesidad de intervención manual para el flujo de vehículos de cuatro ruedas empadronados dentro del alcance definido del proyecto (véase la \hyperref[sec:alcances_limitaciones]{sección de Alcances y Limitaciones}). De esta forma, el conserje puede reasignar estas 2 horas diarias a tareas críticas de seguridad activa y control de perímetros.
 
 Para cuantificar económicamente este beneficio institucional, se modela la reasignación de tiempo bajo los siguientes supuestos:
 \begin{itemize}
@@ -109,7 +109,7 @@ Este monto representa un flujo de beneficio indirecto o ahorro operativo de \tex
 \section{Depreciación Contable y Valor Residual de Activos (Norma SII)}
 \label{sec:depreciacion_sii}
 
-Para evitar arbitrariedades en la determinación de la vida útil de los activos y respaldar rigurosamente el análisis económico, la depreciación contable se fundamenta en las **Tablas de Vida Útil de los Bienes Físicos del Activo Fijo** fijadas por el **Servicio de Impuestos Internos (SII)** de Chile (Resolución Exenta N° 43 del 2002 y actualizaciones vigentes) y las pautas metodológicas de formulación de proyectos MIDESO:
+Para evitar arbitrariedades en la determinación de la vida útil de los activos y respaldar rigurosamente el análisis económico, la depreciación contable se fundamenta en las \textbf{Tablas de Vida Útil de los Bienes Físicos del Activo Fijo} fijadas por el \textbf{Servicio de Impuestos Internos (SII)} de Chile (Resolución Exenta N° 43 del 2002 y actualizaciones vigentes) y las pautas metodológicas de formulación de proyectos MIDESO:
 
 \begin{enumerate}
     \item \textbf{Equipos de Procesamiento y Cómputo (Jetson Orin Nano, Switch PoE y Relé):} Clasificados según la normativa del SII en la categoría de \textit{``Sistemas de procesamiento de datos, computadores y redes''}, a los cuales se les asigna una vida útil normal de \textbf{6 años}. Subtotal: \$858.135 CLP. Depreciación anual: \$143.023 CLP/año.
@@ -117,9 +117,9 @@ Para evitar arbitrariedades en la determinación de la vida útil de los activos
     \item \textbf{Infraestructura Pasiva y Obras Civiles (Pedestal, Gabinete IP65, Cableado UTP/Control, Conduit PVC y Hormigón H20):} Clasificados en la categoría de \textit{``Construcciones, obras civiles y estructuras metálicas livianas''}, con una vida útil normal de \textbf{10 años}. Subtotal: \$252.212 CLP. Depreciación anual: \$25.221 CLP/año.
 \end{enumerate}
 
-Como todas las vidas útiles de los componentes superan el horizonte de evaluación de 5 años del proyecto, **no se requiere modelar una reinversión de equipos en el Año 3**. 
+Como todas las vidas útiles de los componentes superan el horizonte de evaluación de 5 años del proyecto, \textbf{no se requiere modelar una reinversión de equipos}.
 
-Al término del período de evaluación (Año 5), los activos no han concluido su vida útil física ni contable, por lo que conservan un **Valor Libro Remanente (Valor Residual)**. Este valor se calcula restando la depreciación acumulada de 5 años al costo original de los equipos y se rescata como un ingreso de capitales en el flujo del Año 5.
+Al término del período de evaluación (Año 5), los activos no han concluido su vida útil física ni contable, por lo que conservan un \textbf{Valor Libro Remanente (Valor Residual)}. Este valor se calcula restando la depreciación acumulada de 5 años al costo original de los equipos y se rescata como un ingreso de capitales en el flujo del Año 5.
 
 La Tabla~\ref{tab:depreciacion} resume la amortización contable y el cálculo exacto del Valor Residual del proyecto.
 
@@ -143,7 +143,7 @@ La Tabla~\ref{tab:depreciacion} resume la amortización contable y el cálculo e
 \section{Flujo de Caja Proyectado y Evaluación Económica}
 \label{sec:flujo_caja}
 
-Siguiendo la estructura formal de evaluación de proyectos, el flujo financiero se desglosa en el **Flujo de Caja Operacional** (beneficios operativos menos OPEX) y el **Flujo de Caja de Capitales** (inversión inicial CAPEX en Año 0 y la recuperación del Valor Residual en el Año 5). 
+Siguiendo la estructura formal de evaluación de proyectos, el flujo financiero se desglosa en el \textbf{Flujo de Caja Operacional} (beneficios operativos menos OPEX) y el \textbf{Flujo de Caja de Capitales} (inversión inicial CAPEX en Año 0 y la recuperación del Valor Residual en el Año 5). 
 
 En el contexto de una universidad pública, la evaluación se realiza exenta de Impuesto a la Renta de Primera Categoría (al no constituir una actividad comercial gravada), por lo que la depreciación no genera escudo fiscal pero permite determinar con precisión la recuperación del activo fijo.
 
@@ -162,11 +162,12 @@ La Tabla~\ref{tab:flujo_caja} muestra la estructura del Flujo de Caja Neto Proye
         Costos de Operación (OPEX) & \$0 & -\$82.330 & -\$82.330 & -\$82.330 & -\$82.330 & -\$82.330 \\ \hline
         \textbf{Subtotal Flujo Operacional} & \textbf{\$0} & \textbf{\$1.501.670} & \textbf{\$1.501.670} & \textbf{\$1.501.670} & \textbf{\$1.501.670} & \textbf{\$1.501.670} \\ \hline
         \multicolumn{7}{|l|}{\textbf{2. Flujo de Caja de Capitales (FKK)}} \\ \hline
-        Inversión Inicial (CAPEX) & -\$3.067.187 & \$0 & \$0 & \$0 & \$0 & \$0 \\ \hline
+        Inversión Inicial (CAPEX) & -\$3.067.137 & \$0 & \$0 & \$0 & \$0 & \$0 \\ \hline
         Recuperación Valor Residual & \$0 & \$0 & \$0 & \$0 & \$0 & \$925.480 \\ \hline
-        \textbf{Subtotal Flujo Capitales} & \textbf{-\$3.067.187} & \textbf{\$0} & \textbf{\$0} & \textbf{\$0} & \textbf{\$0} & \textbf{\$925.480} \\ \hline
+        \textbf{Subtotal Flujo Capitales} & \textbf{-\$3.067.137} & \textbf{\$0} & \textbf{\$0} & \textbf{\$0} & \textbf{\$0} & \textbf{\$925.480} \\ \hline
         \hline
-        \textbf{FLUJO DE CAJA NETO} & \textbf{-\$3.067.187} & \textbf{\$1.501.670} & \textbf{\$1.501.670} & \textbf{\$1.501.670} & \textbf{\$1.501.670} & \textbf{\$2.427.150} \\ \hline
+        \textbf{FLUJO DE CAJA NETO} & \textbf{-\$3.067.137} & \textbf{\$1.501.670} & \textbf{\$1.501.670} & \textbf{\$1.501.670} & \textbf{\$1.501.670} & \textbf{\$2.427.150} \\ \hline
+        \textbf{FLUJO DE CAJA ACUMULADO} & \textbf{-\$3.067.137} & \textbf{-\$1.565.467} & \textbf{-\$63.797} & \textbf{\$1.437.873} & \textbf{\$2.939.543} & \textbf{\$5.366.693} \\ \hline
     \end{tabular}
     \label{tab:flujo_caja}
 \end{table}
@@ -178,20 +179,24 @@ Para validar la rentabilidad y fundamentar la toma de decisiones, se calculan el
 \begin{enumerate}
     \item \textbf{Valor Actual Neto (VAN):} Expresa la riqueza neta actualizada generada por el proyecto:
     \begin{align}
-        \text{VAN} = & \, -\$3.067.187 + \sum_{t=1}^{4} \frac{\$1.501.670}{(1{,}055)^t} + \frac{\$2.427.150}{(1{,}055)^5} \nonumber \\
-        = & \, \$4.053.486 \text{ CLP}
+        \text{VAN} = & \, -\$3.067.137 + \sum_{t=1}^{4} \frac{\$1.501.670}{(1{,}055)^t} + \frac{\$2.427.150}{(1{,}055)^5} \nonumber \\
+        = & \, \$4.053.537 \text{ CLP}
     \end{align}
-    Puesto que $\text{VAN} = \$4.053.486 \text{ CLP} > 0$, el proyecto es altamente rentable e incrementa el patrimonio institucional en más de 4 millones de pesos.
+    Puesto que $\text{VAN} = \$4.053.537 \text{ CLP} > 0$, el proyecto es altamente rentable e incrementa el patrimonio institucional en más de 4 millones de pesos.
     
     \item \textbf{Tasa Interna de Retorno (TIR):} Representa el rendimiento promedio anual del capital invertido:
     \begin{equation}
-        0 = -\$3.067.187 + \sum_{t=1}^{4} \frac{\$1.501.670}{(1+\text{TIR})^t} + \frac{\$2.427.150}{(1+\text{TIR})^5} \implies \text{TIR} = 42{,}93\%
+        0 = -\$3.067.137 + \sum_{t=1}^{4} \frac{\$1.501.670}{(1+\text{TIR})^t} + \frac{\$2.427.150}{(1+\text{TIR})^5} \implies \text{TIR} = 42{,}92\%
     \end{equation}
-    Al ser la $\text{TIR} = 42{,}93\% \gg 5{,}5\%$, la inversión supera holgadamente la tasa social de exigencia del Estado.
+    Al ser la $\text{TIR} = 42{,}92\% \gg 5{,}5\%$, la inversión supera holgadamente la tasa social de exigencia del Estado.
     
-    \item \textbf{Periodo de Recuperación de Capital (PRC):} Cuantifica el tiempo requerido para amortizar la inversión inicial mediante los flujos operacionales netos:
+    \item \textbf{Periodo de Recuperación de Capital (PRC):} Cuantifica el tiempo exacto requerido para amortizar la inversión inicial mediante la fórmula de interpolación sobre el Flujo de Caja Acumulado. Teóricamente se define como:
     \begin{equation}
-        \text{PRC} = \frac{\$3.067.187 \text{ CLP}}{\$1.501.670 \text{ CLP/año}} \approx 2{,}04 \text{ años}
+        \text{PRC} = A + \frac{|FCA_{A}|}{FCN_{A+1}}
+    \end{equation}
+    Donde $A$ es el último período con Flujo de Caja Acumulado ($FCA$) negativo, y $FCN_{A+1}$ corresponde al Flujo de Caja Neto del período inmediatamente posterior. Sustituyendo con los valores proyectados:
+    \begin{equation}
+        \text{PRC} = 2 \text{ años} + \frac{|\text{-\$63.797}| \text{ CLP}}{\$1.501.670 \text{ CLP}} \approx 2{,}04 \text{ años}
     \end{equation}
     La inversión se recupera íntegramente en \textbf{2 años y 15 días} de funcionamiento del sistema.
 \end{enumerate}
@@ -207,8 +212,8 @@ La Tabla~\ref{tab:indicadores} resume los indicadores de rentabilidad del estudi
         \hline
         \textbf{Indicador Financiero} & \textbf{Valor} & \textbf{Criterio de Aceptación} \\ \hline
         Tasa Social de Descuento ($r$) & 5,50\% & Estándar Oficial MIDESO \cite{MinisterioDesarrolloSocial} \\ \hline
-        Valor Actual Neto (VAN) & \$4.053.486 CLP & Aceptable (VAN > 0) \\ \hline
-        Tasa Interna de Retorno (TIR) & 42,93\% & Excelente (TIR > $r$) \\ \hline
+        Valor Actual Neto (VAN) & \$4.053.537 CLP & Aceptable (VAN > 0) \\ \hline
+        Tasa Interna de Retorno (TIR) & 42,92\% & Excelente (TIR > $r$) \\ \hline
         Periodo de Recuperación (PRC) & 2,04 años & Retorno Rápido (< 3 años) \\ \hline
     \end{tabular}
     \label{tab:indicadores}
