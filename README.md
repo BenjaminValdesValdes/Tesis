@@ -1,11 +1,3 @@
-# Guía de Uso del Proyecto de Tesis en LaTeX (Norma UTEM)
-
-¡Bienvenido al proyecto de LaTeX para tu Trabajo de Titulación (Tesis)! Este proyecto está estructurado modularmente siguiendo estrictamente la **Pauta para la Presentación de Trabajos de Titulación** de la Universidad Tecnológica Metropolitana (UTEM).
-
-Dado que es tu primera vez trabajando con LaTeX, esta guía te dará el paso a paso para configurar tu entorno, compilar tu documento y escribir tu contenido de la manera más fácil y profesional posible.
-
----
-
 ## 1. Estructura del Proyecto
 
 Para que tu trabajo sea ordenado, el proyecto está dividido en carpetas y archivos independientes. Solo debes editar el archivo correspondiente a la sección en la que estés trabajando:
