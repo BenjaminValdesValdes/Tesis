@@ -17,18 +17,20 @@
 % --- Introducción a las conclusiones ---
 % Presenta un breve balance general sobre la ejecución del proyecto...
 
-\section*{Cumplimiento de Objetivos}
+\section*{Cumplimiento de Objetivos (Fase de Diseño y Formulación)}
 
-[Evalúa críticamente cómo se alcanzaron los objetivos propuestos (tanto el general como los específicos) y qué resultados concretos respaldan este cumplimiento.]
+El desarrollo de esta primera etapa del proyecto (Trabajo de Título 1) ha permitido cumplir satisfactoriamente con los objetivos de investigación, formulación y diseño estructural. Se analizó exhaustivamente el estado del arte de las tecnologías de visión computacional (destacando a YOLOv12s por su eficiencia paramétrica) y se definió una arquitectura de software descentralizada (\textit{Edge-Cloud}) capaz de operar de manera autónoma y resiliente (\textit{Offline-First}). Adicionalmente, el estudio de factibilidad económica comprobó categóricamente la viabilidad financiera de la iniciativa, arrojando indicadores altamente positivos (VAN > \$5.8M CLP, TIR 59,47\%) que validan la adopción de este sistema en la Universidad Tecnológica Metropolitana.
 
 \section*{Aportes y Contribuciones}
 
-[Describe el valor agregado de tu trabajo. ¿Qué aporta a la disciplina, a la institución, a la empresa (si aplica) o al estado del arte?]
+El principal aporte práctico de esta fase es el diseño de una "Arquitectura de Referencia" basada en el concepto de \textit{Retrofit} tecnológico, demostrando que es posible modernizar infraestructuras institucionales heredadas (como portones correderos manuales) dotándolas de inteligencia artificial en el borde, sin incurrir en obras civiles millonarias ni el reemplazo de la maquinaria existente. 
+
+A nivel científico-académico, la propuesta cubre un vacío investigativo reciente de gran relevancia. Tal como se documentó en el marco teórico, autores como Buleu et al. (2025) validaron el estado del arte de YOLOv12 para patentes utilizando hardware de computación personal (laptops de alto rendimiento), dejando explícitamente el despliegue optimizado en dispositivos de borde (\textit{Edge}) como trabajo futuro. Este proyecto ejecuta directamente esa propuesta futura, uniendo la precisión de YOLOv12s con la latencia ultrabaja del paradigma perimetral (Hardware Jetson y TensorRT), sentando un precedente valioso para aplicaciones de inferencia ligera en tiempo real.
 
 \section*{Limitaciones de la Solución}
 
-[Describe con honestidad técnica las restricciones y limitaciones de tu desarrollo o de tu investigación (por ejemplo, dependencias tecnológicas, falta de datos, limitaciones de rendimiento, etc.).]
+La limitación técnica principal inherente al alcance de este proyecto radica en su naturaleza de Prototipo de Validación en software (\textit{Proof of Concept}). Si bien el diseño teórico contempla la instalación física de una placa de hardware acelerado (Jetson Orin Nano) y cámaras industriales en la intemperie, el desarrollo se enmarcará en un entorno simulado de computadora personal (PC). Asimismo, las restricciones físicas de la normativa de tránsito chilena impiden funcionalmente la detección automatizada de motocicletas mediante cámaras frontales, derivando esta casuística al sistema manual preexistente.
 
-\section*{Trabajos Futuros}
+\section*{Trabajos Futuros (Fase de Desarrollo y Pruebas)}
 
-[Propón sugerencias, recomendaciones o nuevas líneas de trabajo, mejoras de software y extensiones de la investigación que quedaron fuera del alcance de este proyecto pero que son viables para continuarse en el futuro.]
+Habiendo validado la arquitectura técnica y la rentabilidad financiera, el trabajo futuro inmediato (correspondiente al Trabajo de Título 2) se centrará en la ejecución práctica del cronograma establecido. Las siguientes etapas abarcan: (1) la configuración de entornos y captura fotográfica en terreno para conformar el dataset de patentes chilenas; (2) el entrenamiento empírico del modelo YOLOv12s integrado con EasyOCR; (3) el desarrollo del backend centralizado y la interfaz web local; y (4) la ejecución de pruebas de estrés, evaluación de latencia e índices de precisión de detección (mAP), con el fin de entregar el artefacto de software funcional y plenamente integrado.
