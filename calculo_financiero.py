@@ -20,19 +20,19 @@ costo_instalacion = 480000    # Mano de obra pura: 2 técnicos x 3 jornadas a 80
 capex_total = precio_jetson + precio_camara + precio_rele + precio_cableado + precio_control + precio_gabinete + precio_switch_poe + precio_postes + precio_pvc + precio_hormigon + costo_instalacion
 
 # 2. Definición de OPEX Anual (Costos Operativos)
-costo_electricidad_anual = 32330 # Consumo Jetson+Cámara (219 kWh/año a 147.625 CLP/kWh IVA inc.)
-costo_mantencion_anual = 50000   # Limpieza de lentes, revisión de conexiones
+costo_electricidad_anual = 56260 # Consumo Jetson+Cámara
+costo_mantencion_anual = 80000   # Limpieza de lentes, revisión de conexiones
 opex_total_anual = costo_electricidad_anual + costo_mantencion_anual
 
 # 3. Cálculo de Ahorros (Ingresos del Proyecto)
 # Reasignación de conserje: 2 horas/día, 22 días/mes, 12 meses. Valor HH estimado: $3.000
 horas_conserje_anual = 2 * 22 * 12
-valor_hh_conserje = 3000
+valor_hh_conserje = 4000
 ahorro_conserje_anual = horas_conserje_anual * valor_hh_conserje
 
 # 4. Depreciación por Categorías según Normativa SII (Res. Ex. N° 43 / MIDESO)
 # - Computación (Jetson, Switch, Relé): 6 años de vida útil normal (SII)
-# - Óptica y CCTV (Cámaras LPR Dahua): 9 años de vida útil normal (SII / Datasheet MTBF > 100k hrs)
+# - Óptica y CCTV (Cámaras LPR Dahua): 7 años de vida útil normal (SII)
 # - Infraestructura Pasiva (Pedestal, Gabinete, Cables, PVC, Hormigón): 10 años de vida útil normal (SII)
 
 costo_computacion = precio_jetson + precio_switch_poe + precio_rele        # $858.135 CLP
@@ -40,7 +40,7 @@ costo_cctv = precio_camara                                                # $1.4
 costo_infraestructura = precio_postes + precio_gabinete + precio_cableado + precio_control + precio_pvc + precio_hormigon # $238.312 CLP
 
 depreciacion_comp_anual = costo_computacion / 6
-depreciacion_cctv_anual = costo_cctv / 9
+depreciacion_cctv_anual = costo_cctv / 7
 depreciacion_infra_anual = costo_infraestructura / 10
 
 depreciacion_total_anual = depreciacion_comp_anual + depreciacion_cctv_anual + depreciacion_infra_anual
@@ -65,7 +65,7 @@ print("  EVALUACIÓN ECONÓMICA OFICIAL (SII / RETROFIT)   ")
 print("==================================================")
 print(f"CAPEX Total (Inversión Bruta con IVA): ${capex_total:,.0f} CLP")
 print(f"  -> Equipos de Cómputo (Vida útil 6 años): ${costo_computacion:,.0f} CLP")
-print(f"  -> Óptica y CCTV (Vida útil 9 años): ${costo_cctv:,.0f} CLP")
+print(f"  -> Óptica y CCTV (Vida útil 7 años): ${costo_cctv:,.0f} CLP")
 print(f"  -> Infraestructura Pasiva (Vida útil 10 años): ${costo_infraestructura:,.0f} CLP")
 print(f"  -> Mano de Obra Instalación: ${costo_instalacion:,.0f} CLP")
 print("--------------------------------------------------")
