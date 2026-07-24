@@ -9,7 +9,7 @@ Para garantizar la viabilidad y sostenibilidad a largo plazo del sistema de cont
 
 El enfoque de \textit{Retrofit} consiste en reutilizar y complementar la infraestructura preexistente de la institución (como el portón metálico corredero, la cremallera y los sistemas de motorización eléctrica existentes) y superponer una capa inteligente de hardware de borde y software de visión computacional. Este paradigma permite mitigar drásticamente los costos de inversión iniciales al prescindir de costosas obras de edificación civil o renovación de motores.
 
-La evaluación se proyecta sobre un horizonte temporal de \textbf{5 años}. De acuerdo con la Metodología General del Ministerio de Desarrollo Social y Familia \parencite{METODOLOGIAGENERAL2025}, el horizonte de evaluación depende principalmente de la vida útil de los bienes de capital principales y de la previsibilidad del proyecto. Dado que el sistema se fundamenta en hardware de Inteligencia Artificial sujeto a una rápida obsolescencia y dada la baja previsibilidad de estas tecnologías a largo plazo, se adopta este plazo \textit{ad hoc} como el más conservador y adecuado. Esta decisión evita modelar complejas reinversiones, capturando el remanente de vida útil contable de los equipos (6 y 9 años según el SII) a través de la recuperación de un valor residual al término del quinto año. Para determinar la rentabilidad institucional, se detallan los costos de inversión de capital (CAPEX), costos operativos anuales (OPEX), la depreciación según normativa del Servicio de Impuestos Internos (SII), la recuperación de valores residuales y los indicadores financieros de rentabilidad (Valor Actual Neto, VAN; Tasa Interna de Retorno, TIR; y Periodo de Recuperación de Capital, PRC) calculados bajo la Tasa Social de Descuento (TSD) del \textbf{5,5\%} anual fijada por el MIDESO \parencite{MinisterioDesarrolloSocial}.
+La evaluación se proyecta sobre un horizonte temporal de \textbf{5 años}. De acuerdo con la Metodología General del \textcite{METODOLOGIAGENERAL2025}, el horizonte de evaluación depende principalmente de la vida útil de los bienes de capital principales y de la previsibilidad del proyecto. Dado que el sistema se fundamenta en hardware de Inteligencia Artificial sujeto a una rápida obsolescencia y dada la baja previsibilidad de estas tecnologías a largo plazo, se adopta este plazo \textit{ad hoc} como el más conservador y adecuado. Esta decisión evita modelar complejas reinversiones, capturando el remanente de vida útil contable de los equipos (6 y 9 años según el SII) a través de la recuperación de un valor residual al término del quinto año. Para determinar la rentabilidad institucional, se detallan los costos de inversión de capital (CAPEX), costos operativos anuales (OPEX), la depreciación según normativa del Servicio de Impuestos Internos (SII), la recuperación de valores residuales y los indicadores financieros de rentabilidad (Valor Actual Neto, VAN; Tasa Interna de Retorno, TIR; y Periodo de Recuperación de Capital, PRC) calculados bajo la Tasa Social de Descuento (TSD) del \textbf{5,5\%} anual fijada por el \textcite{MinisterioDesarrolloSocial}.
 
 \section{Inversión Inicial (CAPEX)}
 \label{sec:capex}
@@ -46,7 +46,7 @@ A continuación, en la Tabla~\ref{tab:capex}, se detalla el presupuesto estructu
     \label{tab:capex}
 \end{table}
 
-Este CAPEX total de \textbf{\$3.067.137 CLP} se compone en un 84,35\% por la adquisición directa de activos tangibles e infraestructura de hardware (\$2.587.137 CLP) respaldada en cotizaciones de mercado (véase Anexo~\ref{anexo:cotizaciones}), y en un 15,65\% por los servicios profesionales de montaje físico y cableado (\$480.000 CLP).
+Este CAPEX total de \textbf{\$3.067.137 CLP} se compone en un 77,15\% por la adquisición de Equipos de Cómputo y Visión para la capa inteligente (\$2.366.425 CLP), en un 7,20\% por insumos de Infraestructura Pasiva y Montaje (\$220.712 CLP) respaldados en cotizaciones de mercado (véase Anexo~\ref{anexo:cotizaciones}), y en un 15,65\% exclusivamente por el costo de la Mano de Obra Especializada para su instalación y puesta en marcha (\$480.000 CLP).
 
 El cálculo de la \textbf{Mano de Obra Especializada} se fundamenta en las tarifas de mercado para técnicos instaladores de corrientes débiles y sistemas CCTV en la Región Metropolitana. Se determinó la necesidad de una cuadrilla compuesta por 2 técnicos trabajando de manera simultánea durante 3 jornadas completas para el montaje de la obra civil menor, canalización y configuración del sistema de borde. Según ofertas laborales vigentes (Jooble Chile, 2026; véase Anexo~\ref{anexo:cotizaciones}), el costo referencial asciende a \$80.000 CLP diarios por técnico, resultando en un costo total de instalación de \$480.000 CLP (2 técnicos $\times$ 3 días $\times$ \$80.000 CLP/día).
 
@@ -56,7 +56,7 @@ El cálculo de la \textbf{Mano de Obra Especializada} se fundamenta en las tarif
 Los gastos de operación (OPEX, \textit{Operational Expenditure}) representan los costos recurrentes que la institución debe absorber anualmente para mantener el sistema operativo de forma ininterrumpida y segura. Para esta solución de bajo consumo eléctrico y alta robustez física, el OPEX anual se compone únicamente de dos variables críticas:
 
 \begin{enumerate}
-    \item \textbf{Consumo Eléctrico de Borde:} Corresponde a la energía eléctrica demandada por la NVIDIA Jetson Orin Nano, el Switch PoE y las dos cámaras IP LPR. Basado en las fichas técnicas de los fabricantes (véase Anexo~\ref{anexo:cotizaciones}), se adopta un modelo de carga mixta: 12 horas diurnas en estado nominal ($\sim$25 W) y 12 horas nocturnas a máxima potencia con iluminación activa ($\sim$62 W), resultando en un consumo diario de 1,044 kWh. Conforme a la Resolución Exenta N° 03007 de la \textcite{UTEMRes30072021} y el Pliego Tarifario Regulado de \textcite{EnelDistribucionChile} para la comuna de Ñuñoa, se aplica la opción tarifaria institucional AT3 (Media/Alta Tensión), con un costo de energía actualizado de \textbf{\$147,63 CLP por kWh}. El gasto anual se calcula como:
+    \item \textbf{Consumo Eléctrico de Borde:} Corresponde a la energía eléctrica demandada por la NVIDIA Jetson Orin Nano, el Switch PoE y las dos cámaras IP LPR. Basado en las fichas técnicas de los fabricantes (disponibles directamente en los enlaces comerciales del Anexo~\ref{anexo:cotizaciones}), se adopta un modelo de carga mixta: 12 horas diurnas en estado nominal ($\sim$25 W) y 12 horas nocturnas a máxima potencia con iluminación activa ($\sim$62 W), resultando en un consumo diario de 1,044 kWh. Conforme a la Resolución Exenta N° 03007 de la \textcite{UTEMRes30072021} y el Pliego Tarifario Regulado de \textcite{EnelDistribucionChile} para la comuna de Ñuñoa, se aplica la opción tarifaria institucional AT3 (Media/Alta Tensión), con un costo de energía actualizado de \textbf{\$147,63 CLP por kWh}. El gasto anual se calcula como:
     \begin{align}
         \text{Consumo Anual} = & \, 1{,}044 \text{ kWh/día} \times 365 \text{ días/año} \nonumber \\
         & \times \$147{,}63 \text{ CLP/kWh} = \$56.256 \text{ CLP}
@@ -87,7 +87,7 @@ La Tabla~\ref{tab:opex} resume la estructura de costos operativos anuales proyec
 
 El beneficio económico de la automatización del control de acceso no proviene de la venta de servicios ni de cobros directos a los usuarios, sino de la optimización del recurso humano disponible en la portería del campus.
 
-En la situación actual (sin automatización), los funcionarios de conserjería deben interrumpir sus labores de seguridad, vigilancia y atención a los usuarios para verificar de manera visual a cada conductor y accionar manualmente el portón vehicular a través de control remoto. Se estima empíricamente que el tiempo dedicado a esta labor repetitiva y de bajo valor agregado suma un total de \textbf{2 horas diarias} por jornada de operación del campus.
+En la situación actual (sin automatización), los funcionarios de conserjería deben interrumpir sus labores de seguridad, vigilancia y atención a los usuarios para verificar de manera visual a cada conductor y accionar manualmente el portón vehicular a través de control remoto. Considerando un flujo promedio de 30 a 40 vehículos diarios, donde cada ciclo de apertura, verificación, cierre y la consecuente interrupción de sus tareas de vigilancia principal consume entre 3 y 4 minutos, se establece un escenario conservador de \textbf{2 horas diarias} de tiempo efectivo dedicado exclusivamente a esta labor repetitiva.
 
 La implementación del sistema ALPR automatiza por completo este proceso de verificación, eliminando la necesidad de intervención manual para el flujo de vehículos de cuatro ruedas empadronados dentro del alcance definido del proyecto (véase la \hyperref[sec:alcances_limitaciones]{sección de Alcances y Limitaciones}). De esta forma, el conserje puede reasignar estas 2 horas diarias a tareas críticas de seguridad activa y control de perímetros.
 
@@ -109,12 +109,12 @@ Este monto representa un flujo de beneficio indirecto o ahorro operativo de \tex
 \section{Depreciación Contable y Valor Residual de Activos (Norma SII)}
 \label{sec:depreciacion_sii}
 
-Para evitar arbitrariedades en la determinación de la vida útil de los activos y respaldar rigurosamente el análisis económico, la depreciación contable se fundamenta en las \textbf{Tablas de Vida Útil de los Bienes Físicos del Activo Fijo} fijadas por el \textbf{Servicio de Impuestos Internos (SII)} de Chile \parencite[Resolución Exenta N° 43 del 2002]{SIIServicioImpuestos} y las pautas metodológicas de formulación de proyectos MIDESO:
+Para evitar arbitrariedades en la determinación de la vida útil de los activos y respaldar rigurosamente el análisis económico, la depreciación contable se fundamenta en las \textbf{Tablas de Vida Útil de los Bienes Físicos del Activo Fijo} fijadas por el \textcite[Resolución Exenta N° 43]{SIIServicioImpuestos} y las pautas metodológicas de formulación de proyectos MIDESO \parencite{METODOLOGIAGENERAL2025}:
 
 \begin{enumerate}
-    \item \textbf{Equipos de Procesamiento y Cómputo (Jetson Orin Nano, Switch PoE y Relé):} Clasificados según la normativa del SII en la categoría de \textit{``Sistemas de procesamiento de datos, computadores y redes''}, a los cuales se les asigna una vida útil normal de \textbf{6 años}. Subtotal: \$858.135 CLP. Depreciación anual: \$143.023 CLP/año.
-    \item \textbf{Óptica y Seguridad CCTV (Cámaras LPR Dahua ITC413):} Clasificadas en la categoría de \textit{``Equipos de televisión en circuito cerrado (CCTV) e instrumentación electrónica''}. Dada su naturaleza de equipos electrónicos de intemperie para operación industrial continua (protección IP67 e IK10), se adopta la vida útil normal del SII de \textbf{9 años}. Subtotal: \$1.476.790 CLP. Depreciación anual: \$164.088 CLP/año.
-    \item \textbf{Infraestructura Pasiva y Obras Civiles (Pedestal, Gabinete IP65, Cableado UTP/Control, Conduit PVC y Hormigón H20):} Clasificados en la categoría de \textit{``Construcciones, obras civiles y estructuras metálicas livianas''}, con una vida útil normal de \textbf{10 años}. Subtotal: \$252.212 CLP. Depreciación anual: \$25.221 CLP/año.
+    \item \textbf{Equipos de Procesamiento y Cómputo (Jetson Orin Nano, Switch PoE y Relé):} Clasificados según la normativa del SII en la categoría de \textit{``Sistemas computacionales, computadores, periféricos, y similares''}, a los cuales se les asigna una vida útil normal de \textbf{6 años}. Subtotal: \$858.135 CLP. Depreciación anual: \$143.023 CLP/año.
+    \item \textbf{Óptica y Seguridad CCTV (Cámaras LPR Dahua ITC413):} Clasificadas en la categoría de \textit{``Equipos de vigilancia y detección y control de incendios, alarmas''}. Dada su naturaleza de equipos electrónicos de intemperie para operación industrial continua (protección IP67 e IK10), se adopta la vida útil normal del SII de \textbf{7 años}. Subtotal: \$1.476.790 CLP. Depreciación anual: \$210.970 CLP/año.
+    \item \textbf{Infraestructura Pasiva y Obras Civiles (Pedestal, Gabinete IP65, Cableado UTP/Control, Conduit PVC y Hormigón H20):} Clasificados en la categoría de \textit{``Instalaciones en general (ejemplos: eléctricas, de oficina, etc.)''}, con una vida útil normal de \textbf{10 años}. Subtotal: \$252.212 CLP. Depreciación anual: \$25.221 CLP/año.
 \end{enumerate}
 
 Como todas las vidas útiles de los componentes superan el horizonte de evaluación de 5 años del proyecto, \textbf{no se requiere modelar una reinversión de equipos}.
@@ -132,10 +132,10 @@ La Tabla~\ref{tab:depreciacion} resume la amortización contable y el cálculo e
         \hline
         \textbf{Categoría del Activo (SII)} & \textbf{Vida Útil} & \textbf{Costo Bruto} & \textbf{Deprec. Anual} & \textbf{Valor Residual (Año 5)} \\ \hline
         Sistemas de Cómputo (Jetson/Switch) & 6 años & \$858.135 & \$143.023 & \$143.020 \\ \hline
-        Óptica y CCTV (Cámaras Dahua) & 9 años & \$1.476.790 & \$164.088 & \$656.350 \\ \hline
+        Óptica y CCTV (Cámaras Dahua) & 7 años & \$1.476.790 & \$210.970 & \$421.940 \\ \hline
         Infraestructura Pasiva y Estructura & 10 años & \$252.212 & \$25.221 & \$126.110 \\ \hline
         \hline
-        \textbf{TOTALES} & -- & \textbf{\$2.587.137} & \textbf{\$332.332} & \textbf{\$925.480} \\ \hline
+        \textbf{TOTALES} & -- & \textbf{\$2.587.137} & \textbf{\$379.214} & \textbf{\$691.070} \\ \hline
     \end{tabular}
     \label{tab:depreciacion}
 \end{table}
@@ -163,32 +163,32 @@ La Tabla~\ref{tab:flujo_caja} muestra la estructura del Flujo de Caja Neto Proye
         \textbf{Subtotal Flujo Operacional} & \textbf{\$0} & \textbf{\$1.975.740} & \textbf{\$1.975.740} & \textbf{\$1.975.740} & \textbf{\$1.975.740} & \textbf{\$1.975.740} \\ \hline
         \multicolumn{7}{|l|}{\textbf{2. Flujo de Caja de Capitales (FKK)}} \\ \hline
         Inversión Inicial (CAPEX) & -\$3.067.137 & \$0 & \$0 & \$0 & \$0 & \$0 \\ \hline
-        Recuperación Valor Residual & \$0 & \$0 & \$0 & \$0 & \$0 & \$925.480 \\ \hline
-        \textbf{Subtotal Flujo Capitales} & \textbf{-\$3.067.137} & \textbf{\$0} & \textbf{\$0} & \textbf{\$0} & \textbf{\$0} & \textbf{\$925.480} \\ \hline
+        Recuperación Valor Residual & \$0 & \$0 & \$0 & \$0 & \$0 & \$691.070 \\ \hline
+        \textbf{Subtotal Flujo Capitales} & \textbf{-\$3.067.137} & \textbf{\$0} & \textbf{\$0} & \textbf{\$0} & \textbf{\$0} & \textbf{\$691.070} \\ \hline
         \hline
-        \textbf{FLUJO DE CAJA NETO} & \textbf{-\$3.067.137} & \textbf{\$1.975.740} & \textbf{\$1.975.740} & \textbf{\$1.975.740} & \textbf{\$1.975.740} & \textbf{\$2.901.220} \\ \hline
-        \textbf{FLUJO DE CAJA ACUMULADO} & \textbf{-\$3.067.137} & \textbf{-\$1.091.397} & \textbf{\$884.343} & \textbf{\$2.860.083} & \textbf{\$4.835.823} & \textbf{\$7.737.043} \\ \hline
+        \textbf{FLUJO DE CAJA NETO} & \textbf{-\$3.067.137} & \textbf{\$1.975.740} & \textbf{\$1.975.740} & \textbf{\$1.975.740} & \textbf{\$1.975.740} & \textbf{\$2.666.810} \\ \hline
+        \textbf{FLUJO DE CAJA ACUMULADO} & \textbf{-\$3.067.137} & \textbf{-\$1.091.397} & \textbf{\$884.343} & \textbf{\$2.860.083} & \textbf{\$4.835.823} & \textbf{\$7.502.633} \\ \hline
     \end{tabular}
     \label{tab:flujo_caja}
 \end{table}
 
 \subsection{Indicadores de Rentabilidad Financiera (VAN, TIR y PRC)}
 
-Para validar la rentabilidad y fundamentar la toma de decisiones, se calculan el Valor Actual Neto (VAN), la Tasa Interna de Retorno (TIR) y el Periodo de Recuperación de Capital (PRC) sobre el Flujo de Caja Neto, considerando la Tasa Social de Descuento del $r = 5{,}5\%$ anual vigente del Ministerio de Desarrollo Social y Familia \cite{MinisterioDesarrolloSocial}.
+Para validar la rentabilidad y fundamentar la toma de decisiones, se calculan el Valor Actual Neto (VAN), la Tasa Interna de Retorno (TIR) y el Periodo de Recuperación de Capital (PRC) sobre el Flujo de Caja Neto y su respectivo acumulado, considerando la Tasa Social de Descuento del $r = 5{,}5\%$ anual vigente fijada por el \textcite{MinisterioDesarrolloSocial}.
 
 \begin{enumerate}
     \item \textbf{Valor Actual Neto (VAN):} Expresa la riqueza neta actualizada generada por el proyecto:
     \begin{align}
-        \text{VAN} = & \, -\$3.067.137 + \sum_{t=1}^{4} \frac{\$1.975.740}{(1{,}055)^t} + \frac{\$2.901.220}{(1{,}055)^5} \nonumber \\
-        = & \, \$6.077.951 \text{ CLP}
+        \text{VAN} = & \, -\$3.067.137 + \sum_{t=1}^{4} \frac{\$1.975.740}{(1{,}055)^t} + \frac{\$2.666.810}{(1{,}055)^5} \nonumber \\
+        = & \, \$5.898.595 \text{ CLP}
     \end{align}
-    Puesto que $\text{VAN} = \$6.077.951 \text{ CLP} > 0$, el proyecto es altamente rentable e incrementa el patrimonio institucional en más de 6 millones de pesos.
+    Puesto que $\text{VAN} = \$5.898.595 \text{ CLP} > 0$, el proyecto es altamente rentable e incrementa el patrimonio institucional en más de 5 millones de pesos.
     
     \item \textbf{Tasa Interna de Retorno (TIR):} Representa el rendimiento promedio anual del capital invertido:
     \begin{equation}
-        0 = -\$3.067.137 + \sum_{t=1}^{4} \frac{\$1.975.740}{(1+\text{TIR})^t} + \frac{\$2.901.220}{(1+\text{TIR})^5} \implies \text{TIR} = 60{,}00\%
+        0 = -\$3.067.137 + \sum_{t=1}^{4} \frac{\$1.975.740}{(1+\text{TIR})^t} + \frac{\$2.666.810}{(1+\text{TIR})^5} \implies \text{TIR} = 59{,}47\%
     \end{equation}
-    Al ser la $\text{TIR} = 60{,}00\% \gg 5{,}5\%$, la inversión supera holgadamente la tasa social de exigencia del Estado.
+    Al ser la $\text{TIR} = 59{,}47\% \gg 5{,}5\%$, la inversión supera holgadamente la tasa social de exigencia del Estado.
     
     \item \textbf{Periodo de Recuperación de Capital (PRC):} Cuantifica el tiempo exacto requerido para amortizar la inversión inicial mediante la fórmula de interpolación sobre el Flujo de Caja Acumulado. Teóricamente se define como:
     \begin{equation}
@@ -198,7 +198,7 @@ Para validar la rentabilidad y fundamentar la toma de decisiones, se calculan el
     \begin{equation}
         \text{PRC} = 1 \text{ año} + \frac{|\text{-\$1.091.397}| \text{ CLP}}{\$1.975.740 \text{ CLP}} \approx 1{,}55 \text{ años}
     \end{equation}
-    La inversión se recupera íntegramente en \textbf{1 año y 6 y medio meses} de funcionamiento del sistema.
+    La inversión se recupera íntegramente en \textbf{1 año, 6 meses y 18 días} de funcionamiento del sistema.
 \end{enumerate}
 
 La Tabla~\ref{tab:indicadores} resume los indicadores de rentabilidad del estudio económico.
@@ -212,11 +212,11 @@ La Tabla~\ref{tab:indicadores} resume los indicadores de rentabilidad del estudi
         \hline
         \textbf{Indicador Financiero} & \textbf{Valor} & \textbf{Criterio de Aceptación} \\ \hline
         Tasa Social de Descuento ($r$) & 5,50\% & Estándar Oficial MIDESO \cite{MinisterioDesarrolloSocial} \\ \hline
-        Valor Actual Neto (VAN) & \$6.077.951 CLP & Aceptable (VAN > 0) \\ \hline
-        Tasa Interna de Retorno (TIR) & 60,00\% & Excelente (TIR > $r$) \\ \hline
-        Periodo de Recuperación (PRC) & 1,55 años & Retorno Rápido (< 3 años) \\ \hline
+        Valor Actual Neto (VAN) & \$5.898.595 CLP & Aceptable (VAN > 0) \\ \hline
+        Tasa Interna de Retorno (TIR) & 59,47\% & Excelente (TIR > $r$) \\ \hline
+        Periodo de Recuperación (PRC) & 1,55 años & Retorno Rápido (< 2 años) \\ \hline
     \end{tabular}
     \label{tab:indicadores}
 \end{table}
 
-En conclusión, el estudio de factibilidad económica demuestra de manera objetiva y técnicamente justificada que la implementación del nodo de borde inteligente bajo la metodología \textit{Retrofit} es una inversión altamente rentable para la Universidad Tecnológica Metropolitana, garantizando el retorno del capital en el segundo año y generando un valor económico neto de más de 6 millones de pesos bajo la normativa del Sistema Nacional de Inversiones de Chile.
+En conclusión, el estudio de factibilidad económica demuestra de manera objetiva y técnicamente justificada que la implementación del nodo de borde inteligente bajo la metodología \textit{Retrofit} es una inversión altamente rentable para la Universidad Tecnológica Metropolitana, garantizando el retorno del capital en el segundo año y generando un valor económico neto de más de 5,8 millones de pesos bajo la normativa del Sistema Nacional de Inversiones de Chile.
